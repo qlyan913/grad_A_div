@@ -1,0 +1,47 @@
+***eigenpairs-vc.py
+run start time: Thu Jul  8 08:53:04 2021
+working directory: /home/arnold/Insync/gdrive/home/programs/fenics-applications/poisson-with-potential/1DP/eigenpairs-variable-coef
+command line: ./eigenpairs-vc.py --bc neumann --nelts 1024 --x0  0. --x1  1024 --deg 8 --coef uniform --npts 6001 --params 1024 1.0 100.0 13 --nreq 1000 --target 0. --saveefuns 100,999 --plotefuns 0,10,20,50,100,200,300,400,500,600,700,800,900,999 --verbose
+
+> directory created for results: Results/000002
+> run parameters written to Results/000002/Parameters.json
+> evaluating coefficient
+> coefficient written to Results/000002/coefficient.txt.gz
+> coefficient plotted to Results/000002/coefficient.png
+> stiffness matrix of size 8193 x 8193 created
+> mass matrix of size 8193 x 8193 created
++ coefficient and matrix construction: 0 seconds
+> computed 1112 eigenvalues
+** Run data **
+host: weil
+starttime: Thu Jul  8 08:53:05 2021
+problem size: (8193, 8193)
+number of MPI processes: 1
+number of iterations (proc 0): 5
+problem type: 2
+solution method: krylovschur
+spectral transform: sinvert
+requested eigenvalues: 1000
+converged eigenvalues: 1112
+total time: 12.0
+** Parameters **
+[1024, 1.0, 100.0, 13]
+> eigenfunction 0 plotted to Results/000002/eigenfun00000.png
+> eigenfunction 10 plotted to Results/000002/eigenfun00010.png
+> eigenfunction 20 plotted to Results/000002/eigenfun00020.png
+> eigenfunction 50 plotted to Results/000002/eigenfun00050.png
+> eigenfunction 100 saved to Results/000002/eigenfun00100.txt.gz
+> eigenfunction 100 plotted to Results/000002/eigenfun00100.png
+> eigenfunction 200 plotted to Results/000002/eigenfun00200.png
+> eigenfunction 300 plotted to Results/000002/eigenfun00300.png
+> eigenfunction 400 plotted to Results/000002/eigenfun00400.png
+> eigenfunction 500 plotted to Results/000002/eigenfun00500.png
+> eigenfunction 600 plotted to Results/000002/eigenfun00600.png
+> eigenfunction 700 plotted to Results/000002/eigenfun00700.png
+> eigenfunction 800 plotted to Results/000002/eigenfun00800.png
+> eigenfunction 900 plotted to Results/000002/eigenfun00900.png
+> eigenfunction 999 saved to Results/000002/eigenfun00999.txt.gz
+> eigenfunction 999 plotted to Results/000002/eigenfun00999.png
++ saving spectral info: 10 seconds
++ total time: 23 seconds
+
