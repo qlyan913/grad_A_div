@@ -5,15 +5,15 @@ Solve the eigenvalue problem with variable coefficient:
 import matplotlib.pyplot as plt
 from firedrake import *
 from firedrake.petsc import PETSc
+from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
-deg =5
+deg = 8 
 nelts=1024
 x0=0
 x1=1024
 def eigen_solver(mesh,A,deg):
     V = FunctionSpace(mesh, "Lagrange", deg)
-    # Test and trial functions
     u = TrialFunction(V)
     v = TestFunction(V)
     b = A*dot(grad(u), grad(v))*dx
@@ -46,6 +46,6 @@ aval=1
 aexpr = Constant(aval)
 aelt = 'DG'
 adeg = 0
-A = interpolate(aexpr, FunctionSpace(mesh, aelt, adeg))
+A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 lam, uh = eigen_solver(mesh,A,deg)
 print(lam)
