@@ -1,0 +1,107 @@
+"""
+Codes copied from eigenpairs-vc.py by Douglas Arnold, 2021-07-07
+
+Solve the eigenvalue problem with variable coefficient:
+   -(Au')'=lambda u
+on an interval.
+
+Computes nre eigenpairs nearest a given target.
+
+"""
+import matplotlib.pyplot as plt
+from firedrake import *
+from firedrake.petsc import PETSc
+from firedrake.__future__ import interpolate
+from slepc4py import SLEPc
+import numpy as np
+
+def makedir(resultsdir='Results'):
+    """
+    Check that the directory resultsdir exists, and, if so, create a new subdirectory
+    for the output using the first available name from 000000, 000001, ...  Then return its name.
+    """
+    assert os.path.isdir(resultsdir), 'The subdirectory {} must exist in the current directory'.format(resultsdir)
+    id = 0
+    while os.path.exists(resultsdir + '/{:06d}'.format(id)):
+        id += 1
+    outdir = resultsdir + '/{:06d}'.format(id)
+    os.mkdir(outdir)
+    print('{:06d}'.format(id), flush=True)
+    return outdir
+    
+def eigen_solver(mesh,A,deg,nreq,target):
+    # Find the first nreq eigenpaires nearest the given target
+    V = FunctionSpace(mesh, "Lagrange", deg)
+    u = TrialFunction(V)
+    v = TestFunction(V)
+    b = A*dot(grad(u), grad(v))*dx
+    m = u*v*dx
+    uh = Function(V)
+    boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+    bc = DirichletBC(V, 0,boundary_ids)
+    B = assemble(b, bcs=bc)
+    M = assemble(m, bcs=bc, weight=0.)
+    Bsc, Msc = B.M.handle, M.M.handle
+    
+    # create SLEPc eigensolver
+    E = SLEPc.EPS().create()
+    E.setOperators(Bsc, Msc)
+    # Set problem type to be generalized Hermitian
+    E.setProblemType(SLEPc.EPS.ProblemType.GHEP)
+    E.setType(SLEPc.EPS.Type.KRYLOVSCHUR)
+    E.setDimensions(nreq)
+    # closest to target (in magnitude).
+    E.setWhichEigenpairs(SLEPc.EPS.Which.TARGET_MAGNITUDE)
+    # target -- determine the portion of the spectrum of interest
+    E.setTarget(target)
+    # set the spectral transform of the EPS to shift-and-invert
+    ST = E.getST()
+    ST.setType(SLEPc.ST.Type.SINVERT)
+    PC = ST.getKSP().getPC()
+    PC.setType("lu")
+    PC.setFactorSolverType("mumps")
+    E.setST(ST)
+    E.solve()
+    nconv = eps.getConverged()
+    print(f"computed {nconv} eigenvalues.")
+    return E, nconv, Bsc
+    
+def get_eigenpairs(E,nconv,Bsc,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile):
+    # get eigenpairs
+    eigenvalues = []
+    for i in range(nconv):
+        r = eps.getEigenvalue(i).real
+        #print("{:12.9f}".format(r))
+        eigenvalues.append(r)
+        # get eigenfunction
+        rxv, cxv = Bsc.getVecs()
+        r = eps.getEigenpair(i, rxv, cxv)
+        rx = rxv.array
+        # normalize eigenfunction so max = max magnitude = 1
+        rxmax = rx.max()
+        rxmin = rx.min()
+        if rxmax < -rxmin:
+            rx = rx/rxmin
+        else:
+            rx = rx/rxmax
+        eigenfun = Function(V)
+        eigenfun.vector().set_local(rx)
+        if i in plotefuns:
+            x = np.linspace(x0, x1, npts, endpoint=False)
+            y = eval_u(eigenfun, x)
+            plt.clf()
+            plt.plot(x, y, alpha=.75, linewidth=2)
+            plt.xlim([x0, x1])
+            plt.ylim([-1.1, 1.1])
+            plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+            print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+            plt.savefig(eigenfunplotfile.format(i), dpi=500)
+    
+    print("eigenvalues: ", eigenvalues)
+    np.savetxt(eigenvalfile, eigenvalues)
+    print("> eigenvalues written to {}".format(eigenvalfile))
+  
+    
+
+
+
