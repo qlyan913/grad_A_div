@@ -8,6 +8,7 @@ on an interval.
 Computes nre eigenpairs nearest a given target.
 
 """
+import os
 import matplotlib.pyplot as plt
 from firedrake import *
 from firedrake.petsc import PETSc
@@ -29,6 +30,19 @@ def makedir(resultsdir='Results'):
     print('{:06d}'.format(id), flush=True)
     return outdir
     
+def eval_u(u, pts):
+    """
+    evaluate finite element function at an array of points
+
+    input values:
+        u: finite element function
+        pts: array of points
+
+    return values:
+        vals: array of values of u
+    """
+    return np.array([u.at(x) for x in pts])
+
 def eigen_solver(mesh,A,deg,nreq,target):
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, "Lagrange", deg)
@@ -44,38 +58,38 @@ def eigen_solver(mesh,A,deg,nreq,target):
     Bsc, Msc = B.M.handle, M.M.handle
     
     # create SLEPc eigensolver
-    E = SLEPc.EPS().create()
-    E.setOperators(Bsc, Msc)
+    Eps = SLEPc.EPS().create()
+    Eps.setOperators(Bsc, Msc)
     # Set problem type to be generalized Hermitian
-    E.setProblemType(SLEPc.EPS.ProblemType.GHEP)
-    E.setType(SLEPc.EPS.Type.KRYLOVSCHUR)
-    E.setDimensions(nreq)
+    Eps.setProblemType(SLEPc.EPS.ProblemType.GHEP)
+    Eps.setType(SLEPc.EPS.Type.KRYLOVSCHUR)
+    Eps.setDimensions(nreq)
     # closest to target (in magnitude).
-    E.setWhichEigenpairs(SLEPc.EPS.Which.TARGET_MAGNITUDE)
+    Eps.setWhichEigenpairs(SLEPc.EPS.Which.TARGET_MAGNITUDE)
     # target -- determine the portion of the spectrum of interest
-    E.setTarget(target)
+    Eps.setTarget(target)
     # set the spectral transform of the EPS to shift-and-invert
-    ST = E.getST()
+    ST = Eps.getST()
     ST.setType(SLEPc.ST.Type.SINVERT)
     PC = ST.getKSP().getPC()
     PC.setType("lu")
     PC.setFactorSolverType("mumps")
-    E.setST(ST)
-    E.solve()
-    nconv = eps.getConverged()
+    Eps.setST(ST)
+    Eps.solve()
+    nconv = Eps.getConverged()
     print(f"computed {nconv} eigenvalues.")
-    return E, nconv, Bsc
+    return Eps, nconv, Bsc,V
     
-def get_eigenpairs(E,nconv,Bsc,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile):
     # get eigenpairs
     eigenvalues = []
     for i in range(nconv):
-        r = eps.getEigenvalue(i).real
+        r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
         eigenvalues.append(r)
         # get eigenfunction
         rxv, cxv = Bsc.getVecs()
-        r = eps.getEigenpair(i, rxv, cxv)
+        r = Eps.getEigenpair(i, rxv, cxv)
         rx = rxv.array
         # normalize eigenfunction so max = max magnitude = 1
         rxmax = rx.max()
@@ -88,7 +102,7 @@ def get_eigenpairs(E,nconv,Bsc,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunp
         eigenfun.vector().set_local(rx)
         if i in plotefuns:
             x = np.linspace(x0, x1, npts, endpoint=False)
-            y = eval_u(eigenfun, x)
+            y = eval_u(eigenfun,x)
             plt.clf()
             plt.plot(x, y, alpha=.75, linewidth=2)
             plt.xlim([x0, x1])
