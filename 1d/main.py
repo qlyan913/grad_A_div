@@ -2,7 +2,7 @@
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u
 """
-import os
+import os,math
 import matplotlib.pyplot as plt
 from firedrake import *
 from firedrake.petsc import PETSc
@@ -11,10 +11,10 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 8
-nelts=1024
-npts=6000
+nelts=100
+npts=600
 x0=0
-x1=1024
+x1=math.pi
 nreq=1000
 target=0
 plotefuns=0,10,20,50,100,200,300,400,500,600,700,800,900,999
