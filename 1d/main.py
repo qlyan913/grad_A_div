@@ -11,7 +11,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 8
-nelts=100
+nelts=500
 npts=2000
 x0=0
 x1=math.pi
@@ -25,6 +25,7 @@ outdir = makedir()
 coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
+eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
    
 mesh = IntervalMesh(nelts, x0, x1)
 aval=1
@@ -45,4 +46,4 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target)
-get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile)
+get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile)

@@ -43,6 +43,29 @@ def eval_u(u, pts):
     """
     return np.array([u.at(x) for x in pts])
 
+from PIL import Image
+def combine_images(columns, space, images,file):
+    rows = len(images) // columns
+    if len(images) % columns:
+        rows += 1
+    width_max = max([Image.open(image).width for image in images])
+    height_max = max([Image.open(image).height for image in images])
+    background_width = width_max*columns + (space*columns)-space
+    background_height = height_max*rows + (space*rows)-space
+    background = Image.new('RGBA', (background_width, background_height), (255, 255, 255, 255))
+    x = 0
+    y = 0
+    for i, image in enumerate(images):
+        img = Image.open(image)
+        x_offset = int((width_max-img.width)/2)
+        y_offset = int((height_max-img.height)/2)
+        background.paste(img, (x+x_offset, y+y_offset))
+        x += width_max + space
+        if (i+1) % columns == 0:
+            y += height_max + space
+            x = 0
+    background.save(file)
+
 def eigen_solver(mesh,A,deg,nreq,target):
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, "Lagrange", deg)
@@ -82,9 +105,10 @@ def eigen_solver(mesh,A,deg,nreq,target):
     print(f"computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile):
     # get eigenpairs
     eigenvalues = []
+    eigenf_imgs = []
     for i in range(nconv):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
@@ -112,12 +136,12 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
             plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
             print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
             plt.savefig(eigenfunplotfile.format(i), dpi=500)
-    
-    print("eigenvalues: ", eigenvalues)
+            eigenf_imgs.append(eigenfunplotfile.format(i))
+  
     np.savetxt(eigenvalfile, eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile))
-  
-    
+    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
+    print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
 
 
 
