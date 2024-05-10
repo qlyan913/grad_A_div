@@ -12,7 +12,7 @@ import numpy as np
 from solver import *
 deg = 8
 nelts=100
-npts=600
+npts=2000
 x0=0
 x1=math.pi
 nreq=1000

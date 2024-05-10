@@ -53,8 +53,10 @@ def eigen_solver(mesh,A,deg,nreq,target):
     uh = Function(V)
     boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
     bc = DirichletBC(V, 0,boundary_ids)
-    B = assemble(b, bcs=bc)
-    M = assemble(m, bcs=bc, weight=0.)
+  #  B = assemble(b, bcs=bc)
+  #  M = assemble(m, bcs=bc, weight=0.)
+    B = assemble(b)
+    M = assemble(m)
     Bsc, Msc = B.M.handle, M.M.handle
     
     # create SLEPc eigensolver
