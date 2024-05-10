@@ -2,7 +2,7 @@
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u
 """
-import os,math
+import os,math, json
 import matplotlib.pyplot as plt
 from firedrake import *
 from firedrake.petsc import PETSc
@@ -18,7 +18,9 @@ x1=math.pi
 nreq=1000
 target=0
 plotefuns=0,10,20,50,100,200,300,400,500,600,700,800,900,999
-
+bctype='neumann' # dirichlet or neumann
+coeftype='constant'
+params=''
 # create directory and filenames for output
 outdir = makedir()
 # filenames
@@ -26,7 +28,26 @@ coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
-   
+paramfile = outdir+ '/'+'Parameter.json'
+
+# write parameters to file
+# store parameters in dictionary
+runparameters = {
+    'bctype': bctype,
+    'deg': deg,
+    'nelts': nelts,
+    'npts': npts,
+    'params': params,
+    'coeftype': coeftype,
+    'x0': x0,
+    'x1': x1,
+    }
+paramf = open(paramfile, 'w')
+json.dump(runparameters, paramf, indent=4)
+paramf.write('\n')
+paramf.close()
+print("> run parameters written to {}".format(paramfile))
+
 mesh = IntervalMesh(nelts, x0, x1)
 aval=1
 aexpr = Constant(aval)
@@ -45,5 +66,5 @@ plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
-EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target)
+EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype)
 get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile)

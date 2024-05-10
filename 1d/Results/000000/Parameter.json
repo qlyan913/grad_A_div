@@ -1,0 +1,10 @@
+{
+    "bctype": "dirichlet",
+    "deg": 8,
+    "nelts": 500,
+    "npts": 2000,
+    "params": "",
+    "coeftype": "constant",
+    "x0": 0,
+    "x1": 3.141592653589793
+}

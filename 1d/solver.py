@@ -27,7 +27,7 @@ def makedir(resultsdir='Results'):
         id += 1
     outdir = resultsdir + '/{:06d}'.format(id)
     os.mkdir(outdir)
-    print('{:06d}'.format(id), flush=True)
+    print('> subdirectory name:{:06d}'.format(id), flush=True)
     return outdir
     
 def eval_u(u, pts):
@@ -66,7 +66,7 @@ def combine_images(columns, space, images,file):
             x = 0
     background.save(file)
 
-def eigen_solver(mesh,A,deg,nreq,target):
+def eigen_solver(mesh,A,deg,nreq,target,bctype):
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, "Lagrange", deg)
     u = TrialFunction(V)
@@ -74,14 +74,15 @@ def eigen_solver(mesh,A,deg,nreq,target):
     b = A*dot(grad(u), grad(v))*dx
     m = u*v*dx
     uh = Function(V)
-    boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
-    bc = DirichletBC(V, 0,boundary_ids)
-  #  B = assemble(b, bcs=bc)
-  #  M = assemble(m, bcs=bc, weight=0.)
-    B = assemble(b)
-    M = assemble(m)
+    if bctype == 'dirichlet':
+       boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+       bc = DirichletBC(V, 0,boundary_ids)
+       B = assemble(b, bcs=bc)
+       M = assemble(m, bcs=bc, weight=0.)
+    else:    
+       B = assemble(b)
+       M = assemble(m)
     Bsc, Msc = B.M.handle, M.M.handle
-    
     # create SLEPc eigensolver
     Eps = SLEPc.EPS().create()
     Eps.setOperators(Bsc, Msc)
@@ -102,7 +103,7 @@ def eigen_solver(mesh,A,deg,nreq,target):
     Eps.setST(ST)
     Eps.solve()
     nconv = Eps.getConverged()
-    print(f"computed {nconv} eigenvalues.")
+    print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
 def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile):
