@@ -1,7 +1,7 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on [x0,x1]
-Here, we consider the 1d random displacment model:
+Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
    f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]
@@ -19,12 +19,12 @@ deg = 8
 nelts=1000
 npts=3000
 x0=0
-x1=10
+x1=100
 nreq=1000
 target=0
-plotefuns=0,10,20,50,100,200,300,400,500,600,700,800,900,999
+plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
 bctype='neumann' # dirichlet or neumann
-coeftype='constant'
+coeftype='1d random displacement'
 params=''
 # create directory and filenames for output
 outdir = makedir()
