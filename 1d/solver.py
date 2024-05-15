@@ -145,4 +145,14 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
     print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
 
 
-
+def plot_coeff(x0,x1,A,npts,filename):
+    # evaluate coefficient, save to file and plot
+    plt.clf()
+    print("> evaluating coefficient")
+    pts = np.linspace(x0, x1, npts, endpoint=True)
+    avals = eval_u(A,pts)
+    plt.plot(pts, avals, alpha=.75, linewidth=2)
+    plt.xlim([x0, x1])
+    plt.title('coefficient')
+    plt.savefig(coefplotfile, dpi=500)
+    print("> coefficient plotted to {}".format(filename))
