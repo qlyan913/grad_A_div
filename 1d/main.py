@@ -58,12 +58,15 @@ x , = SpatialCoordinate(mesh)
 # define coefficient A
 dmax=0.2
 s=0.25
-nn=x1-x0+1
+nn=x1-x0-1
 d=-dmax+np.random.rand(nn)*(2*dmax)
-f= conditional(abs(x-2)>s,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
-aexpr=f
+f_sum=0.0
+for i in range(nn):
+   x_center=i+1+dn[i]
+   f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
+aexpr=1./(1+f_sum)
 aelt='CG'
-adeg=1
+adeg=3
 #aval=1
 #aexpr = Constant(aval)
 #aelt = 'DG'
