@@ -4,7 +4,7 @@
     "nelts": 1000,
     "npts": 3000,
     "params": "",
-    "coeftype": "constant",
+    "coeftype": "1d random displacement",
     "x0": 0,
     "x1": 10
 }
