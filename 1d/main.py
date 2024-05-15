@@ -57,10 +57,10 @@ mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
 dmax=1/5.
-s=4.
+s=1/4.
 nn=x1-x0+1
 d=-dmax+np.random.rand(nn)*(2*dmax)
-f= conditional(abs(x)>s,0,6/8*x*(1-x**2/s**2)**3-6/(8*s**2)*x*(1-x**2/s**2)**2*(3*x**2+1))
+f= conditional(abs(x-2)>s,0,6/8*x*(1-x**2/s**2)**3-6/(8*s**2)*x*(1-x**2/s**2)**2*(3*x**2+1))
 aexpr=f
 aelt='CG'
 adeg=3
