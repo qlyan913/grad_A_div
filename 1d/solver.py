@@ -115,7 +115,8 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
         #print("{:12.9f}".format(r))
         eigenvalues.append(r)
         # get eigenfunction
-        rxv, cxv = Bsc.getVecs()
+        rxv, _ = Bsc.getVecs()
+        cxv, _ = Bsc.getVecs()
         r = Eps.getEigenpair(i, rxv, cxv)
         rx = rxv.array
         # normalize eigenfunction so max = max magnitude = 1
