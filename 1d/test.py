@@ -42,7 +42,7 @@ x1=10
 fsumplotfile="test_figs/fsum.png"
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
-nn=x1-x0
+nn=x1-x0-1
 d=-dmax+np.random.rand(nn)*(2*dmax)
 f_sum=0.0
 for i in range(nn):
