@@ -25,7 +25,7 @@ dmax=0.2
 s=0.25
 fexpr= conditional(abs(x)>s,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
 aelt='CG'
-adeg=1
+adeg=3
 F = assemble(interpolate(fexpr, FunctionSpace(mesh, aelt, adeg)))
 plt.clf()
 print("> evaluating f")
@@ -40,6 +40,7 @@ print("> f plotted to {}".format(fplotfile))
 x0=0
 x1=10
 fsumplotfile="test_figs/fsum.png"
+coefplotfile="test_figs/coeff.png"
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 nn=x1-x0-1
@@ -48,7 +49,7 @@ f_sum=0.0
 for i in range(nn):
    f_sum=f_sum + conditional(abs(x-(i+1))>s,0,6/8*(x-(i+1))*(1-pow(x-(i+1),2)/pow(s,2))**3-6/(8*pow(s,2))*(x-(i+1))*(1-pow(x-(i+1),2)/pow(s,2))**2*(3*pow(x-(i+1),2)+1))
 aelt='CG'
-adeg=1
+adeg=3
 F = assemble(interpolate(f_sum, FunctionSpace(mesh, aelt, adeg)))
 plt.clf()
 print("> evaluating f sum")
@@ -58,3 +59,15 @@ plt.plot(pts, avals, alpha=.75, linewidth=2)
 plt.xlim([x0, x1])
 plt.savefig(fsumplotfile, dpi=500)
 print("> f sum plotted to {}".format(fsumplotfile))
+
+aexpr=1./(1+f_sum)
+A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
+plt.clf()
+print("> evaluating coeff")
+pts = np.linspace(x0, x1, npts, endpoint=True)
+avals = eval_u(A,pts)
+plt.plot(pts, avals, alpha=.75, linewidth=2)
+plt.xlim([x0, x1])
+plt.savefig(coefplotfile, dpi=500)
+print("> f sum plotted to {}".format(coefplotfile))
+
