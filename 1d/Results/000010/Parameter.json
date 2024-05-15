@@ -1,0 +1,10 @@
+{
+    "bctype": "neumann",
+    "deg": 8,
+    "nelts": 1000,
+    "npts": 3000,
+    "params": "",
+    "coeftype": "constant",
+    "x0": 0,
+    "x1": 10
+}
