@@ -141,7 +141,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
   
     np.savetxt(eigenvalfile, eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile))
-    combine_images(columns=10, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
+    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
     print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
 
 
