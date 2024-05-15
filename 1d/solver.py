@@ -121,9 +121,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
         # get eigenfunction
         rxv, _ = Bsc.getVecs()
         cxv, _ = Bsc.getVecs()
-        eigenfun = Function(V)
-        with eigenfun.dat.vec_wo as rxv:
-           r = Eps.getEigenpair(i, rxv, cxv)
+        r = Eps.getEigenpair(i, rxv, cxv)
         rx = rxv.array
         # normalize eigenfunction so max = max magnitude = 1
         rxmax = rx.max()
@@ -132,8 +130,8 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
             rx = rx/rxmin
         else:
             rx = rx/rxmax
-#        eigenfun = Function(V)
-#        eigenfun.vector().set_local(rx)
+        eigenfun = Function(V)
+        eigenfun.vector().set_local(rx)
         if i in plotefuns:
             x = np.linspace(x0, x1, npts, endpoint=False)
             y = eval_u(eigenfun,x)
