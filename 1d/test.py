@@ -44,10 +44,11 @@ coefplotfile="test_figs/coeff.png"
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 nn=x1-x0-1
-d=-dmax+np.random.rand(nn)*(2*dmax)
+dn=-dmax+np.random.rand(nn)*(2*dmax)
 f_sum=0.0
 for i in range(nn):
-   f_sum=f_sum + conditional(abs(x-(i+1))>s,0,6/8*(x-(i+1))*(1-pow(x-(i+1),2)/pow(s,2))**3-6/(8*pow(s,2))*(x-(i+1))*(1-pow(x-(i+1),2)/pow(s,2))**2*(3*pow(x-(i+1),2)+1))
+   x_center=i+1+dn[i]
+   f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
 aelt='CG'
 adeg=3
 F = assemble(interpolate(f_sum, FunctionSpace(mesh, aelt, adeg)))
