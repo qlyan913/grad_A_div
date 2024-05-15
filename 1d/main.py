@@ -1,7 +1,7 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on [x0,x1]
-Here, we consider the 1d random displacment mode:
+Here, we consider the 1d random displacment model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
    f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]

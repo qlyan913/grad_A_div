@@ -1,7 +1,5 @@
 """
-Solve the eigenvalue problem with variable coefficient:
-   -(Au')'=lambda u on [x0,x1]
-Here, we consider the 1d random displacment mode:
+   Plot the coefficient function:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
    f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]
@@ -15,56 +13,29 @@ from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
 from solver import *
-deg = 8
-nelts=1000
-npts=3000
-x0=0
-x1=10
-nreq=1000
-target=0
-plotefuns=0,10,20,50,100,200,300,400,500,600,700,800,900,999
-bctype='neumann' # dirichlet or neumann
-coeftype='constant'
-params=''
-# create directory and filenames for output
-outdir = makedir()
-# filenames
-coefplotfile = outdir + '/' + 'coefficient.png'
-eigenvalfile = outdir + '/' + 'eigenvalues.txt'
-eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
-eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
-paramfile = outdir+ '/'+'Parameter.json'
-
-# write parameters to file
-# store parameters in dictionary
-runparameters = {
-    'bctype': bctype,
-    'deg': deg,
-    'nelts': nelts,
-    'npts': npts,
-    'params': params,
-    'coeftype': coeftype,
-    'x0': x0,
-    'x1': x1,
-    }
-paramf = open(paramfile, 'w')
-json.dump(runparameters, paramf, indent=4)
-paramf.write('\n')
-paramf.close()
-print("> run parameters written to {}".format(paramfile))
-
+nelts=400
+npts=1000
+x0=-0.6
+x1=0.6
+# plot of  f
+fplotfile="test_figs/f.png"
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
-# define coefficient A
 dmax=0.2
-s=1
-f= conditional(abs(x-0.5)>s,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
-aexpr=f
+s=0.25
+f= conditional(abs(x)>s,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
+fexpr=f
 aelt='CG'
 adeg=1
-#aval=1
-#aexpr = Constant(aval)
-#aelt = 'DG'
-#adeg = 0
-A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
-plot_coeff(x0,x1,A,npts,coefplotfile)
+F = assemble(interpolate(fexpr, FunctionSpace(mesh, aelt, adeg)))
+plt.clf()
+print("> evaluating f")
+pts = np.linspace(x0, x1, npts, endpoint=True)
+avals = eval_u(F,pts)
+plt.plot(pts, avals, alpha=.75, linewidth=2)
+plt.xlim([x0, x1])
+plt.savefig(fplotfile, dpi=500)
+print("> f plotted to {}".format(fplotfile))
+
+nn=x1-x0+1
+d=-dmax+np.random.rand(nn)*(2*dmax)
