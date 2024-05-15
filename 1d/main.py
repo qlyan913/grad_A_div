@@ -1,6 +1,11 @@
 """
 Solve the eigenvalue problem with variable coefficient:
-   -(Au')'=lambda u
+   -(Au')'=lambda u on [x0,x1]
+Here, we consider the 1d random displacment mode:
+   A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
+   f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
+   dn uniform distribution on [-dmax,dmax]
+   We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
 import os,math, json
 import matplotlib.pyplot as plt
@@ -11,10 +16,10 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 8
-nelts=500
-npts=2000
+nelts=1000
+npts=3000
 x0=0
-x1=math.pi
+x1=10
 nreq=1000
 target=0
 plotefuns=0,10,20,50,100,200,300,400,500,600,700,800,900,999
@@ -49,10 +54,20 @@ paramf.close()
 print("> run parameters written to {}".format(paramfile))
 
 mesh = IntervalMesh(nelts, x0, x1)
-aval=1
-aexpr = Constant(aval)
-aelt = 'DG'
-adeg = 0
+x , = SpatialCoordinate(mesh)
+# define coefficient A
+dmax=1/5.
+s=4.
+nn=x1-x0+1
+d=-dmax+np.random.rand(nn)*(2*dmax)
+f= conditional(abs(x)>s,0,6/8*x*(1-x**2/s**2)**3-6/(8*s**2)*x*(1-x**2/s**2)**2*(3*x**2+1))
+aexpr=f
+aelt='CG'
+adeg=3
+#aval=1
+#aexpr = Constant(aval)
+#aelt = 'DG'
+#adeg = 0
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()
