@@ -56,8 +56,8 @@ print("> run parameters written to {}".format(paramfile))
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
-dmax=1/5.
-s=1/4.
+dmax=0.2
+s=1.0
 nn=x1-x0+1
 d=-dmax+np.random.rand(nn)*(2*dmax)
 f= conditional(abs(x-2)>s,0,6/8*x*(1-x**2/s**2)**3-6/(8*s**2)*x*(1-x**2/s**2)**2*(3*x**2+1))
