@@ -16,8 +16,8 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 8
-nelts=2000
-npts=4000
+nelts=1000
+npts=3000
 x0=0
 x1=100
 nreq=1000
