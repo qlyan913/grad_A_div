@@ -154,5 +154,5 @@ def plot_coeff(x0,x1,A,npts,filename):
     plt.plot(pts, avals, alpha=.75, linewidth=2)
     plt.xlim([x0, x1])
     plt.title('coefficient')
-    plt.savefig(coefplotfile, dpi=500)
+    plt.savefig(filename, dpi=500)
     print("> coefficient plotted to {}".format(filename))
