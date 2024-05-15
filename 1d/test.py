@@ -58,7 +58,7 @@ x , = SpatialCoordinate(mesh)
 # define coefficient A
 dmax=0.2
 s=1
-f= conditional(abs(x)>s,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
+f= conditional(abs(x)>s+1,0,6/8*x*(1-pow(x,2)/pow(s,2))**3-6/(8*pow(s,2))*x*(1-pow(x,2)/pow(s,2))**2*(3*x**2+1))
 aexpr=f
 aelt='CG'
 adeg=1
