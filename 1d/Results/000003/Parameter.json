@@ -1,6 +1,6 @@
 {
-    "bctype": "neumann",
-    "deg": 8,
+    "bctype": "dirichlet",
+    "deg": 5,
     "nelts": 1000,
     "npts": 3000,
     "params": "",
