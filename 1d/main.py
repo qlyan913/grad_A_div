@@ -24,7 +24,7 @@ nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
 #plotefuns=[int(d) for d in range(20)]
-bctype='dirichlet' # dirichlet or neumann
+bctype='neumann' # dirichlet or neumann
 coeftype='1d random displacement'
 params=''
 # create directory and filenames for output
