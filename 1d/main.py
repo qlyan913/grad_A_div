@@ -15,8 +15,8 @@ from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
 from solver import *
-deg = 8
-nelts=3000
+deg = 5
+nelts=1000
 npts=3000
 x0=0
 x1=10
