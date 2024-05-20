@@ -1,10 +1,9 @@
 {
-    "bctype": "neumann",
+    "bctype": "periodic",
     "deg": 5,
     "nelts": 1000,
     "npts": 5000,
     "params": "",
     "coeftype": "1d random displacement",
-    "x0": 0,
-    "x1": 10
+    "witdth": 10
 }
