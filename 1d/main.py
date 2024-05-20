@@ -67,7 +67,7 @@ for i in range(nn):
    f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
 aexpr=1./(1+f_sum)
 aelt='CG'
-adeg=3
+adeg=6
 #aval=1
 #aexpr = Constant(aval)
 #aelt = 'DG'
