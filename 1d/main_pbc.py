@@ -59,7 +59,7 @@ x , = SpatialCoordinate(mesh)
 # define coefficient A
 dmax=0.2
 s=0.25
-nn=x1-x0
+nn=x1-x0-1
 dn=-dmax+np.random.rand(nn)*(2*dmax)
 f_sum=0.0
 for i in range(nn):

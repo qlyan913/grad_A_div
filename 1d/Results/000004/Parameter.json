@@ -5,5 +5,5 @@
     "npts": 5000,
     "params": "",
     "coeftype": "1d random displacement",
-    "witdth": 10
+    "witdth": 100
 }
