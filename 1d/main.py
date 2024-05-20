@@ -19,7 +19,7 @@ deg = 5
 nelts=1000
 npts=5000
 x0=0
-x1=10
+x1=100
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
@@ -57,7 +57,7 @@ print("> run parameters written to {}".format(paramfile))
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
-dmax=0 #0.2
+dmax=0
 s=0.25
 nn=x1-x0-1
 dn=-dmax+np.random.rand(nn)*(2*dmax)
