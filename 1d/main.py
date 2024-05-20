@@ -17,7 +17,7 @@ import numpy as np
 from solver import *
 deg = 5
 nelts=1000
-npts=3000
+npts=5000
 x0=0
 x1=100
 nreq=1000
