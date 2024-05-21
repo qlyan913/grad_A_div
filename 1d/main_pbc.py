@@ -16,8 +16,8 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=1000
-npts=5000
+nelts=3000
+npts=6000
 x0=0
 x1=100
 width=x1-x0
