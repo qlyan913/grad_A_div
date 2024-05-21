@@ -19,7 +19,7 @@ deg = 5
 nelts=3000
 npts=6000
 x0=0
-x1=100
+x1=200
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,999
@@ -71,8 +71,8 @@ else:
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
-      #f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-      f_sum=f_sum + conditional(abs(x-x_center)>s,0,(1-pow(x-x_center,2)/pow(s,2))**3*(3*pow(x-x_center,2)+1))
+      f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
+     # f_sum=f_sum + conditional(abs(x-x_center)>s,0,(1-pow(x-x_center,2)/pow(s,2))**3*(3*pow(x-x_center,2)+1))
    aexpr=1./(1+f_sum)
    aelt='CG'
    adeg=6
