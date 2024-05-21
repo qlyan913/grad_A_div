@@ -19,10 +19,10 @@ deg = 5
 nelts=3000
 npts=4*nelts
 x0=0
-x1=10
+x1=200
 nreq=1000
 target=0
-plotefuns=0,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,999
+plotefuns=0,10,20,30,40,50,60,70,80,100,200,300,400,500,600,700,800,900,999
 #plotefuns=[int(d) for d in range(30)]
 bctype='dirichlet' # dirichlet or neumann
 coeftype='1d random displacement'
@@ -91,4 +91,4 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype)
-get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile)
+get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,coefplotfile)

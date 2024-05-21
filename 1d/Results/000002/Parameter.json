@@ -6,5 +6,5 @@
     "params": "",
     "coeftype": "1d random displacement",
     "x0": 0,
-    "x1": 10
+    "x1": 200
 }

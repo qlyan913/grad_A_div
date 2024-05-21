@@ -110,10 +110,11 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,coefplotfile):
     # get eigenpairs
     eigenvalues = []
     eigenf_imgs = []
+    eigenf_imgs.append(coefplotfile)
     for i in range(nconv):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
