@@ -16,8 +16,8 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=3000
-npts=5*nelts
+nelts=4000
+npts=3*nelts
 x0=0
 x1=200
 nreq=1000
@@ -75,7 +75,7 @@ else:
      # f_sum=f_sum + conditional(abs(x-x_center)>s,0,(1-pow(x-x_center,2)/pow(s,2))**3*(3*pow(x-x_center,2)+1))
    aexpr=1./(1+f_sum)
    aelt='CG'
-   adeg=6
+   adeg=5
 
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
