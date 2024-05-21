@@ -51,9 +51,13 @@ for i in range(nn):
    x_center=i+1+dn[i]
    #f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
    f_sum=f_sum+ conditional(abs(x-x_center)>s,0,(1-pow(x-x_center,2)/pow(s,2))**3*(3*pow(x-x_center,2)+1))
-aelt='CG'
-adeg=3
 F = assemble(interpolate(f_sum, FunctionSpace(mesh, aelt, adeg)))
+aelt='CG'
+adeg=5
+#for i in range(nn):
+#   x_center=i+1+dn[i]
+#   f=conditional(abs(x-x_center)>s,0,(1-pow(x-x_center,2)/pow(s,2))**3*(3*pow(x-x_center,2)+1))
+#   F = F +  assemble(interpolate(f, FunctionSpace(mesh, aelt, adeg)))
 plt.clf()
 print("> evaluating f sum")
 pts = np.linspace(x0, x1, npts, endpoint=True)
