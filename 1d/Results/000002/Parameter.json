@@ -1,8 +1,8 @@
 {
-    "bctype": "neumann",
+    "bctype": "dirichlet",
     "deg": 5,
     "nelts": 3000,
-    "npts": 6000,
+    "npts": 12000,
     "params": "",
     "coeftype": "1d random displacement",
     "x0": 0,

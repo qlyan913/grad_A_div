@@ -141,7 +141,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
             plt.ylim([-1.1, 1.1])
             plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
             print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
-            plt.savefig(eigenfunplotfile.format(i), dpi=500)
+            plt.savefig(eigenfunplotfile.format(i), dpi=300)
             eigenf_imgs.append(eigenfunplotfile.format(i))
   
     np.savetxt(eigenvalfile, eigenvalues)
@@ -159,5 +159,5 @@ def plot_coeff(x0,x1,A,npts,filename):
     plt.plot(pts, avals, alpha=.75, linewidth=2)
     plt.xlim([x0, x1])
     plt.title('coefficient')
-    plt.savefig(filename, dpi=500)
+    plt.savefig(filename, dpi=300)
     print("> coefficient plotted to {}".format(filename))

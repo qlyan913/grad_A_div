@@ -16,10 +16,10 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=4000
-npts=5*nelts
+nelts=3000
+npts=4*nelts
 x0=0
-x1=200
+x1=10
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,999
