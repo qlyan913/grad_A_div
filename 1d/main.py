@@ -19,13 +19,14 @@ deg = 5
 nelts=3000
 npts=6000
 x0=0
-x1=100
+x1=2*math.pi
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,999
 #plotefuns=[int(d) for d in range(30)]
-bctype='neumann' # dirichlet or neumann
-coeftype='1d random displacement'
+bctype='dirichlet' # dirichlet or neumann
+#coeftype='1d random displacement'
+coeftype='constant'
 params=''
 # create directory and filenames for output
 outdir = makedir()
@@ -57,21 +58,24 @@ print("> run parameters written to {}".format(paramfile))
 mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
-dmax=0.2
-s=0.25
-nn=x1-x0-1
-dn=-dmax+np.random.rand(nn)*(2*dmax)
-f_sum=0.0
-for i in range(nn):
-   x_center=i+1+dn[i]
-   f_sum=f_sum + 0.5*conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-aexpr=1./(1+f_sum)
-aelt='CG'
-adeg=6
-#aval=1
-#aexpr = Constant(aval)
-#aelt = 'DG'
-#adeg = 0
+if coeftype=='constant':
+   aval=1
+   aexpr = Constant(aval)
+   aelt = 'DG'
+   adeg = 0
+else:
+   dmax=0.2
+   s=0.25
+   nn=x1-x0-1
+   dn=-dmax+np.random.rand(nn)*(2*dmax)
+   f_sum=0.0
+   for i in range(nn):
+      x_center=i+1+dn[i]
+      f_sum=f_sum + 0.5*conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
+   aexpr=1./(1+f_sum)
+   aelt='CG'
+   adeg=6
+
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()

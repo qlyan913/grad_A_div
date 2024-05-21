@@ -1,10 +1,10 @@
 {
-    "bctype": "neumann",
-    "deg": 8,
-    "nelts": 500,
-    "npts": 2000,
+    "bctype": "dirichlet",
+    "deg": 5,
+    "nelts": 3000,
+    "npts": 6000,
     "params": "",
     "coeftype": "constant",
     "x0": 0,
-    "x1": 3.141592653589793
+    "x1": 6.283185307179586
 }
