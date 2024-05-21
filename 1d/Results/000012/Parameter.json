@@ -2,7 +2,7 @@
     "bctype": "dirichlet",
     "deg": 5,
     "nelts": 4000,
-    "npts": 12000,
+    "npts": 20000,
     "params": "",
     "coeftype": "1d random displacement",
     "x0": 0,
