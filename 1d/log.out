@@ -1,0 +1,33 @@
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+> subdirectory name:000008
+> run parameters written to Results/000008/Parameter.json
+> evaluating coefficient
+> coefficient plotted to Results/000008/coefficient.png
+> computed 1101 eigenvalues.
+> eigenfunction 0 plotted to Results/000008/eigenfun00000.png
+> eigenfunction 10 plotted to Results/000008/eigenfun00010.png
+> eigenfunction 20 plotted to Results/000008/eigenfun00020.png
+> eigenfunction 30 plotted to Results/000008/eigenfun00030.png
+> eigenfunction 40 plotted to Results/000008/eigenfun00040.png
+> eigenfunction 50 plotted to Results/000008/eigenfun00050.png
+> eigenfunction 60 plotted to Results/000008/eigenfun00060.png
+> eigenfunction 70 plotted to Results/000008/eigenfun00070.png
+> eigenfunction 80 plotted to Results/000008/eigenfun00080.png
+> eigenfunction 90 plotted to Results/000008/eigenfun00090.png
+> eigenfunction 100 plotted to Results/000008/eigenfun00100.png
+> eigenfunction 150 plotted to Results/000008/eigenfun00150.png
+> eigenfunction 200 plotted to Results/000008/eigenfun00200.png
+> eigenfunction 250 plotted to Results/000008/eigenfun00250.png
+> eigenfunction 300 plotted to Results/000008/eigenfun00300.png
+> eigenfunction 350 plotted to Results/000008/eigenfun00350.png
+> eigenfunction 400 plotted to Results/000008/eigenfun00400.png
+> eigenfunction 450 plotted to Results/000008/eigenfun00450.png
+> eigenfunction 500 plotted to Results/000008/eigenfun00500.png
+> eigenfunction 550 plotted to Results/000008/eigenfun00550.png
+> eigenfunction 600 plotted to Results/000008/eigenfun00600.png
+> eigenfunction 700 plotted to Results/000008/eigenfun00700.png
+> eigenfunction 800 plotted to Results/000008/eigenfun00800.png
+> eigenfunction 900 plotted to Results/000008/eigenfun00900.png
+> eigenfunction 999 plotted to Results/000008/eigenfun00999.png
+> eigenvalues written to Results/000008/eigenvalues.txt
+> eigenfunction montage written to Results/000008/eigenfunmontage.png

@@ -16,10 +16,10 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=4000
-npts=4*nelts
+nelts=4000   # number of elements on interval
+npts=4*nelts # for plotting functions
 x0=0
-x1=200
+x1=400
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
