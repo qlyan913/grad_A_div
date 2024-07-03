@@ -19,11 +19,11 @@ deg = 5
 nelts=4000   # number of elements on interval
 npts=4*nelts # for plotting functions
 x0=0
-x1=400
+x1=200
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
-#plotefuns=[int(d) for d in range(30)]
+plotefuns_2=[int(d) for d in range(150,200)]
 bctype='dirichlet' # dirichlet or neumann
 coeftype='1d random displacement'
 dmax=0.2
@@ -37,6 +37,7 @@ coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
+eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 paramfile = outdir+ '/'+'Parameter.json'
 
 # write parameters to file
@@ -93,4 +94,4 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype)
-get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile)
+get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2)

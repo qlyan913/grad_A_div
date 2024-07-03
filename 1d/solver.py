@@ -110,10 +110,11 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2):
     # get eigenpairs
     eigenvalues = []
     eigenf_imgs = []
+    eigenf_imgs_2 = []
     for i in range(nconv):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
@@ -143,12 +144,26 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigen
             print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
             plt.savefig(eigenfunplotfile.format(i), dpi=300)
             eigenf_imgs.append(eigenfunplotfile.format(i))
-  
+        
+        if i in plotefuns_2:
+            x = np.linspace(x0, x1, npts, endpoint=False)
+            y = eval_u(eigenfun,x)
+            plt.clf()
+            plt.plot(x, y, alpha=.75, linewidth=2)
+            plt.xlim([x0, x1])
+            plt.ylim([-1.1, 1.1])
+            plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+            print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+            plt.savefig(eigenfunplotfile.format(i), dpi=300)
+            eigenf_imgs_2.append(eigenfunplotfile.format(i))
+
     np.savetxt(eigenvalfile, eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile))
     combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
     print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
-
+    combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
+    print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
+  
 
 def plot_coeff(x0,x1,A,npts,filename):
     # evaluate coefficient, save to file and plot
