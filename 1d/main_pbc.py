@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=3000
+nelts=2000
 npts=6000
 x0=0
 x1=100
@@ -24,17 +24,18 @@ width=x1-x0
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
-#plotefuns=[int(d) for d in range(20)]
-bctype='periodic' 
-coeftype='1d random displacement'
+plotefuns_2=[int(d) for d in range(20)]
+bctype='periodic'
+coeftype='constant' #'1d random displacement'
 params=''
 # create directory and filenames for output
-outdir = makedir()
+outdir = makedir('Results_per')
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
+eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 paramfile = outdir+ '/'+'Parameter.json'
 
 # write parameters to file
@@ -57,21 +58,23 @@ print("> run parameters written to {}".format(paramfile))
 mesh = PeriodicIntervalMesh(nelts,width)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
-dmax=0.2
-s=0.25
-nn=x1-x0-1
-dn=-dmax+np.random.rand(nn)*(2*dmax)
-f_sum=0.0
-for i in range(nn):
-   x_center=i+1+dn[i]
-   f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-aexpr=1./(1+f_sum)
-aelt='CG'
-adeg=6
-#aval=1
-#aexpr = Constant(aval)
-#aelt = 'DG'
-#adeg = 0
+if coeftype == 'constant':
+   aval=1
+   aexpr = Constant(aval)
+   aelt = 'DG'
+   adeg = 0
+else:
+   dmax=0.2
+   s=0.25
+   nn=x1-x0-1
+   dn=-dmax+np.random.rand(nn)*(2*dmax)
+   f_sum=0.0
+   for i in range(nn):
+      x_center=i+1+dn[i]
+      f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
+   aexpr=1./(1+f_sum)
+   aelt='CG'
+   adeg=5
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()
@@ -86,4 +89,4 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype)
-get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile)
+get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2)
