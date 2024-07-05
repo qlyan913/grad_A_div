@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=2000
+nelts=101
 npts=6000
 x0=0
 x1=100
@@ -26,7 +26,7 @@ target=0
 plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 bctype='periodic'
-coeftype='constant' #'1d random displacement'
+coeftype='pw_2constant' #'constant' #'1d random displacement'
 params=''
 # create directory and filenames for output
 outdir = makedir('Results_per')
@@ -63,6 +63,22 @@ if coeftype == 'constant':
    aexpr = Constant(aval)
    aelt = 'DG'
    adeg = 0
+elif coeftype == 'pw_2constant':
+   # pw constants alternately equal to a0 or a1
+   nc=nelts
+   a0=1
+   a1=10
+   aval=np.zeros(nc)
+   for i in range(nc):
+       if i % 2 ==0:
+          aval[i]=a0
+       else:
+          aval[i]=a1
+   aelt = 'DG'
+   adeg=0
+   # create pw constant with nc pieces
+   aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
+   aexpr.vector().set_local(aval)
 else:
    dmax=0.2
    s=0.25
