@@ -26,7 +26,7 @@ target=0
 plotefuns=0,10,20,30,40,50,100,200,300,400,500,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 bctype='periodic'
-coeftype='pw_2constant' #'constant' #'1d random displacement'
+coeftype='random displacement ' # 'pw_2constant' #'constant' #'1d random displacement'
 params=''
 # create directory and filenames for output
 outdir = makedir('Results_per')
@@ -84,7 +84,7 @@ else:
    s=0.25
    nn=x1-x0-1
    #dn=-dmax+np.random.rand(nn)*(2*dmax)
-   dn=np.zeros(nc)
+   dn=np.zeros(nn)
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
