@@ -1,0 +1,9 @@
+{
+    "bctype": "periodic",
+    "deg": 5,
+    "nelts": 3000,
+    "npts": 6000,
+    "params": "",
+    "coeftype": "pw_2constant",
+    "witdth": 100
+}

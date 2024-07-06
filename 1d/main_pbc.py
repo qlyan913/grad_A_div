@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=101
+nelts=3000
 npts=6000
 x0=0
 x1=100
@@ -83,7 +83,8 @@ else:
    dmax=0.2
    s=0.25
    nn=x1-x0-1
-   dn=-dmax+np.random.rand(nn)*(2*dmax)
+   #dn=-dmax+np.random.rand(nn)*(2*dmax)
+   dn=np.zeros(nc)
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
