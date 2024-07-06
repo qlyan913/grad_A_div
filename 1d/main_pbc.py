@@ -17,7 +17,7 @@ import numpy as np
 from solver import *
 deg = 5
 nelts=3000
-npts=6000
+npts=9000
 x0=0
 x1=100
 width=x1-x0
@@ -91,7 +91,7 @@ else:
       f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
    aexpr=1./(1+f_sum)
    aelt='CG'
-   adeg=5
+   adeg=7
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()
