@@ -83,8 +83,8 @@ else:
    dmax=0.2
    s=0.25
    nn=x1-x0-1
-   #dn=-dmax+np.random.rand(nn)*(2*dmax)
-   dn=np.zeros(nn)
+   dn=-dmax+np.random.rand(nn)*(2*dmax)
+   #dn=np.zeros(nn)
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
