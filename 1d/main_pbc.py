@@ -19,7 +19,7 @@ deg = 5
 nelts=3000
 npts=9000
 x0=0
-x1=100
+x1=10
 width=x1-x0
 nreq=1000
 target=0
@@ -83,8 +83,8 @@ else:
    dmax=0.2
    s=0.25
    nn=x1-x0-1
-   dn=-dmax+np.random.rand(nn)*(2*dmax)
-   #dn=np.zeros(nn)
+   #dn=-dmax+np.random.rand(nn)*(2*dmax)
+   dn=np.zeros(nn)
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
