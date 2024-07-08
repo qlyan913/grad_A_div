@@ -110,7 +110,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[]):
     # get eigenpairs
     eigenvalues = []
     eigenf_imgs = []
@@ -137,6 +137,8 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             x = np.linspace(x0, x1, npts, endpoint=False)
             y = eval_u(eigenfun,x)
             plt.clf()
+            if center_list:
+                plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
             plt.plot(x, y, alpha=.75, linewidth=2)
             plt.xlim([x0, x1])
             plt.ylim([-1.1, 1.1])
