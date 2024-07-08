@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=3000
+nelts=10
 npts=9000
 x0=0
 x1=10
@@ -66,7 +66,7 @@ if coeftype == 'constant':
    adeg = 0
 elif coeftype == 'pw_2constant':
    # pw constants alternately equal to a0 or a1
-   nc=nelts
+   nc=x1-x0
    a0=1
    a1=10
    aval=np.zeros(nc)
