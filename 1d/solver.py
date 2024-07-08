@@ -66,9 +66,9 @@ def combine_images(columns, space, images,file):
             x = 0
     background.save(file)
 
-def eigen_solver(mesh,A,deg,nreq,target,bctype):
+def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
     # Find the first nreq eigenpaires nearest the given target
-    V = FunctionSpace(mesh, "Lagrange", deg)
+    V = FunctionSpace(mesh, 'Lagrange', deg)
     u = TrialFunction(V)
     v = TestFunction(V)
     b = A*dot(grad(u), grad(v))*dx

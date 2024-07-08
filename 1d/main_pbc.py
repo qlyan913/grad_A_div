@@ -111,5 +111,5 @@ plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
-EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype)
+EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1)
 get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2)
