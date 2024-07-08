@@ -4,6 +4,6 @@
     "nelts": 3000,
     "npts": 9000,
     "params": "",
-    "coeftype": "random displacement ",
+    "coeftype": "random displacement",
     "witdth": 10
 }
