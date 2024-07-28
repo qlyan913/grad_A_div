@@ -24,9 +24,10 @@ width=x1-x0
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
+plotefuns=[x+3 for x in plotefuns]
 plotefuns_2=[int(d) for d in range(20)]
 bctype='periodic'
-coeftype='pw_2constant' #'random displacement'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
+coeftype='fixed displacement' #'pw_2constant'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
 np.random.seed(10)
 params=''
 # create directory and filenames for output
@@ -82,7 +83,7 @@ elif coeftype == 'pw_2constant':
    aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
    aexpr.vector().set_local(aval)
 else:
-   dmax=0.2
+   dmax=0
    s=0.25
    nn=x1-x0-1
    center_list=[]

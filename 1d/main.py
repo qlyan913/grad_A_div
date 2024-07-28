@@ -19,14 +19,14 @@ deg = 5
 nelts=4000   # number of elements on interval
 npts=4*nelts # for plotting functions
 x0=0
-x1=100
+x1=10
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 bctype='dirichlet' # dirichlet or neumann
-coeftype='periodic' #'1d random displacement'
-dmax=0.2
+coeftype='fixed displacement' #'1d random displacement' #'pw_2constant' #'1d random displacement'
+dmax=0
 np.random.seed(5)
 #coeftype='constant'
 params=''
@@ -66,8 +66,24 @@ if coeftype=='constant':
    aexpr = Constant(aval)
    aelt = 'DG'
    adeg = 0
-elif coeftype=='periodic':
-   dmax=0.2
+elif coeftype == 'pw_2constant':
+   # pw constants alternately equal to a0 or a1
+   nc=x1-x0
+   a0=1
+   a1=10
+   aval=np.zeros(nc)
+   center_list=range(nc)
+   for i in range(nc):
+       if i % 2 ==0:
+          aval[i]=a0
+       else:
+          aval[i]=a1
+   aelt = 'DG'
+   adeg=0
+   # create pw constant with nc pieces
+   aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
+   aexpr.vector().set_local(aval)
+elif coeftype=='fixed displacement':
    s=0.25
    nn=x1-x0-1
    #dn=-dmax+np.random.rand(nn+1)*(2*dmax)
