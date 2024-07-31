@@ -4,7 +4,7 @@
     "nelts": 4000,
     "npts": 16000,
     "params": "",
-    "coeftype": "fixed displacement",
+    "coeftype": "random displacement",
     "x0": 0,
     "x1": 10
 }
