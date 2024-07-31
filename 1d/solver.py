@@ -110,7 +110,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[]):
+def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
     # get eigenpairs
     eigenvalues = []
     eigenf_imgs = []
@@ -133,7 +133,24 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             rx = rx/rxmax
         eigenfun = Function(V)
         eigenfun.vector().set_local(rx)
-        if i in plotefuns:
+        if flag == 0:
+           if i in plotefuns or i in plotefuns_2:
+              x = np.linspace(x0, x1, npts, endpoint=False)
+              y = eval_u(eigenfun,x)
+              plt.clf()
+              if center_list:
+                 plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
+              plt.plot(x, y, alpha=.75, linewidth=2)
+              plt.xlim([x0, x1])
+              plt.ylim([-1.1, 1.1])
+              plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+              print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+              plt.savefig(eigenfunplotfile.format(i), dpi=300)
+              if i in plotefuns:
+                 eigenf_imgs.append(eigenfunplotfile.format(i))
+              else:
+                 eigenf_imgs_2.append(eigenfunplotfile.format(i))
+        else:
             x = np.linspace(x0, x1, npts, endpoint=False)
             y = eval_u(eigenfun,x)
             plt.clf()
@@ -145,29 +162,20 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
             print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
             plt.savefig(eigenfunplotfile.format(i), dpi=300)
-            eigenf_imgs.append(eigenfunplotfile.format(i))
-        
-        if i in plotefuns_2:
-            x = np.linspace(x0, x1, npts, endpoint=False)
-            y = eval_u(eigenfun,x)
-            plt.clf()
-            if center_list:
-                plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
-            plt.plot(x, y, alpha=.75, linewidth=2)
-            plt.xlim([x0, x1])
-            plt.ylim([-1.1, 1.1])
-            plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
-            print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
-            plt.savefig(eigenfunplotfile.format(i), dpi=300)
-            eigenf_imgs_2.append(eigenfunplotfile.format(i))
-
     np.savetxt(eigenvalfile, eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile))
-    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
-    print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
-    combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
-    print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
-  
+    if flag == 0:
+       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
+       print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
+       combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
+       print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
+    else:
+       for i in range(0,1000,25):
+           segment=list(range(i,i+25))
+           i0=segment[0]
+           iend=segment[-1]
+           combine_images(columns=5, space=20, images=segment,file=eigenfunmon_all.format(i0,iend))
+           print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
 
 def plot_coeff(x0,x1,A,npts,filename):
     # evaluate coefficient, save to file and plot

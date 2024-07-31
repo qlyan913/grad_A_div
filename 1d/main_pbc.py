@@ -83,7 +83,7 @@ elif coeftype == 'pw_2constant':
    aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
    aexpr.vector().set_local(aval)
 else:
-   dmax=0
+   dmax=0.2
    s=0.25
    nn=x1-x0-1
    center_list=[]
