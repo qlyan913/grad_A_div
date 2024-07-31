@@ -25,7 +25,7 @@ target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 bctype='dirichlet' # dirichlet or neumann
-coeftype='fixed displacement' #'random displacement' #'pw_2constant' 
+coeftype='random displacement' #'fixed displacement' #'random displacement' #'pw_2constant' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
