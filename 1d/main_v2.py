@@ -39,7 +39,7 @@ eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
-eigenfunmon_all = outdir+'/'+'eigenfun{:03d}_{:03d}.png'
+eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
 
 # write parameters to file
