@@ -1,11 +1,17 @@
 # eigenvalue problem
 
 000000   [0,2\pi]   constant coefficient    periodic boundary 
+
 000001   [0,2\pi]   constant coefficient    Dirichlet boundary 
+
 000002   [0,10]     random displacement     Dirichlet boundary 
+
 000003   [0,100]    random displacement     Dirichlet boundary 
+
 000004   [0,200]    random displacement     Dirichlet boundary 
+
 000005   [0,10]     random displacement v2  Dirichlet boundary 
+
 000006   [0,100]    random displacement v2  Dirichlet boundary 
 000007   [0,200]    random displacement v2  Dirichlet boundary 
 000008   [0,400]    random displacement v2  Dirichlet boundary 
