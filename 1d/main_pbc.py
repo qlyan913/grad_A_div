@@ -19,16 +19,17 @@ deg = 5
 nelts=2000
 npts=9000
 x0=0
-x1=10
+x1=200
 width=x1-x0
 nreq=1000
 target=0
+flag=1 # plot all first 500 eigenfunctions
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns=[x+3 for x in plotefuns]
 plotefuns_2=[int(d) for d in range(20)]
 bctype='periodic'
-coeftype='fixed displacement' #'pw_2constant'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
-np.random.seed(10)
+coeftype='random displacement' #'pw_2constant'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
+np.random.seed(5)
 params=''
 # create directory and filenames for output
 outdir = makedir('Results_per')
@@ -38,6 +39,7 @@ eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
+eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
 
 # write parameters to file
@@ -121,4 +123,4 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1)
-get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list)
+get_eigenpairs(EPS,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
