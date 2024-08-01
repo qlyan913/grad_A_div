@@ -28,7 +28,7 @@ plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,6
 plotefuns=[x+3 for x in plotefuns]
 plotefuns_2=[int(d) for d in range(20)]
 bctype='periodic'
-coeftype='random displacement' #'pw_2constant'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
+coeftype='pw_2constant' #'random displacement' #'pw_2constant'  #'fixed displacement' #'random displacement'  # 'pw_2constant' #'constant' 
 np.random.seed(5)
 params=''
 # create directory and filenames for output
