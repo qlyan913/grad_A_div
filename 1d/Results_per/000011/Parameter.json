@@ -1,8 +1,8 @@
 {
     "bctype": "periodic",
     "deg": 5,
-    "nelts": 2000,
-    "npts": 9000,
+    "nelts": 4000,
+    "npts": 16000,
     "params": "",
     "coeftype": "random displacement",
     "witdth": 200
