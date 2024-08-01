@@ -32,6 +32,6 @@
 
 000015   [0,200]    random displacement     Dirichlet boundary   all first 500 eigenvalues
 
-
+000015   [0,200]    fixed displacement (1-periodic)   Dirichlet boundary   all first 500 eigenvalues
 
  
