@@ -22,5 +22,8 @@
 
 0000010  [0,10]    fixed displacement (1-periodic)   periodic boundary  mode 13,23,...
 
+0000011   [0,200]   random displacement    periodic boundary all first 500 eigens 
+
+0000012   [0,200]   0 - 10 2pc constant (2-periodic) periodic boundary  all first 500 eigens
 
  
