@@ -72,7 +72,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
     u = TrialFunction(V)
     v = TestFunction(V)
     b = A*dot(grad(u), grad(v))*dx
-    m = u*v*dx
+    m = A*u*v*dx
     uh = Function(V)
     if bctype == 'dirichlet':
        boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
@@ -154,13 +154,16 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             if i < 501:
                x = np.linspace(x0, x1, npts, endpoint=False)
                y = eval_u(eigenfun,x)
+               f2=assemble(eigenfun**2*dx)
+               f4=assemble(eigenfun**4*dx)
+               pr=1/(x1-x0)*(f2**2)/f4
                plt.clf()
                if center_list:
                   plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
                plt.plot(x, y, alpha=.75, linewidth=2)
                plt.xlim([x0, x1])
                plt.ylim([-1.1, 1.1])
-               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {}'.format(nelts, i, r.real,pr))
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
             else:
