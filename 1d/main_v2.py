@@ -54,6 +54,8 @@ paramfile = outdir+ '/'+'Parameter.json'
 # write parameters to file
 # store parameters in dictionary
 runparameters = {
+    'operator type': flag2,
+    '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi'
     'bctype': bctype,
     'deg': deg,
     'nelts': nelts,
