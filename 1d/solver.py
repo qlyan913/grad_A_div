@@ -167,7 +167,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
             if i < 501:
-               eigenvalues_v2.append(r)
+               eigenvalues_v2.append(Eps.getEigenvalue(i).real)
                modes.append(i)
                x = np.linspace(x0, x1, npts, endpoint=False)
                y = eval_u(eigenfun,x)

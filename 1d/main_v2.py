@@ -25,7 +25,7 @@ target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # print all first 500 eigenfuns
-flag2 =1  
+flag2 =3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -42,8 +42,8 @@ outdir = makedir()
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
-mpfile = outdir + '/' + 'mode_pratio.png'
-epfile = outdir + '/' + 'eigen_pratio.png'
+mpfile = outdir + '/' + 'pratio_mode.png'
+epfile = outdir + '/' + 'pratio_eigen.png'
 pratiofile=outdir + '/' + 'pratio.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
@@ -131,7 +131,7 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
-modes, eigenvalues, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
 np.savetxt(pratiofile,pratio)
 
 plt.clf()
@@ -142,9 +142,9 @@ plt.savefig(mpfile)
 print("> pratio vs modes to {}".format(mpfile))
 
 plt.clf()
-plt.scatter(eigenvalues,pratio)
+plt.scatter(eigenvalues2,pratio)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.savefig(mpfile)
+plt.savefig(epfile)
 print("> pratio vs eigenvalues to {}".format(epfile))
 
