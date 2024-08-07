@@ -30,8 +30,8 @@
 
 000014   [0,10]     fixed displacement (1-periodic)   Dirichlet boundary 
 
-000015   [0,200]    random displacement     Dirichlet boundary   all first 500 eigenvalues
+000015   [0,200]    operator=1 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
-000016   [0,200]    fixed displacement (1-periodic)   Dirichlet boundary   all first 500 eigenvalues
+000016   [0,200]    operator=2 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
-000017   [0,100]    random displacement     Dirichlet boundary   all first 500 eigenvalues 
+000017   [0,200]    operator=3 random displacement     Dirichlet boundary   all first 500 eigenvalues
