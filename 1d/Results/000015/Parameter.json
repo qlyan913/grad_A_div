@@ -1,6 +1,7 @@
 {
     "operator type": 1,
-    "1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phibctype": "dirichlet",
+    "1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi"
+    "bctype": "dirichlet",
     "deg": 5,
     "nelts": 4000,
     "npts": 16000,
