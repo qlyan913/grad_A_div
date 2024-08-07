@@ -66,13 +66,25 @@ def combine_images(columns, space, images,file):
             x = 0
     background.save(file)
 
-def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
+def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag=1):
+    """
+     flag ---- 1: -div A grad phi = lambda phi
+          ---- 2: -div A grad phi = lambda A phi
+          ---- 3: -div grad phi = lambda A phi
+    """
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, 'Lagrange', deg)
     u = TrialFunction(V)
     v = TestFunction(V)
-    b = A*dot(grad(u), grad(v))*dx
-    m = A*u*v*dx
+    if flag == 1:
+       b = A*dot(grad(u), grad(v))*dx
+       m = u*v*dx
+    elif flag == 2:
+       b = A*dot(grad(u), grad(v))*dx
+       m = A*u*v*dx
+    elif flag == 3:
+       b = dot(grad(u), grad(v))*dx
+       m = A*u*v*dx
     uh = Function(V)
     if bctype == 'dirichlet':
        boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
@@ -113,6 +125,9 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1):
 def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
     # get eigenpairs
     eigenvalues = []
+    eigenvalues_v2 = []
+    pratio=[]
+    modes=[]
     eigenf_imgs = []
     eigenf_imgs_2 = []
     for i in range(nconv):
@@ -152,18 +167,21 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
             if i < 501:
+               eigenvalues_v2.append(r)
+               modes.append(i)
                x = np.linspace(x0, x1, npts, endpoint=False)
                y = eval_u(eigenfun,x)
                f2=assemble(eigenfun**2*dx)
                f4=assemble(eigenfun**4*dx)
                pr=1/(x1-x0)*(f2**2)/f4
+               pratio.append(pr)
                plt.clf()
                if center_list:
                   plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
                plt.plot(x, y, alpha=.75, linewidth=2)
                plt.xlim([x0, x1])
                plt.ylim([-1.1, 1.1])
-               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {}'.format(nelts, i, r.real,pr))
+               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format(nelts, i, r.real,pr))
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
             else:
@@ -185,6 +203,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
               eigenf_imgs.append(eigenfunplotfile.format(j))
            combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmon_all.format(i0,iend))
            print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
+    return modes, eigenvalues_v2, pratio
 
 def plot_coeff(x0,x1,A,npts,filename):
     # evaluate coefficient, save to file and plot

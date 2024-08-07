@@ -25,6 +25,12 @@ target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # print all first 500 eigenfuns
+flag2 =1  
+"""
+     flag2 ---- 1: -div A grad phi = lambda phi
+          ---- 2: -div A grad phi = lambda A phi
+          ---- 3: -div grad phi = lambda A phi
+"""
 bctype='dirichlet' # dirichlet or neumann
 coeftype='random displacement' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
@@ -36,6 +42,9 @@ outdir = makedir()
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
+mpfile = outdir + '/' + 'mode_pratio.png'
+epfile = outdir + '/' + 'eigen_pratio.png'
+pratiofile=outdir + '/' + 'pratio.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
@@ -119,5 +128,21 @@ plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
-EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1)
-get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
+modes, eigenvalues, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+np.savetxt(pratiofile,pratio)
+
+plt.clf()
+plt.scatter(modes,pratio)
+plt.xlabel('modes')
+plt.ylabel('p-ratio')
+plt.savefig(mpfile)
+print("> pratio vs modes to {}".format(mpfile))
+
+plt.clf()
+plt.scatter(eigenvalues,pratio)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.savefig(mpfile)
+print("> pratio vs eigenvalues to {}".format(epfile))
+
