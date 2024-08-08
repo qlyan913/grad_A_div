@@ -16,23 +16,22 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=4000   # number of elements on interval
-npts=4*nelts # for plotting functions
-x0=0
-x1=200
+L=1 # length of square
+nx=1000
+ny=1000
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
-flag=1 # print all first 500 eigenfuns
-flag2 =3
+flag=0 # 1: print all first 500 eigenfuns, 0: print plotefuns 
+flag2 =1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
           ---- 3: -div grad phi = lambda A phi
 """
 bctype='dirichlet' # dirichlet or neumann
-coeftype='random displacement' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
@@ -41,6 +40,7 @@ params=''
 outdir = makedir()
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
+meshplotfile = outdir + '/' + 'mesh.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 mpfile = outdir + '/' + 'pratio_mode.png'
 epfile = outdir + '/' + 'pratio_eigen.png'
@@ -60,12 +60,11 @@ runparameters = {
     '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi':"" ,
     'bctype': bctype,
     'deg': deg,
-    'nelts': nelts,
-    'npts': npts,
+    'nx': nx,
+    'ny':ny,
     'params': params,
     'coeftype': coeftype,
-    'x0': x0,
-    'x1': x1,
+    'L':L
     }
 paramf = open(paramfile, 'w')
 json.dump(runparameters, paramf, indent=4)
@@ -73,8 +72,16 @@ paramf.write('\n')
 paramf.close()
 print("> run parameters written to {}".format(paramfile))
 
-mesh = IntervalMesh(nelts, x0, x1)
-x , = SpatialCoordinate(mesh)
+mesh = SquareMesh(nx,ny,L)
+plt.clf()
+triplot(mesh)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Mesh')
+plt.savefig(meshplotfile, dpi=300)
+print("> mesh plotted to {}".format(meshplotfile))
+
+x , y= SpatialCoordinate(mesh)
 # define coefficient A
 if coeftype=='constant':
    aval=1

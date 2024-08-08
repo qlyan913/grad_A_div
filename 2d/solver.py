@@ -87,7 +87,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag=1):
        m = A*u*v*dx
     uh = Function(V)
     if bctype == 'dirichlet':
-       boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+       boundary_ids = (1,2,3,4) #
        bc = DirichletBC(V, 0,boundary_ids)
        B = assemble(b, bcs=bc)
        M = assemble(m, bcs=bc, weight=0.)
@@ -150,15 +150,21 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
         eigenfun.vector().set_local(rx)
         if flag == 0:
            if i in plotefuns or i in plotefuns_2:
+              eigenvalues_v2.append(r.real)
+              modes.append(i)
               x = np.linspace(x0, x1, npts, endpoint=False)
               y = eval_u(eigenfun,x)
+              f2=assemble(eigenfun**2*dx)
+              f4=assemble(eigenfun**4*dx)
+              pr=1/(x1-x0)*(f2**2)/f4
+              pratio.append(pr)
               plt.clf()
               if center_list:
                  plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
               plt.plot(x, y, alpha=.75, linewidth=2)
               plt.xlim([x0, x1])
               plt.ylim([-1.1, 1.1])
-              plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+              plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format(nelts, i, r.real,pr))
               print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               if i in plotefuns:
@@ -167,7 +173,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
             if i < 501:
-               eigenvalues_v2.append(Eps.getEigenvalue(i).real)
+               eigenvalues_v2.append(r.real)
                modes.append(i)
                x = np.linspace(x0, x1, npts, endpoint=False)
                y = eval_u(eigenfun,x)
