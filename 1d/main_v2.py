@@ -57,7 +57,7 @@ paramfile = outdir+ '/'+'Parameter.json'
 # store parameters in dictionary
 runparameters = {
     'operator type': flag2,
-    '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi':,
+    '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi':"" ,
     'bctype': bctype,
     'deg': deg,
     'nelts': nelts,
@@ -152,19 +152,19 @@ print("> pratio vs eigenvalues to {}".format(epfile))
 
 
 plt.clf()
+plt.yscale('log')
+plt.xscale('log')
 plt.scatter(modes,pratio)
 plt.xlabel('modes')
 plt.ylabel('p-ratio')
-plt.set_yscale('log')
-plt.set_xscale('log')
 plt.savefig(mpfile_log)
 print("> pratio vs modes to {}".format(mpfile_log))
 
 plt.clf()
+plt.yscale('log')
+plt.xscale('log')
 plt.scatter(eigenvalues2,pratio)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.set_yscale('log')
-plt.set_xscale('log')
 plt.savefig(epfile_log)
 print("> pratio vs eigenvalues to {}".format(epfile_log))

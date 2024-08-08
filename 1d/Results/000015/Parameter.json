@@ -1,0 +1,12 @@
+{
+    "operator type": 1,
+    "1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi": "",
+    "bctype": "dirichlet",
+    "deg": 5,
+    "nelts": 4000,
+    "npts": 16000,
+    "params": "",
+    "coeftype": "random displacement",
+    "x0": 0,
+    "x1": 200
+}
