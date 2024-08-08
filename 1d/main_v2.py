@@ -25,7 +25,7 @@ target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # print all first 500 eigenfuns
-flag2 =3
+flag2 =1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -44,6 +44,8 @@ coefplotfile = outdir + '/' + 'coefficient.png'
 eigenvalfile = outdir + '/' + 'eigenvalues.txt'
 mpfile = outdir + '/' + 'pratio_mode.png'
 epfile = outdir + '/' + 'pratio_eigen.png'
+mpfile_log = outdir + '/' + 'pratio_mode_log.png'
+epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 pratiofile=outdir + '/' + 'pratio.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
@@ -148,3 +150,21 @@ plt.ylabel('p-ratio')
 plt.savefig(epfile)
 print("> pratio vs eigenvalues to {}".format(epfile))
 
+
+plt.clf()
+plt.scatter(modes,pratio)
+plt.xlabel('modes')
+plt.ylabel('p-ratio')
+plt.set_yscale('log')
+plt.set_xscale('log')
+plt.savefig(mpfile_log)
+print("> pratio vs modes to {}".format(mpfile_log))
+
+plt.clf()
+plt.scatter(eigenvalues2,pratio)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.set_yscale('log')
+plt.set_xscale('log')
+plt.savefig(epfile_log)
+print("> pratio vs eigenvalues to {}".format(epfile_log))
