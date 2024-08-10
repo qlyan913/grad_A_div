@@ -74,6 +74,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     """
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, 'Lagrange', deg)
+    print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
     u = TrialFunction(V)
     v = TestFunction(V)
     if flag == 1:

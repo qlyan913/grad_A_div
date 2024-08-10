@@ -30,6 +30,7 @@ flag2 =1
           ---- 2: -div A grad phi = lambda A phi
           ---- 3: -div grad phi = lambda A phi
 """
+plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
 coeftype='constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
@@ -73,13 +74,15 @@ paramf.close()
 print("> run parameters written to {}".format(paramfile))
 
 mesh = SquareMesh(nx,ny,L)
-plt.clf()
-triplot(mesh)
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.title('Mesh')
-plt.savefig(meshplotfile, dpi=300)
-print("> mesh plotted to {}".format(meshplotfile))
+print("> mesh with {} elements".format(mesh.num_cells()))
+if plotmesh==1:
+   plt.clf()
+   triplot(mesh)
+   plt.xlabel('X')
+   plt.ylabel('Y')
+   plt.title('Mesh')
+   plt.savefig(meshplotfile, dpi=300)
+   print("> mesh plotted to {}".format(meshplotfile))
 
 x , y= SpatialCoordinate(mesh)
 # define coefficient A
@@ -129,12 +132,11 @@ else:
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()
+fig, axes = plt.subplots()
 print("> evaluating coefficient")
-pts = np.linspace(x0, x1, npts, endpoint=True)
-avals = eval_u(A,pts)
-plt.plot(pts, avals, alpha=.75, linewidth=2)
-plt.xlim([x0, x1])
-plt.title('coefficient'.format(nelts, deg))
+collection = tripcolor(A, axes=axes)
+fig.colorbar(collection);
+plt.title('coefficient')
 plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
