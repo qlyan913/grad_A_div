@@ -19,9 +19,9 @@ deg = 5
 L=1 # length of square
 nx=100
 ny=100
-nreq=1000
+nreq=300
 target=0
-plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
+plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=0 # 1: print all first 500 eigenfuns, 0: print plotefuns 
 flag2 =1
@@ -133,7 +133,6 @@ A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
 plt.clf()
 fig, axes = plt.subplots()
-print("> evaluating coefficient")
 collection = tripcolor(A, axes=axes)
 fig.colorbar(collection);
 plt.title('coefficient')
@@ -142,7 +141,7 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
 np.savetxt(pratiofile,pratio)
 
 plt.clf()

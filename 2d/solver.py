@@ -123,7 +123,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
+def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
     # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -153,19 +153,15 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
            if i in plotefuns or i in plotefuns_2:
               eigenvalues_v2.append(r.real)
               modes.append(i)
-              x = np.linspace(x0, x1, npts, endpoint=False)
-              y = eval_u(eigenfun,x)
               f2=assemble(eigenfun**2*dx)
               f4=assemble(eigenfun**4*dx)
-              pr=1/(x1-x0)*(f2**2)/f4
+              pr=1/(L**2)*(f2**2)/f4
               pratio.append(pr)
               plt.clf()
-              if center_list:
-                 plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
-              plt.plot(x, y, alpha=.75, linewidth=2)
-              plt.xlim([x0, x1])
-              plt.ylim([-1.1, 1.1])
-              plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format(nelts, i, r.real,pr))
+              fig, axes = plt.subplots()
+              collection = tripcolor(eigenfun, axes=axes)
+              fig.colorbar(collection);
+              plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
               print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               if i in plotefuns:
@@ -176,19 +172,15 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             if i < 501:
                eigenvalues_v2.append(r.real)
                modes.append(i)
-               x = np.linspace(x0, x1, npts, endpoint=False)
-               y = eval_u(eigenfun,x)
                f2=assemble(eigenfun**2*dx)
                f4=assemble(eigenfun**4*dx)
-               pr=1/(x1-x0)*(f2**2)/f4
+               pr=1/(L**2)*(f2**2)/f4
                pratio.append(pr)
                plt.clf()
-               if center_list:
-                  plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
-               plt.plot(x, y, alpha=.75, linewidth=2)
-               plt.xlim([x0, x1])
-               plt.ylim([-1.1, 1.1])
-               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format(nelts, i, r.real,pr))
+               fig, axes = plt.subplots()
+               collection = tripcolor(eigenfun, axes=axes)
+               fig.colorbar(collection);
+               plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
             else:
