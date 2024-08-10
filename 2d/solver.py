@@ -66,7 +66,7 @@ def combine_images(columns, space, images,file):
             x = 0
     background.save(file)
 
-def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag=1):
+def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     """
      flag ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi

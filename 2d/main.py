@@ -139,7 +139,7 @@ plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
-EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
+EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
 modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
 np.savetxt(pratiofile,pratio)
 
