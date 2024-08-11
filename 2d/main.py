@@ -1,6 +1,6 @@
 """
 Solve the eigenvalue problem with variable coefficient:
-   -(Au')'=lambda u on [x0,x1]
+   -(Au')'=lambda u on square [0,L]x[0,L]
 Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
    f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=1 # length of square
+L=10 # length of square
 nx=100
 ny=100
 nreq=300
@@ -32,7 +32,7 @@ flag2 =1
 """
 plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
-coeftype='constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='fixed displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
@@ -91,32 +91,16 @@ if coeftype=='constant':
    aexpr = Constant(aval)
    aelt = 'DG'
    adeg = 0
-elif coeftype == 'pw_2constant':
-   # pw constants alternately equal to a0 or a1
-   nc=x1-x0
-   a0=1
-   a1=10
-   aval=np.zeros(nc)
-   center_list=range(nc)
-   for i in range(nc):
-       if i % 2 ==0:
-          aval[i]=a0
-       else:
-          aval[i]=a1
-   aelt = 'DG'
-   adeg=0
-   # create pw constant with nc pieces
-   aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
-   aexpr.vector().set_local(aval)
 else: 
    s=0.25
-   nn=x1-x0-1
+   nn=L-1
    if coeftype == 'random displacement':
       dn=-dmax+np.random.rand(nn+1)*(2*dmax)
    elif coeftype == 'fixed displacement':
       dn=np.zeros(nn+1)
    f_sum=0.0
    for i in range(nn):
+      
       x_center=i+1+dn[i]
       f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
    # near x=x0
