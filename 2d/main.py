@@ -82,6 +82,7 @@ if plotmesh==1:
    plt.ylabel('Y')
    plt.title('Mesh')
    plt.savefig(meshplotfile, dpi=300)
+   plt.close()
    print("> mesh plotted to {}".format(meshplotfile))
 
 x , y= SpatialCoordinate(mesh)
@@ -102,7 +103,10 @@ else:
    for i in range(nn):
       for j in range(nn):
       	x_center=[i+1+dn[i],j+1+dn[i]]
-      	f_sum=f_sum + conditional(dist([x,y],x_center)>s,0,(1-pow(dist([x,y],x_center),2)/pow(s,2))**3*(3*pow(dist([x,y],x_center),2)+1))
+      	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+   aexpr=1./(1+f_sum)
+   aelt='CG'
+   adeg=7
 
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
