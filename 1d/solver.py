@@ -163,7 +163,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               if i in plotefuns:
                  eigenf_imgs.append(eigenfunplotfile.format(i))
-              else:
+              if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
             if i < 501:

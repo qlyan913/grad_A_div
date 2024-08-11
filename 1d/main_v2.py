@@ -127,7 +127,7 @@ pts = np.linspace(x0, x1, npts, endpoint=True)
 avals = eval_u(A,pts)
 plt.plot(pts, avals, alpha=.75, linewidth=2)
 plt.xlim([x0, x1])
-plt.title('coefficient'.format(nelts, deg))
+plt.title('coefficient')
 plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
