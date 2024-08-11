@@ -100,18 +100,9 @@ else:
       dn=np.zeros(nn+1)
    f_sum=0.0
    for i in range(nn):
-      
-      x_center=i+1+dn[i]
-      f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-   # near x=x0
-   x_center=x0+dn[nn]
-   f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-   # near x=x1
-   x_center=x_center+x1-x0
-   f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-   aexpr=1./(1+f_sum)
-   aelt='CG'
-   adeg=7
+      for j in range(nn):
+      	x_center=[i+1+dn[i],j+1+dn[i]]
+      	f_sum=f_sum + conditional(dist([x,y],x_center)>s,0,(1-pow(dist([x,y],x_center),2)/pow(s,2))**3*(3*pow(dist([x,y],x_center),2)+1))
 
 A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 # evaluate coefficient, save to file and plot
