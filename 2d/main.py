@@ -96,13 +96,28 @@ else:
    s=0.25
    nn=L-1
    if coeftype == 'random displacement':
-      dn=-dmax+np.random.rand(nn+1)*(2*dmax)
+      # unifrom distribution on unit disk: https://rh8liuqy.github.io/Uniform_Disk.html
+      U1 = np.random.uniform(size = nn**2)
+      U2 = np.random.uniform(size = nn**2)
+      r = dmax
+      dn1 = r * np.sqrt(U2) * np.cos(2 * np.pi * U1)
+      dn2 = r * np.sqrt(U2) * np.sin(2 * np.pi * U1)
+      sampleplotfile = outdir+ '/'+'sample_dn.png'
+      plt.clf()
+      circle = plt.Circle((0, 0), r, color='g', fill=False)
+      fig,ax = plt.subplots()
+      ax.scatter(x = dn1, y = dn2, s = 0.5)
+      ax.add_artist(circle)
+      plt.title('sampling of dn')
+      plt.savefig(sampleplotfile, dpi=300)
+      print("> sampling of dn plotted to {}".format(sampleplotfile))
    elif coeftype == 'fixed displacement':
-      dn=np.zeros(nn+1)
+      dn1=np.zeros(nn**2)
+      dn2=np.zeros(nn**2)
    f_sum=0.0
    for i in range(nn):
       for j in range(nn):
-      	x_center=[i+1+dn[i],j+1+dn[i]]
+      	x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
       	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
    aexpr=1./(1+f_sum)
    aelt='CG'
