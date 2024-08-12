@@ -6,6 +6,6 @@
     "nx": 100,
     "ny": 100,
     "params": "",
-    "coeftype": "fixed displacement",
+    "coeftype": "random displacement",
     "L": 20
 }
