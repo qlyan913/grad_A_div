@@ -123,7 +123,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
+def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all="",n_all=500):
     # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -170,7 +170,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
               if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
-            if i < 501:
+            if i < n_all+1:
                eigenvalues_v2.append(r.real)
                modes.append(i)
                f2=assemble(eigenfun**2*dx)
@@ -195,7 +195,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
        combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
        print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
     else:
-       for i in range(0,500,25):
+       for i in range(0,n_all,25):
            segment=list(range(i,i+25))
            i0=segment[0]
            iend=segment[-1]

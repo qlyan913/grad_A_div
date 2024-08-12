@@ -5,3 +5,5 @@
 000002   [0,10]x[0,10]   random displacement    Dirichlet boundar   first 500 eigen
 000003   [0,20]x[0,20]   fixed displacement    Dirichlet boundary   frist 500 eigen
 000004   [0,20]x[0,20]   random displacement    Dirichlet boundar   first 500 eigen
+000005   [0,20]x[0,20]   fixed displacement 2f   Dirichlet boundary   frist 500 eigen
+000006   [0,20]x[0,20]   random displacement 2f   Dirichlet boundar   first 500 eigen
