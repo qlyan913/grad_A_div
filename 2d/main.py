@@ -3,7 +3,7 @@ Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on square [0,L]x[0,L]
 Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
-   f = 10[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
+   f = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
@@ -16,16 +16,16 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=10 # length of square
+L=20 # length of square
 nx=100
 ny=100
 nreq=301
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
-flag=0 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
+flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
 n_all=300
-flag2 =1
+flag2 = 2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
