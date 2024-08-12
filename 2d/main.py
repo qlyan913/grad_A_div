@@ -19,7 +19,7 @@ deg = 5
 L=10 # length of square
 nx=100
 ny=100
-nreq=300
+nreq=301
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
@@ -32,7 +32,7 @@ flag2 =1
 """
 plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
-coeftype='random displacement' #'constant' #'random displacement' # 'fixed displacement' 
+coeftype='fixed displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
