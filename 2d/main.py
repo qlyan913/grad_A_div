@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=50 # length of square
+L=20 # length of square
 nx=100
 ny=100
 nreq=301
@@ -32,7 +32,7 @@ flag2 =1
 """
 plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
-coeftype='random displacement' #'constant' #'random displacement' # 'fixed displacement' 
+coeftype='fixed displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
@@ -115,8 +115,8 @@ else:
       dn1=np.zeros(nn**2)
       dn2=np.zeros(nn**2)
    f_sum=0.0
-   for i in range(0,nn,5):
-      for j in range(0,nn,5):
+   for i in range(0,nn):
+      for j in range(0,nn):
       	x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
       	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,10*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
    aexpr=1./(1+f_sum)
