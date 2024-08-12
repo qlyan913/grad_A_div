@@ -118,7 +118,7 @@ else:
    for i in range(0,nn):
       for j in range(0,nn):
       	x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
-      	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,10*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+      	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
    aexpr=1./(1+f_sum)
    aelt='CG'
    adeg=7
