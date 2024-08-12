@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=10 # length of square
+L=20 # length of square
 nx=100
 ny=100
 nreq=501
