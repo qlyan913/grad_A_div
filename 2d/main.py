@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=20 # length of square
+L=100 # length of square
 nx=100
 ny=100
 nreq=301
@@ -25,7 +25,7 @@ plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
 n_all=300
-flag2 = 3
+flag2 = 1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
