@@ -19,7 +19,7 @@ deg = 5
 nelts=4000   # number of elements on interval
 npts=4*nelts # for plotting functions
 x0=0
-x1=200
+x1=400
 nreq=1000
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
@@ -112,7 +112,7 @@ else:
    if fv==1:
       f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
    else:   
-      f_sum=f_sum + conditional(abs(x-x_center)>s,0,20*(1-((x-x_center)**2)/pow(s,2))**3*(3*((x-x_center)**2+1))
+      f_sum=f_sum + conditional(abs(x-x_center)>s,0,20*(1-(x-x_center)**2/pow(s,2))**3*(3*(x-x_center)**2+1))
    
    if fv==1:
       # near x=x0
