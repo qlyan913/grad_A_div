@@ -10,3 +10,4 @@
 000007   [0,20]x[0,20]   random displacement   Dirichlet boundar   first 300 eigen operator=2
 000008   [0,20]x[0,20]   random displacement   Dirichlet boundar  300 eigen close to 14  operator=2
 000009   [0,20]x[0,20]   random displacement   Dirichlet boundar  300 eigen close to 30  operator=2
+000010   [0,20]x[0,20]   random displacement   Dirichlet boundar   first 300 eigen operator=3
