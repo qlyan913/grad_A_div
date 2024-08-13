@@ -109,10 +109,10 @@ else:
    f_sum=0.0
    for i in range(nn):
       x_center=i+1+dn[i]
-   if fv==1:
-      f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
-   else:   
-      f_sum=f_sum + conditional(abs(x-x_center)>s,0,20*(1-(x-x_center)**2/pow(s,2))**3*(3*(x-x_center)**2+1))
+      if fv==1:
+         f_sum=f_sum + conditional(abs(x-x_center)>s,0,6/8*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**3-6/(8*pow(s,2))*(x-x_center)*(1-pow(x-x_center,2)/pow(s,2))**2*(3*pow(x-x_center,2)+1))
+      else:   
+         f_sum=f_sum + conditional(abs(x-x_center)>s,0,20*(1-(x-x_center)**2/pow(s,2))**3*(3*(x-x_center)**2+1))
    
    if fv==1:
       # near x=x0
