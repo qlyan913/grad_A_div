@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=100 # length of square
+L=30 # length of square
 nx=100
 ny=100
 nreq=301
@@ -116,7 +116,7 @@ else:
    elif coeftype == 'fixed displacement':
       dn1=np.zeros(nn**2)
       dn2=np.zeros(nn**2)
-   f_sum=0.0
+   f_sum=Constant(0.0)
    for i in range(0,nn):
       for j in range(0,nn):
       	x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
