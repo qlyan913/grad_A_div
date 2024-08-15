@@ -25,8 +25,9 @@ for i in range(0,nn):
    for j in range(0,nn):
       x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
       fi= conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
-      Fi=assemble(interpolate(1.0/(1.0+fi), FunctionSpace(mesh, 'CG', 7)))
+      Fi=assemble(interpolate(1.0/(1+fi), FunctionSpace(mesh, 'CG', 7)))
       A+=Fi
+A+=-(nn**2-1)
 #print('defining coefficients')
 #A=assemble(interpolate(1.0/(1.0+Fs), FunctionSpace(mesh, 'CG', 3)))
 # evaluate coefficient, save to file and plot
