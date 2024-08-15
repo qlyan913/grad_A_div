@@ -16,7 +16,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=30 # length of square
+L=100 # length of square
 nx=100
 ny=100
 nreq=301
@@ -94,6 +94,7 @@ if coeftype=='constant':
    aexpr = Constant(aval)
    aelt = 'DG'
    adeg = 0
+   A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
 else: 
    s=0.25
    nn=L-1
@@ -116,16 +117,14 @@ else:
    elif coeftype == 'fixed displacement':
       dn1=np.zeros(nn**2)
       dn2=np.zeros(nn**2)
-   f_sum=Constant(0.0)
+   Asum=Function(FunctionSpace(mesh, 'CG', 7))
    for i in range(0,nn):
       for j in range(0,nn):
-      	x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
-      	f_sum=f_sum + conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
-   aexpr=1./(1+f_sum)
-   aelt='CG'
-   adeg=7
-
-A = assemble(interpolate(aexpr, FunctionSpace(mesh, aelt, adeg)))
+          x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
+          fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+          Fi = assemble(interpolate(fi,FunctionSpace(mesh,'CG',7)))
+          Asum += Fi
+   A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
 # evaluate coefficient, save to file and plot
 plt.clf()
 fig, axes = plt.subplots()
