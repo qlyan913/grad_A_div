@@ -7,7 +7,7 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=20 # length of square
+L=100 # length of square
 nx=100
 ny=100
 mesh = SquareMesh(nx,ny,L)
