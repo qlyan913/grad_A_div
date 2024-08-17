@@ -37,7 +37,7 @@ flag2 = 1
 """
 plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
-coeftype='fixed displacement' #'constant' #'random displacement' # 'fixed displacement' 
+coeftype='random displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'

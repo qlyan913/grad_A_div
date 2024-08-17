@@ -11,3 +11,5 @@
 
 
 # coefficient 2:
+000005   [0,10]x[0,10]   fixed displacement   Dirichlet boundar   
+000006   [0,10]x[0,10]   random displacement   Dirichlet boundar  
