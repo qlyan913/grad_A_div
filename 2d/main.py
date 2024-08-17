@@ -19,11 +19,11 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=10 # length of square
+L=100 # length of square
 nx=200
 ny=200
 nreq=301
-target=0
+target=10
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
