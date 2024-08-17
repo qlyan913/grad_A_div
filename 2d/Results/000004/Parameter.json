@@ -4,9 +4,9 @@
     "bctype": "dirichlet",
     "deg": 5,
     "target": 15,
-    "nx": 100,
-    "ny": 100,
+    "nx": 200,
+    "ny": 200,
     "params": "",
     "coeftype": "random displacement",
-    "L": 20
+    "L": 100
 }

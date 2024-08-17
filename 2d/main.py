@@ -3,10 +3,13 @@ Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on square [0,L]x[0,L]
 Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
-   f = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
+  
+   f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
+   f2 =  -1 or 1 x0.75 [max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
+import random
 import os,math, json
 import matplotlib.pyplot as plt
 from firedrake import *
@@ -16,14 +19,15 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=100 # length of square
+L=10 # length of square
 nx=200
 ny=200
 nreq=301
-target=15
+target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
+f_flag=2 # 1: coef--- f1, 2: coef --- f2
 n_all=300
 flag2 = 1
 """
@@ -33,7 +37,7 @@ flag2 = 1
 """
 plotmesh=1 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
-coeftype='random displacement' #'constant' #'random displacement' # 'fixed displacement' 
+coeftype='fixed displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
@@ -54,13 +58,14 @@ eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
-
+signfile = outdir+ '/'+'sign_list.txt'
 # write parameters to file
 # store parameters in dictionary
 runparameters = {
     'operator type': flag2,
     '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi':"" ,
     'bctype': bctype,
+    'coef_type': f_flag,
     'deg': deg,
     'target':target,
     'nx': nx,
@@ -118,13 +123,22 @@ else:
       dn1=np.zeros(nn**2)
       dn2=np.zeros(nn**2)
    Asum=Function(FunctionSpace(mesh, 'CG', 7))
+   sign_list=[]
    for i in range(0,nn):
       for j in range(0,nn):
           x_center=[i+1+dn1[i*nn+j],j+1+dn2[i*nn+j]]
-          fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+          if f_flag ==1:
+             fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+          else:
+             sign=random.choice([-1,1])
+             sign_list.append(sign)
+             fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign*0.75*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           Fi = assemble(interpolate(fi,FunctionSpace(mesh,'CG',7)))
           Asum += Fi
    A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
+if f_flag==2:
+   np.savetxt(signfile, sign_list)
+
 # evaluate coefficient, save to file and plot
 plt.clf()
 fig, axes = plt.subplots()
