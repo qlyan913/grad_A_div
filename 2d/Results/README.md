@@ -20,3 +20,4 @@
 
 # coefficient 3:
 000010   [0,10]x[0,10]   random displacement   Dirichlet boundar
+000011   [0,100]x[0,100]   random displacement   Dirichlet boundar
