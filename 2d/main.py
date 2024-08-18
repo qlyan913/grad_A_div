@@ -23,11 +23,11 @@ L=100 # length of square
 nx=200
 ny=200
 nreq=301
-target=0
+target=20
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
-f_flag=2 # 1: coef--- f1, 2: coef --- f2
+f_flag=1 # 1: coef--- f1, 2: coef --- f2
 n_all=300
 flag2 = 1
 """
@@ -54,11 +54,13 @@ mpfile_log = outdir + '/' + 'pratio_mode_log.png'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 pratiofile=outdir + '/' + 'pratio.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
+eigenfun_smpr_file= outdir + '/' + 'smpr_{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
+
 # write parameters to file
 # store parameters in dictionary
 runparameters = {
@@ -157,7 +159,7 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all,n_all)
+modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,eigenfun_smpr_file,[],flag,eigenfunmon_all,n_all)
 np.savetxt(pratiofile,pratio)
 
 plt.clf()

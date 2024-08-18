@@ -123,7 +123,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all="",n_all=500):
+def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,eigenfun_smpr_file,center_list=[],flag=0,eigenfunmon_all="",n_all=500):
     # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -169,6 +169,15 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                  eigenf_imgs.append(eigenfunplotfile.format(i))
               if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
+              if pr <0.8:
+                   plt.clf()
+                   fig = plt.figure()
+                   axes= fig.add_subplot(projection="3d")
+                   trisurf(eigenfun,axes=axes);
+                   plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
+                   print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
+                   plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
+                   plt.close()
         else:
             if i < n_all+1:
                eigenvalues_v2.append(r.real)
@@ -185,6 +194,15 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
                plt.close()
+               if pr <0.8:
+                   plt.clf()
+                   fig = plt.figure()
+                   axes= fig.add_subplot(projection="3d")
+                   trisurf(eigenfun,axes=axes);
+                   plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
+                   print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
+                   plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
+                   plt.close()
             else:
                break
     np.savetxt(eigenvalfile, eigenvalues)
