@@ -1,2 +1,128 @@
 firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
 > subdirectory name:000004
+> run parameters written to Results/000004/Parameter.json
+> mesh with 80000 elements
+> mesh plotted to Results/000004/mesh.png
+> sampling of dn plotted to Results/000004/sample_dn.png
+> coefficient plotted to Results/000004/coefficient.png
+> degree of freedom:  1002001
+> computed 341 eigenvalues.
+> eigenfunction 0 plotted to Results/000004/eigenfun00000.png
+> eigenfunction 0 with p-ration0.05404 plotted to Results/000004/smpr_00000.png
+> eigenfunction 1 plotted to Results/000004/eigenfun00001.png
+> eigenfunction 1 with p-ration0.04759 plotted to Results/000004/smpr_00001.png
+> eigenfunction 2 plotted to Results/000004/eigenfun00002.png
+> eigenfunction 2 with p-ration0.05387 plotted to Results/000004/smpr_00002.png
+> eigenfunction 3 plotted to Results/000004/eigenfun00003.png
+> eigenfunction 3 with p-ration0.03419 plotted to Results/000004/smpr_00003.png
+> eigenfunction 4 plotted to Results/000004/eigenfun00004.png
+> eigenfunction 4 with p-ration0.04576 plotted to Results/000004/smpr_00004.png
+> eigenfunction 5 plotted to Results/000004/eigenfun00005.png
+> eigenfunction 5 with p-ration0.04113 plotted to Results/000004/smpr_00005.png
+> eigenfunction 6 plotted to Results/000004/eigenfun00006.png
+> eigenfunction 6 with p-ration0.04952 plotted to Results/000004/smpr_00006.png
+> eigenfunction 7 plotted to Results/000004/eigenfun00007.png
+> eigenfunction 7 with p-ration0.04924 plotted to Results/000004/smpr_00007.png
+> eigenfunction 8 plotted to Results/000004/eigenfun00008.png
+> eigenfunction 8 with p-ration0.04701 plotted to Results/000004/smpr_00008.png
+> eigenfunction 9 plotted to Results/000004/eigenfun00009.png
+> eigenfunction 9 with p-ration0.04822 plotted to Results/000004/smpr_00009.png
+> eigenfunction 10 plotted to Results/000004/eigenfun00010.png
+> eigenfunction 10 with p-ration0.04728 plotted to Results/000004/smpr_00010.png
+> eigenfunction 11 plotted to Results/000004/eigenfun00011.png
+> eigenfunction 11 with p-ration0.05446 plotted to Results/000004/smpr_00011.png
+> eigenfunction 12 plotted to Results/000004/eigenfun00012.png
+> eigenfunction 12 with p-ration0.05523 plotted to Results/000004/smpr_00012.png
+> eigenfunction 13 plotted to Results/000004/eigenfun00013.png
+> eigenfunction 13 with p-ration0.05124 plotted to Results/000004/smpr_00013.png
+> eigenfunction 14 plotted to Results/000004/eigenfun00014.png
+> eigenfunction 14 with p-ration0.04393 plotted to Results/000004/smpr_00014.png
+> eigenfunction 15 plotted to Results/000004/eigenfun00015.png
+> eigenfunction 15 with p-ration0.05513 plotted to Results/000004/smpr_00015.png
+> eigenfunction 16 plotted to Results/000004/eigenfun00016.png
+> eigenfunction 16 with p-ration0.05069 plotted to Results/000004/smpr_00016.png
+> eigenfunction 17 plotted to Results/000004/eigenfun00017.png
+> eigenfunction 17 with p-ration0.05130 plotted to Results/000004/smpr_00017.png
+> eigenfunction 18 plotted to Results/000004/eigenfun00018.png
+> eigenfunction 18 with p-ration0.05064 plotted to Results/000004/smpr_00018.png
+> eigenfunction 19 plotted to Results/000004/eigenfun00019.png
+> eigenfunction 19 with p-ration0.05605 plotted to Results/000004/smpr_00019.png
+> eigenfunction 20 plotted to Results/000004/eigenfun00020.png
+> eigenfunction 20 with p-ration0.05308 plotted to Results/000004/smpr_00020.png
+> eigenfunction 21 plotted to Results/000004/eigenfun00021.png
+> eigenfunction 21 with p-ration0.05443 plotted to Results/000004/smpr_00021.png
+> eigenfunction 22 plotted to Results/000004/eigenfun00022.png
+> eigenfunction 22 with p-ration0.04840 plotted to Results/000004/smpr_00022.png
+> eigenfunction 23 plotted to Results/000004/eigenfun00023.png
+> eigenfunction 23 with p-ration0.04932 plotted to Results/000004/smpr_00023.png
+> eigenfunction 24 plotted to Results/000004/eigenfun00024.png
+> eigenfunction 24 with p-ration0.04242 plotted to Results/000004/smpr_00024.png
+> eigenfunction 25 plotted to Results/000004/eigenfun00025.png
+> eigenfunction 25 with p-ration0.04526 plotted to Results/000004/smpr_00025.png
+> eigenfunction 26 plotted to Results/000004/eigenfun00026.png
+> eigenfunction 26 with p-ration0.04263 plotted to Results/000004/smpr_00026.png
+> eigenfunction 27 plotted to Results/000004/eigenfun00027.png
+> eigenfunction 27 with p-ration0.04717 plotted to Results/000004/smpr_00027.png
+> eigenfunction 28 plotted to Results/000004/eigenfun00028.png
+> eigenfunction 28 with p-ration0.04004 plotted to Results/000004/smpr_00028.png
+> eigenfunction 29 plotted to Results/000004/eigenfun00029.png
+> eigenfunction 29 with p-ration0.05657 plotted to Results/000004/smpr_00029.png
+> eigenfunction 30 plotted to Results/000004/eigenfun00030.png
+> eigenfunction 30 with p-ration0.05685 plotted to Results/000004/smpr_00030.png
+> eigenfunction 31 plotted to Results/000004/eigenfun00031.png
+> eigenfunction 31 with p-ration0.05789 plotted to Results/000004/smpr_00031.png
+> eigenfunction 32 plotted to Results/000004/eigenfun00032.png
+> eigenfunction 32 with p-ration0.05273 plotted to Results/000004/smpr_00032.png
+> eigenfunction 33 plotted to Results/000004/eigenfun00033.png
+> eigenfunction 33 with p-ration0.04413 plotted to Results/000004/smpr_00033.png
+> eigenfunction 34 plotted to Results/000004/eigenfun00034.png
+> eigenfunction 34 with p-ration0.05751 plotted to Results/000004/smpr_00034.png
+> eigenfunction 35 plotted to Results/000004/eigenfun00035.png
+> eigenfunction 35 with p-ration0.03767 plotted to Results/000004/smpr_00035.png
+> eigenfunction 36 plotted to Results/000004/eigenfun00036.png
+> eigenfunction 36 with p-ration0.05312 plotted to Results/000004/smpr_00036.png
+> eigenfunction 37 plotted to Results/000004/eigenfun00037.png
+> eigenfunction 37 with p-ration0.05620 plotted to Results/000004/smpr_00037.png
+> eigenfunction 38 plotted to Results/000004/eigenfun00038.png
+> eigenfunction 38 with p-ration0.04679 plotted to Results/000004/smpr_00038.png
+> eigenfunction 39 plotted to Results/000004/eigenfun00039.png
+> eigenfunction 39 with p-ration0.05194 plotted to Results/000004/smpr_00039.png
+> eigenfunction 40 plotted to Results/000004/eigenfun00040.png
+> eigenfunction 40 with p-ration0.05341 plotted to Results/000004/smpr_00040.png
+> eigenfunction 41 plotted to Results/000004/eigenfun00041.png
+> eigenfunction 41 with p-ration0.05801 plotted to Results/000004/smpr_00041.png
+> eigenfunction 42 plotted to Results/000004/eigenfun00042.png
+> eigenfunction 42 with p-ration0.04605 plotted to Results/000004/smpr_00042.png
+> eigenfunction 43 plotted to Results/000004/eigenfun00043.png
+> eigenfunction 43 with p-ration0.04361 plotted to Results/000004/smpr_00043.png
+> eigenfunction 44 plotted to Results/000004/eigenfun00044.png
+> eigenfunction 44 with p-ration0.05290 plotted to Results/000004/smpr_00044.png
+> eigenfunction 45 plotted to Results/000004/eigenfun00045.png
+> eigenfunction 45 with p-ration0.05566 plotted to Results/000004/smpr_00045.png
+> eigenfunction 46 plotted to Results/000004/eigenfun00046.png
+> eigenfunction 46 with p-ration0.04482 plotted to Results/000004/smpr_00046.png
+> eigenfunction 47 plotted to Results/000004/eigenfun00047.png
+> eigenfunction 47 with p-ration0.05520 plotted to Results/000004/smpr_00047.png
+> eigenfunction 48 plotted to Results/000004/eigenfun00048.png
+> eigenfunction 48 with p-ration0.05162 plotted to Results/000004/smpr_00048.png
+> eigenfunction 49 plotted to Results/000004/eigenfun00049.png
+> eigenfunction 49 with p-ration0.04987 plotted to Results/000004/smpr_00049.png
+> eigenfunction 50 plotted to Results/000004/eigenfun00050.png
+> eigenfunction 50 with p-ration0.03359 plotted to Results/000004/smpr_00050.png
+> eigenfunction 51 plotted to Results/000004/eigenfun00051.png
+> eigenfunction 51 with p-ration0.05265 plotted to Results/000004/smpr_00051.png
+> eigenfunction 52 plotted to Results/000004/eigenfun00052.png
+> eigenfunction 52 with p-ration0.04088 plotted to Results/000004/smpr_00052.png
+> eigenfunction 53 plotted to Results/000004/eigenfun00053.png
+> eigenfunction 53 with p-ration0.04765 plotted to Results/000004/smpr_00053.png
+> eigenfunction 54 plotted to Results/000004/eigenfun00054.png
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Caught signal number 15 Terminate: Some process (or the batch system) has told this process to end
+[0]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[0]PETSC ERROR: or see https://petsc.org/release/faq/#valgrind and https://petsc.org/release/faq/
+[0]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[0]PETSC ERROR: to get more information on the crash.
+application called MPI_Abort(MPI_COMM_WORLD, 59) - process 0
+[unset]: PMIU_write error; fd=-1 buf=:cmd=abort exitcode=59 message=application called MPI_Abort(MPI_COMM_WORLD, 59) - process 0
+:
+system msg for write_line failure : Bad file descriptor

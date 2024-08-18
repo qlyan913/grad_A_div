@@ -169,7 +169,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                  eigenf_imgs.append(eigenfunplotfile.format(i))
               if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
-              if pr <0.8:
+              if pr <0.08:
                    plt.clf()
                    fig = plt.figure()
                    axes= fig.add_subplot(projection="3d")
@@ -194,7 +194,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
                plt.close()
-               if pr <0.8:
+               if pr <0.08:
                    plt.clf()
                    fig = plt.figure()
                    axes= fig.add_subplot(projection="3d")
