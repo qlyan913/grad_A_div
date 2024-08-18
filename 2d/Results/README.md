@@ -13,9 +13,8 @@
 # coefficient 2:
 000005   [0,10]x[0,10]   random displacement   Dirichlet boundar   
 -- operator 1 -- 
-000007   [0,100]x[0,100]   random displacement   Dirichlet boundar first 300 eigen  
-000008   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 10
-000009   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 30
+000006   [0,100]x[0,100]   random displacement   Dirichlet boundar first 300 eigen  
+000007   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 20
 
 # coefficient 3:
 000012   [0,10]x[0,10]   random displacement   Dirichlet boundar
