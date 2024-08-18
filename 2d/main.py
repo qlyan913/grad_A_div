@@ -5,7 +5,7 @@ Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
   
    f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
-   f2 =  -1 or 1 x0.75 [max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
+   f2 =(-1)^(i+j) x 0.75 [max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
    dn uniform distribution on [-dmax,dmax]
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
@@ -19,15 +19,15 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=100 # length of square
+L=10 # length of square
 nx=200
 ny=200
 nreq=301
-target=20
+target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
-flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
-f_flag=3 # 1: coef--- f1, 2: coef --- f2
+flag=0 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
+f_flag=2 # 1: coef--- f1, 2: coef --- f2
 n_all=300
 flag2 = 1
 """
@@ -130,8 +130,8 @@ else:
           if f_flag ==1:
              fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,20*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           elif f_flag ==2:
-             sign=random.choice([-1,1])
-             sign_list.append(sign)
+            # sign=random.choice([-1,1])
+             sign=(-1)**(i+j)
              fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign*0.75*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           else:
              sign=(-1)**(i+j)
@@ -143,8 +143,8 @@ else:
           Fi = assemble(interpolate(fi,FunctionSpace(mesh,'CG',7)))
           Asum += Fi
    A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
-if f_flag==2:
-   np.savetxt(signfile, sign_list)
+#if f_flag==2:
+ #  np.savetxt(signfile, sign_list)
 
 # evaluate coefficient, save to file and plot
 plt.clf()

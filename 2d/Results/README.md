@@ -11,13 +11,14 @@
 
 
 # coefficient 2:
-000005   [0,10]x[0,10]   fixed displacement   Dirichlet boundar   
-000006   [0,10]x[0,10]   random displacement   Dirichlet boundar  
+000005   [0,10]x[0,10]   random displacement   Dirichlet boundar   
 -- operator 1 -- 
 000007   [0,100]x[0,100]   random displacement   Dirichlet boundar first 300 eigen  
 000008   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 10
 000009   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 30
 
 # coefficient 3:
+000012   [0,10]x[0,10]   random displacement   Dirichlet boundar
+-- operator 1 -- 
 000010   [0,100]x[0,100]   random displacement   Dirichlet boundar
 000011   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigen close to 20
