@@ -23,7 +23,7 @@ L=100 # length of square
 nx=200
 ny=200
 nreq=301
-target=0
+target=20
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
 flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
@@ -135,7 +135,11 @@ else:
              fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign*0.75*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           else:
              sign=(-1)**(i+j)
-             fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign*0.75*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
+             if sign==-1:
+                sign_2=-0.9
+             else: 
+                sign_2=20
+             fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign_2*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           Fi = assemble(interpolate(fi,FunctionSpace(mesh,'CG',7)))
           Asum += Fi
    A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
