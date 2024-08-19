@@ -4,9 +4,9 @@ Solve the eigenvalue problem with variable coefficient:
 Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
   
-   f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
-   f2 =(-1)^(i+j) x 0.75 [max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in [-s,s]
-   dn uniform distribution on [-dmax,dmax]
+   f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in B_0(s)
+   f2 =(-1)^(i+j) x 0.75 [max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in B_0(s)
+   dn uniform distribution on the ball B_0(d_max)
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
 import random
