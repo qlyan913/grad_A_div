@@ -26,8 +26,8 @@ nreq=301
 target=20
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300
 plotefuns_2=[int(d) for d in range(20)]
-flag=1 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
-f_flag=1 # 1: coef--- f1, 2: coef --- f2
+flag=0 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
+f_flag=3 # 1: coef--- f1, 2: coef --- f2
 n_all=300
 flag2 = 1
 """

@@ -169,11 +169,12 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                  eigenf_imgs.append(eigenfunplotfile.format(i))
               if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
-              if pr <0.08:
+              if pr <0.07:
                    plt.clf()
                    fig = plt.figure()
                    axes= fig.add_subplot(projection="3d")
-                   trisurf(eigenfun,axes=axes);
+                   collection=trisurf(eigenfun,axes=axes);
+                   fig.colorbar(collection);
                    plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
                    print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
                    plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
@@ -194,11 +195,12 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
                plt.close()
-               if pr <0.08:
+               if pr <0.07:
                    plt.clf()
                    fig = plt.figure()
                    axes= fig.add_subplot(projection="3d")
-                   trisurf(eigenfun,axes=axes);
+                   collection=trisurf(eigenfun,axes=axes);
+                   fig.colorbar(collection);
                    plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
                    print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
                    plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
