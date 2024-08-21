@@ -227,14 +227,15 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
     return modes, eigenvalues_v2, pratio
 
 
-def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,flag,target):
+def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target):
    # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
     pratio=[]
     modes=[]
     eigenf_imgs = []
-    eigenf_imgs_2 = []
+    eigenf_imgs_smpr = []
+    
     for i in range(nreq):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
@@ -253,39 +254,40 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
             rx = rx/rxmax
         eigenfun = Function(V)
         eigenfun.vector().set_local(rx)
-        if flag == 0:
+        
+        if i in plotefuns:
+           eigenvalues_v2.append(r.real)
+           modes.append(i)
+           f2=assemble(eigenfun**2*dx)
+           f4=assemble(eigenfun**4*dx)
+           pr=1/(L**2)*(f2**2)/f4
+           pratio.append(pr)
+           plt.clf()
+           fig, axes = plt.subplots()
+           collection = tripcolor(eigenfun, axes=axes)
+           fig.colorbar(collection);
+           plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
+           print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
+           plt.savefig(eigenfunplotfile.format(target,i), dpi=300)
+           plt.close()
            if i in plotefuns:
-              eigenvalues_v2.append(r.real)
-              modes.append(i)
-              f2=assemble(eigenfun**2*dx)
-              f4=assemble(eigenfun**4*dx)
-              pr=1/(L**2)*(f2**2)/f4
-              pratio.append(pr)
+              eigenf_imgs.append(eigenfunplotfile.format(target,i))
+           if pr <0.05:
               plt.clf()
-              fig, axes = plt.subplots()
-              collection = tripcolor(eigenfun, axes=axes)
+              fig = plt.figure()
+              axes= fig.add_subplot(projection="3d")
+              collection=trisurf(eigenfun,axes=axes);
               fig.colorbar(collection);
-              plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
-              print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
-              plt.savefig(eigenfunplotfile.format(target,i), dpi=300)
+              plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
+              print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))
+              plt.savefig(eigenfun_smpr_file.format(target,i),dpi=300)
               plt.close()
-              if i in plotefuns:
-                 eigenf_imgs.append(eigenfunplotfile.format(target,i))
-              if pr <0.07:
-                   plt.clf()
-                   fig = plt.figure()
-                   axes= fig.add_subplot(projection="3d")
-                   collection=trisurf(eigenfun,axes=axes);
-                   fig.colorbar(collection);
-                   plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-                   print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))
-                   plt.savefig(eigenfun_smpr_file.format(target,i),dpi=300)
-                   plt.close()
+              eigenf_imgs_smpr.append(eigenfun_smpr_file.format(target,i))
     np.savetxt(eigenvalfile.format(target), eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
     combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
     print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
-    return modes, eigenvalues_v2, pratio
+    return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr
 
 
 

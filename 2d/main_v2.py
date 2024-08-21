@@ -23,11 +23,9 @@ L=100 # length of square
 nx=200
 ny=200
 nreq=21
-target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,300]
+target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,500]
 plotefuns=[int(d) for d in range(20)]
-flag=0 # 1: print all first n_all(default=500) eigenfuns, 0: print plotefuns 
 f_flag=1 # 1: coef--- f1, 2: coef --- f2
-n_all=15
 flag2 =3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -47,14 +45,12 @@ outdir = makedir()
 coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
 eigenvalfile = outdir + '/' + 'eigenvalues_target_{:05d}.txt'
-mpfile = outdir + '/' + 'pratio_mode_target_{:05d}.png'
-epfile = outdir + '/' + 'pratio_eigen_target_{:05d}.png'
-mpfile_log = outdir + '/' + 'pratio_mode_log_target_{:05d}.png'
-epfile_log = outdir + '/' + 'pratio_eigen_log_target_{:05d}.png'
+epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}.png'
+eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr.png'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
 
@@ -152,24 +148,25 @@ plt.title('coefficient')
 plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
 
+eigenvalues_list=[]
+pratio_list=[]
+eigf_imgs_list=[]
 # solve eigen problem and save results
 for target in target_list: 
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-   modes, eigenvalues2, pratio = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,flag,target)
+   modes, eigenvalues2, pratio,eigenf_imgs_smpr = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
    np.savetxt(pratiofile.format(target),pratio)
+   eigenvalues_list+=eigenvalues2
+   pratio_list+=pratio
+   eigf_imgs_list+=eigenf_imgs_smpr
 
-   plt.clf()
-   plt.yscale('log')
-   plt.scatter(modes,pratio)
-   plt.xlabel('modes')
-   plt.ylabel('p-ratio')
-   plt.savefig(mpfile_log.format(target))
-   print("> pratio vs modes to {}".format(mpfile_log.format(target)))
+plt.clf()
+plt.yscale('log')
+plt.scatter(eigenvalues_list,pratio_list)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.savefig(epfile_log)
+print("> pratio vs eigenvalues to {}".format(epfile_log))
 
-   plt.clf()
-   plt.yscale('log')
-   plt.scatter(eigenvalues2,pratio)
-   plt.xlabel('eigenvalues')
-   plt.ylabel('p-ratio')
-   plt.savefig(epfile_log.format(target))
-   print("> pratio vs eigenvalues to {}".format(epfile_log.format(target)))
+combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
+print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr)) 
