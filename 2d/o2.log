@@ -1,0 +1,431 @@
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+> subdirectory name:000014
+> run parameters written to Results/000014/Parameter.json
+> mesh with 80000 elements
+> mesh plotted to Results/000014/mesh.png
+> sampling of dn plotted to Results/000014/sample_dn.png
+> coefficient plotted to Results/000014/coefficient.png
+> degree of freedom:  1002001
+> computed 22 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00000_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00000_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00000_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00000_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00000_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00000_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00000_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00000_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00000_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00000_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00000_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00000_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00000_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00000_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00000_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00000_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00000_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00000_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00000_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00000_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00000.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00000.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00000.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00000.png
+> degree of freedom:  1002001
+> computed 22 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00010_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00010_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00010_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00010_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00010_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00010_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00010_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00010_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00010_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00010_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00010_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00010_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00010_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00010_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00010_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00010_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00010_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00010_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00010_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00010_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00010.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00010.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00010.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00010.png
+> degree of freedom:  1002001
+> computed 24 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00020_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00020_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00020_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00020_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00020_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00020_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00020_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00020_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00020_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00020_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00020_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00020_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00020_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00020_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00020_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00020_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00020_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00020_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00020_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00020_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00020.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00020.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00020.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00020.png
+> degree of freedom:  1002001
+> computed 21 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00030_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00030_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00030_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00030_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00030_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00030_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00030_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00030_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00030_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00030_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00030_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00030_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00030_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00030_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00030_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00030_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00030_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00030_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00030_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00030_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00030.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00030.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00030.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00030.png
+> degree of freedom:  1002001
+> computed 21 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00040_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00040_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00040_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00040_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00040_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00040_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00040_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00040_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00040_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00040_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00040_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00040_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00040_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00040_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00040_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00040_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00040_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00040_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00040_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00040_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00040.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00040.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00040.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00040.png
+> degree of freedom:  1002001
+> computed 21 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00050_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00050_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00050_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00050_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00050_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00050_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00050_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00050_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00050_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00050_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00050_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00050_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00050_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00050_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00050_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00050_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00050_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00050_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00050_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00050_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00050.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00050.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00050.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00050.png
+> degree of freedom:  1002001
+> computed 21 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00060_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00060_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00060_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00060_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00060_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00060_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00060_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00060_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00060_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00060_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00060_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00060_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00060_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00060_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00060_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00060_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00060_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00060_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00060_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00060_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00060.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00060.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00060.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00060.png
+> degree of freedom:  1002001
+> computed 23 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00070_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00070_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00070_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00070_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00070_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00070_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00070_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00070_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00070_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00070_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00070_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00070_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00070_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00070_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00070_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00070_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00070_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00070_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00070_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00070_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00070.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00070.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00070.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00070.png
+> degree of freedom:  1002001
+> computed 23 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00080_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00080_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00080_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00080_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00080_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00080_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00080_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00080_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00080_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00080_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00080_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00080_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00080_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00080_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00080_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00080_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00080_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00080_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00080_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00080_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00080.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00080.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00080.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00080.png
+> degree of freedom:  1002001
+> computed 22 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00090_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00090_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00090_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00090_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00090_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00090_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00090_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00090_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00090_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00090_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00090_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00090_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00090_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00090_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00090_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00090_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00090_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00090_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00090_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00090_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00090.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00090.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00090.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00090.png
+> degree of freedom:  1002001
+> computed 25 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00100_eigen00000.png
+> eigenfunction 1 plotted to Results/000014/target_00100_eigen00001.png
+> eigenfunction 2 plotted to Results/000014/target_00100_eigen00002.png
+> eigenfunction 3 plotted to Results/000014/target_00100_eigen00003.png
+> eigenfunction 4 plotted to Results/000014/target_00100_eigen00004.png
+> eigenfunction 5 plotted to Results/000014/target_00100_eigen00005.png
+> eigenfunction 6 plotted to Results/000014/target_00100_eigen00006.png
+> eigenfunction 7 plotted to Results/000014/target_00100_eigen00007.png
+> eigenfunction 8 plotted to Results/000014/target_00100_eigen00008.png
+> eigenfunction 9 plotted to Results/000014/target_00100_eigen00009.png
+> eigenfunction 10 plotted to Results/000014/target_00100_eigen00010.png
+> eigenfunction 11 plotted to Results/000014/target_00100_eigen00011.png
+> eigenfunction 12 plotted to Results/000014/target_00100_eigen00012.png
+> eigenfunction 13 plotted to Results/000014/target_00100_eigen00013.png
+> eigenfunction 14 plotted to Results/000014/target_00100_eigen00014.png
+> eigenfunction 15 plotted to Results/000014/target_00100_eigen00015.png
+> eigenfunction 16 plotted to Results/000014/target_00100_eigen00016.png
+> eigenfunction 17 plotted to Results/000014/target_00100_eigen00017.png
+> eigenfunction 18 plotted to Results/000014/target_00100_eigen00018.png
+> eigenfunction 19 plotted to Results/000014/target_00100_eigen00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00100.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00100.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00100.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00100.png
+> degree of freedom:  1002001
+> computed 22 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00150_eigen00000.png
+> eigenfunction 0 with p-ration0.04768 plotted to Results/000014/target_00150_smpr_00000.png
+> eigenfunction 1 plotted to Results/000014/target_00150_eigen00001.png
+> eigenfunction 1 with p-ration0.01810 plotted to Results/000014/target_00150_smpr_00001.png
+> eigenfunction 2 plotted to Results/000014/target_00150_eigen00002.png
+> eigenfunction 2 with p-ration0.05073 plotted to Results/000014/target_00150_smpr_00002.png
+> eigenfunction 3 plotted to Results/000014/target_00150_eigen00003.png
+> eigenfunction 3 with p-ration0.02851 plotted to Results/000014/target_00150_smpr_00003.png
+> eigenfunction 4 plotted to Results/000014/target_00150_eigen00004.png
+> eigenfunction 4 with p-ration0.05169 plotted to Results/000014/target_00150_smpr_00004.png
+> eigenfunction 5 plotted to Results/000014/target_00150_eigen00005.png
+> eigenfunction 5 with p-ration0.02662 plotted to Results/000014/target_00150_smpr_00005.png
+> eigenfunction 6 plotted to Results/000014/target_00150_eigen00006.png
+> eigenfunction 6 with p-ration0.02512 plotted to Results/000014/target_00150_smpr_00006.png
+> eigenfunction 7 plotted to Results/000014/target_00150_eigen00007.png
+> eigenfunction 7 with p-ration0.05247 plotted to Results/000014/target_00150_smpr_00007.png
+> eigenfunction 8 plotted to Results/000014/target_00150_eigen00008.png
+> eigenfunction 8 with p-ration0.03825 plotted to Results/000014/target_00150_smpr_00008.png
+> eigenfunction 9 plotted to Results/000014/target_00150_eigen00009.png
+> eigenfunction 9 with p-ration0.03863 plotted to Results/000014/target_00150_smpr_00009.png
+> eigenfunction 10 plotted to Results/000014/target_00150_eigen00010.png
+> eigenfunction 10 with p-ration0.03909 plotted to Results/000014/target_00150_smpr_00010.png
+> eigenfunction 11 plotted to Results/000014/target_00150_eigen00011.png
+> eigenfunction 11 with p-ration0.06152 plotted to Results/000014/target_00150_smpr_00011.png
+> eigenfunction 12 plotted to Results/000014/target_00150_eigen00012.png
+> eigenfunction 12 with p-ration0.04377 plotted to Results/000014/target_00150_smpr_00012.png
+> eigenfunction 13 plotted to Results/000014/target_00150_eigen00013.png
+> eigenfunction 13 with p-ration0.03915 plotted to Results/000014/target_00150_smpr_00013.png
+> eigenfunction 14 plotted to Results/000014/target_00150_eigen00014.png
+> eigenfunction 14 with p-ration0.05463 plotted to Results/000014/target_00150_smpr_00014.png
+> eigenfunction 15 plotted to Results/000014/target_00150_eigen00015.png
+> eigenfunction 15 with p-ration0.04798 plotted to Results/000014/target_00150_smpr_00015.png
+> eigenfunction 16 plotted to Results/000014/target_00150_eigen00016.png
+> eigenfunction 16 with p-ration0.05959 plotted to Results/000014/target_00150_smpr_00016.png
+> eigenfunction 17 plotted to Results/000014/target_00150_eigen00017.png
+> eigenfunction 17 with p-ration0.03001 plotted to Results/000014/target_00150_smpr_00017.png
+> eigenfunction 18 plotted to Results/000014/target_00150_eigen00018.png
+> eigenfunction 18 with p-ration0.06099 plotted to Results/000014/target_00150_smpr_00018.png
+> eigenfunction 19 plotted to Results/000014/target_00150_eigen00019.png
+> eigenfunction 19 with p-ration0.02808 plotted to Results/000014/target_00150_smpr_00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00150.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00150.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00150.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00150.png
+> degree of freedom:  1002001
+> computed 22 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00200_eigen00000.png
+> eigenfunction 0 with p-ration0.04018 plotted to Results/000014/target_00200_smpr_00000.png
+> eigenfunction 1 plotted to Results/000014/target_00200_eigen00001.png
+> eigenfunction 1 with p-ration0.02971 plotted to Results/000014/target_00200_smpr_00001.png
+> eigenfunction 2 plotted to Results/000014/target_00200_eigen00002.png
+> eigenfunction 2 with p-ration0.03323 plotted to Results/000014/target_00200_smpr_00002.png
+> eigenfunction 3 plotted to Results/000014/target_00200_eigen00003.png
+> eigenfunction 3 with p-ration0.03921 plotted to Results/000014/target_00200_smpr_00003.png
+> eigenfunction 4 plotted to Results/000014/target_00200_eigen00004.png
+> eigenfunction 4 with p-ration0.03966 plotted to Results/000014/target_00200_smpr_00004.png
+> eigenfunction 5 plotted to Results/000014/target_00200_eigen00005.png
+> eigenfunction 5 with p-ration0.04225 plotted to Results/000014/target_00200_smpr_00005.png
+> eigenfunction 6 plotted to Results/000014/target_00200_eigen00006.png
+> eigenfunction 6 with p-ration0.04363 plotted to Results/000014/target_00200_smpr_00006.png
+> eigenfunction 7 plotted to Results/000014/target_00200_eigen00007.png
+> eigenfunction 7 with p-ration0.04239 plotted to Results/000014/target_00200_smpr_00007.png
+> eigenfunction 8 plotted to Results/000014/target_00200_eigen00008.png
+> eigenfunction 8 with p-ration0.03667 plotted to Results/000014/target_00200_smpr_00008.png
+> eigenfunction 9 plotted to Results/000014/target_00200_eigen00009.png
+> eigenfunction 9 with p-ration0.02824 plotted to Results/000014/target_00200_smpr_00009.png
+> eigenfunction 10 plotted to Results/000014/target_00200_eigen00010.png
+> eigenfunction 10 with p-ration0.04187 plotted to Results/000014/target_00200_smpr_00010.png
+> eigenfunction 11 plotted to Results/000014/target_00200_eigen00011.png
+> eigenfunction 11 with p-ration0.04253 plotted to Results/000014/target_00200_smpr_00011.png
+> eigenfunction 12 plotted to Results/000014/target_00200_eigen00012.png
+> eigenfunction 12 with p-ration0.03346 plotted to Results/000014/target_00200_smpr_00012.png
+> eigenfunction 13 plotted to Results/000014/target_00200_eigen00013.png
+> eigenfunction 13 with p-ration0.04088 plotted to Results/000014/target_00200_smpr_00013.png
+> eigenfunction 14 plotted to Results/000014/target_00200_eigen00014.png
+> eigenfunction 14 with p-ration0.03417 plotted to Results/000014/target_00200_smpr_00014.png
+> eigenfunction 15 plotted to Results/000014/target_00200_eigen00015.png
+> eigenfunction 15 with p-ration0.03935 plotted to Results/000014/target_00200_smpr_00015.png
+> eigenfunction 16 plotted to Results/000014/target_00200_eigen00016.png
+> eigenfunction 16 with p-ration0.04126 plotted to Results/000014/target_00200_smpr_00016.png
+> eigenfunction 17 plotted to Results/000014/target_00200_eigen00017.png
+> eigenfunction 17 with p-ration0.04244 plotted to Results/000014/target_00200_smpr_00017.png
+> eigenfunction 18 plotted to Results/000014/target_00200_eigen00018.png
+> eigenfunction 18 with p-ration0.03937 plotted to Results/000014/target_00200_smpr_00018.png
+> eigenfunction 19 plotted to Results/000014/target_00200_eigen00019.png
+> eigenfunction 19 with p-ration0.03878 plotted to Results/000014/target_00200_smpr_00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00200.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00200.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00200.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00200.png
+> degree of freedom:  1002001
+> computed 26 eigenvalues.
+> eigenfunction 0 plotted to Results/000014/target_00300_eigen00000.png
+> eigenfunction 0 with p-ration0.04497 plotted to Results/000014/target_00300_smpr_00000.png
+> eigenfunction 1 plotted to Results/000014/target_00300_eigen00001.png
+> eigenfunction 1 with p-ration0.04405 plotted to Results/000014/target_00300_smpr_00001.png
+> eigenfunction 2 plotted to Results/000014/target_00300_eigen00002.png
+> eigenfunction 2 with p-ration0.04293 plotted to Results/000014/target_00300_smpr_00002.png
+> eigenfunction 3 plotted to Results/000014/target_00300_eigen00003.png
+> eigenfunction 3 with p-ration0.04659 plotted to Results/000014/target_00300_smpr_00003.png
+> eigenfunction 4 plotted to Results/000014/target_00300_eigen00004.png
+> eigenfunction 4 with p-ration0.04495 plotted to Results/000014/target_00300_smpr_00004.png
+> eigenfunction 5 plotted to Results/000014/target_00300_eigen00005.png
+> eigenfunction 5 with p-ration0.04417 plotted to Results/000014/target_00300_smpr_00005.png
+> eigenfunction 6 plotted to Results/000014/target_00300_eigen00006.png
+> eigenfunction 6 with p-ration0.04695 plotted to Results/000014/target_00300_smpr_00006.png
+> eigenfunction 7 plotted to Results/000014/target_00300_eigen00007.png
+> eigenfunction 7 with p-ration0.04667 plotted to Results/000014/target_00300_smpr_00007.png
+> eigenfunction 8 plotted to Results/000014/target_00300_eigen00008.png
+> eigenfunction 8 with p-ration0.04715 plotted to Results/000014/target_00300_smpr_00008.png
+> eigenfunction 9 plotted to Results/000014/target_00300_eigen00009.png
+> eigenfunction 9 with p-ration0.05003 plotted to Results/000014/target_00300_smpr_00009.png
+> eigenfunction 10 plotted to Results/000014/target_00300_eigen00010.png
+> eigenfunction 10 with p-ration0.04477 plotted to Results/000014/target_00300_smpr_00010.png
+> eigenfunction 11 plotted to Results/000014/target_00300_eigen00011.png
+> eigenfunction 11 with p-ration0.04690 plotted to Results/000014/target_00300_smpr_00011.png
+> eigenfunction 12 plotted to Results/000014/target_00300_eigen00012.png
+> eigenfunction 12 with p-ration0.04865 plotted to Results/000014/target_00300_smpr_00012.png
+> eigenfunction 13 plotted to Results/000014/target_00300_eigen00013.png
+> eigenfunction 13 with p-ration0.04045 plotted to Results/000014/target_00300_smpr_00013.png
+> eigenfunction 14 plotted to Results/000014/target_00300_eigen00014.png
+> eigenfunction 14 with p-ration0.04627 plotted to Results/000014/target_00300_smpr_00014.png
+> eigenfunction 15 plotted to Results/000014/target_00300_eigen00015.png
+> eigenfunction 15 with p-ration0.04871 plotted to Results/000014/target_00300_smpr_00015.png
+> eigenfunction 16 plotted to Results/000014/target_00300_eigen00016.png
+> eigenfunction 16 with p-ration0.04847 plotted to Results/000014/target_00300_smpr_00016.png
+> eigenfunction 17 plotted to Results/000014/target_00300_eigen00017.png
+> eigenfunction 17 with p-ration0.04243 plotted to Results/000014/target_00300_smpr_00017.png
+> eigenfunction 18 plotted to Results/000014/target_00300_eigen00018.png
+> eigenfunction 18 with p-ration0.04231 plotted to Results/000014/target_00300_smpr_00018.png
+> eigenfunction 19 plotted to Results/000014/target_00300_eigen00019.png
+> eigenfunction 19 with p-ration0.04939 plotted to Results/000014/target_00300_smpr_00019.png
+> eigenvalues written to Results/000014/eigenvalues_target_00300.txt
+> eigenfunction montage written to Results/000014/eigenfunmontage_target_00300.png
+> pratio vs modes to Results/000014/pratio_mode_log_target_00300.png
+> pratio vs eigenvalues to Results/000014/pratio_eigen_log_target_00300.png
