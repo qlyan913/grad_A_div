@@ -19,14 +19,14 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=10 # length of square
+L=100 # length of square
 nx=200
 ny=200
 nreq=21
-target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,500]
+target_list=[0,5,10,15,20,25,30,35,40,45,50,55,60,70,80,90,100,150,200,250,300]
 plotefuns=[int(d) for d in range(20)]
 f_flag=3 # 1: coef--- f1, 2: coef --- f2
-flag2 =1
+flag2 =3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -46,6 +46,7 @@ coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
 eigenvalfile = outdir + '/' + 'eigenvalues_target_{:05d}.txt'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
+epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
 pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
@@ -167,6 +168,15 @@ plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
 plt.savefig(epfile_log)
 print("> pratio vs eigenvalues to {}".format(epfile_log))
+
+plt.clf()
+plt.yscale('log')
+plt.xscale('log')
+plt.scatter(eigenvalues_list,pratio_list)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.savefig(epfile_loglog)
+print("> pratio vs eigenvalues to {}".format(epfile_loglog))
 
 combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
 print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr)) 

@@ -15,22 +15,22 @@ Choices of f:
 000000   [0,1]x[0,1]   constant coefficient    Dirichlet boundary 
 
 # coefficient 1:
--- operator 1 -- 
+-- operator 1 --
 000001   [0,10]x[0,10]   fixed displacement    Dirichlet boundary
 000002   [0,10]x[0,10]   random displacement    Dirichlet boundar 
-000003   [0,100]x[0,100]   random displacement   Dirichlet boundar   first 300 eigen
-000004   [0,100]x[0,100]   random displacement   Dirichlet boundar  300 eigens close to 20, p ratio aorund 0.05
+000003   [0,100]x[0,100]   random displacement   Dirichlet boundar 
+-- operator 2 --
+000004   [0,100]x[0,100]   random displacement   Dirichlet boundar
+-- operator 3 --
+000005   [0,100]x[0,100]   random displacement   Dirichlet boundar
 
-
-# coefficient 2:    all p ratio lager than 0.3
+# coefficient 3:  
 -- operator 1 -- 
-000005   [0,10]x[0,10]   random displacement   Dirichlet boundar   
-000006   [0,100]x[0,100]   random displacement   Dirichlet boundar first 300 eigen
-000007   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigens close to 20
+000006   [0,10]x[0,10]   random displacement   Dirichlet boundar 
+000007   [0,100]x[0,100]   random displacement   Dirichlet boundar
+-- operator 2 --  
+000008   [0,100]x[0,100]   random displacement   Dirichlet boundar 
+-- operator 3 --
+000009   [0,100]x[0,100]   random displacement   Dirichlet boundar   
 
-# coefficient 3:
--- operator 1 -- 
-00008   [0,10]x[0,10]   random displacement   Dirichlet boundar,   
-00009   [0,10]x[0,10]   random displacement   Dirichlet boundar   close to 20,   some p ratio less than 0.03
-000010   [0,100]x[0,100]   random displacement   Dirichlet boundar first 300 eigen 
-000011   [0,100]x[0,100]   random displacement   Dirichlet boundar 300 eigen close to 20, p-ratio  around 0.06
+
