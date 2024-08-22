@@ -265,6 +265,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
            plt.clf()
            fig, axes = plt.subplots()
            collection = tripcolor(eigenfun, axes=axes)
+           collection.set_clim(-1.1,1.1)
            fig.colorbar(collection);
            plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
            print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
@@ -277,6 +278,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
               fig = plt.figure()
               axes= fig.add_subplot(projection="3d")
               collection=trisurf(eigenfun,axes=axes);
+              collection.set_clim(-1.1,1.1)
               fig.colorbar(collection);
               plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
               print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))

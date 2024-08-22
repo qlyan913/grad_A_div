@@ -19,14 +19,14 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=100 # length of square
+L=10 # length of square
 nx=200
 ny=200
 nreq=21
 target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,500]
 plotefuns=[int(d) for d in range(20)]
 f_flag=3 # 1: coef--- f1, 2: coef --- f2
-flag2 =3
+flag2 =1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
