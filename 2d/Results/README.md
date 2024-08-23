@@ -17,20 +17,27 @@ Choices of f:
 # coefficient 1:
 -- operator 1 --
 000001   [0,10]x[0,10]   fixed displacement    Dirichlet boundary
-000002   [0,10]x[0,10]   random displacement    Dirichlet boundar 
-000003   [0,100]x[0,100]   random displacement   Dirichlet boundar 
+000002   [0,10]x[0,10]   random displacement    Dirichlet boundary 
+000003   [0,100]x[0,100]   random displacement   Dirichlet boundary 
 -- operator 2 --
-000004   [0,100]x[0,100]   random displacement   Dirichlet boundar
+000004   [0,100]x[0,100]   random displacement   Dirichlet boundary
 -- operator 3 --
-000005   [0,100]x[0,100]   random displacement   Dirichlet boundar
+000005   [0,100]x[0,100]   random displacement   Dirichlet boundary
 
 # coefficient 3:  
 -- operator 1 -- 
-000006   [0,10]x[0,10]   random displacement   Dirichlet boundar 
-000007   [0,100]x[0,100]   random displacement   Dirichlet boundar
+000006   [0,10]x[0,10]   random displacement   Dirichlet boundary
+000007   [0,100]x[0,100]   random displacement   Dirichlet boundary
 -- operator 2 --  
-000008   [0,100]x[0,100]   random displacement   Dirichlet boundar 
+000008   [0,100]x[0,100]   random displacement   Dirichlet boundary 
 -- operator 3 --
-000009   [0,100]x[0,100]   random displacement   Dirichlet boundar   
+000009   [0,100]x[0,100]   random displacement   Dirichlet boundary   
 
-
+# coefficient piecewise constant: 
+-- operator 1 -- 
+0000010   [0,10]x[0,10]   Dirichlet boundary
+0000011   [0,100]x[0,100]   Dirichlet boundary
+-- operator 2 --    
+0000012   [0,100]x[0,100]   Dirichlet boundary
+-- operator 3 --    
+0000013   [0,100]x[0,100]   Dirichlet boundary
