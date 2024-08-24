@@ -23,9 +23,9 @@ L=100 # length of square
 nx=200
 ny=200
 nreq=21
-target_list=[0,5,10,15,20,25,30,35,40,45,50,55,60,70,80,90,100,150,200,250,300]
+target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000]
 plotefuns=[int(d) for d in range(20)]
-f_flag=3 # 1: coef--- f1, 2: coef --- f2
+f_flag=1 # 1: coef--- f1, 2: coef --- f2
 flag2 =3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -178,5 +178,25 @@ plt.ylabel('p-ratio')
 plt.savefig(epfile_loglog)
 print("> pratio vs eigenvalues to {}".format(epfile_loglog))
 
-combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
-print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr)) 
+n_imgs=len(eigf_imgs_list)
+if n_imgs<25:
+   combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
+   print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr.format(0)))
+else:
+   dd,dd2=divmod(n_imgs,25)
+   for i in range(dd):
+       segment=list(range(25*i,25*i+25))
+       i0=segment[0]
+       iend=segment[-1]
+       eigenf_imgs=[]
+       for j in segment:
+          eigenf_imgs.append(eigf_imgs_list[j])
+       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
+       print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))
+   segment=list(range(25*dd,n_imgs))
+   i0=segment[0]
+   eigenf_imgs=[]
+   for j in segment:
+      eigenf_imgs.append(eigf_imgs_list[j])
+   combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
+   print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))

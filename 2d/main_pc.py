@@ -15,15 +15,15 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=10 # length of square
+L=200 # length of square
 nx=L
 ny=L
 a0=1   # pc constant range from [a0, a1]
 a1=10  
 nreq=21
-target_list=[0,5,10,15,20,25,30,35,40,45,50,55,60,70,80,90,100,150,200,250,300]
+target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
 plotefuns=[int(d) for d in range(20)]
-flag2=1
+flag2=3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -47,7 +47,7 @@ pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}.png'
-eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr.png'
+eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr_{:05d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
 
@@ -133,5 +133,27 @@ plt.ylabel('p-ratio')
 plt.savefig(epfile_loglog)
 print("> pratio vs eigenvalues to {}".format(epfile_loglog))
 
-combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
-print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr)) 
+n_imgs=len(eigf_imgs_list)
+if n_imgs<25:
+   combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
+   print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr.format(0)))
+else:
+   dd,dd2=divmod(n_imgs,25)
+   for i in range(dd):
+       segment=list(range(25*i,25*i+25))
+       i0=segment[0]
+       iend=segment[-1]
+       eigenf_imgs=[]
+       for j in segment:
+          eigenf_imgs.append(eigf_imgs_list[j])
+       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
+       print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))
+   segment=list(range(25*dd,n_imgs))
+   i0=segment[0]
+   eigenf_imgs=[]
+   for j in segment:
+      eigenf_imgs.append(eigf_imgs_list[j])
+   combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
+   print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))
+
+
