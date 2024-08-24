@@ -1,7 +1,7 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on square [0,L]x[0,L]
-Here, we consider the 1d random displacement model:
+Here, we consider the random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
   
    f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in B_0(s)

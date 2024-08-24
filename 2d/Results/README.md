@@ -1,6 +1,18 @@
 Solve eigenvalue 
      - div (A \nabla u)=\lambda u
  on 2D square [0, L]x[0, L].
+
+ Tested with 3 cases: 
+
+operator 1 : -div A grad u = lambda u
+operator 2 : -div A grad u = lambda Au
+operator 3 : -div  grad u = lambda Au
+
+To check the eigenfunctions, we solve eigenproblem with eigenvalue closest to:
+
+0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000.
+
+
 THe coefficient 
  A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w)))
 
@@ -14,7 +26,7 @@ Choices of f:
 
 000000   [0,1]x[0,1]   constant coefficient    Dirichlet boundary 
 
-# coefficient 1:
+# coefficient f1:
 -- operator 1 --
 000001   [0,10]x[0,10]   fixed displacement    Dirichlet boundary
 000002   [0,10]x[0,10]   random displacement    Dirichlet boundary 
@@ -24,7 +36,7 @@ Choices of f:
 -- operator 3 --
 000005   [0,100]x[0,100]   random displacement   Dirichlet boundary
 
-# coefficient 3:  
+# coefficient f3:  
 -- operator 1 -- 
 000006   [0,10]x[0,10]   random displacement   Dirichlet boundary
 000007   [0,100]x[0,100]   random displacement   Dirichlet boundary
@@ -33,7 +45,9 @@ Choices of f:
 -- operator 3 --
 000009   [0,100]x[0,100]   random displacement   Dirichlet boundary   
 
-# coefficient piecewise constant: 
+
+# coefficient piecewise constant random i.i.d from [1,10]: 
+
 -- operator 1 -- 
 0000010   [0,10]x[0,10]   Dirichlet boundary
 0000011   [0,200]x[0,200]   Dirichlet boundary

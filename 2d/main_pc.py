@@ -1,9 +1,7 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -div(A\nabla u')=lambda u on square [0,L]x[0,L]
-Here, we consider the 1d random displacement model:
-   A(x)  is piecewise constant on quadrilateral mesh, 
-   taking unfirom random number from [a01, a1]
+Here, A(x)  is piecewise constant on quadrilateral mesh, taking uniform random number from [a01, a1]
 """
 import random
 import os,math, json
