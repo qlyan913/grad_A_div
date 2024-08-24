@@ -10,8 +10,13 @@ operator 3 : -div  grad u = lambda Au
 
 To check the eigenfunctions, we solve eigenproblem with eigenvalue closest to:
 
-0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000.
+target= 0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000.
 
+File names: 
+eigenfunmontage_smpr_ n.png :    saved  montage of eigenfunctions with small participation ratio (<0.05)
+coefficient.pn:    coefficients A.
+target_a_smpr_b.png:  b th eigenfunctions whose eigenvalues cloeset to number a and with small participation ratio (<0.05)  
+pratio_eigen_log.pn:  participation  ratio vs eigenvalues.
 
 THe coefficient 
  A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w)))
