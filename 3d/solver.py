@@ -88,7 +88,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
        m = A*u*v*dx
     uh = Function(V)
     if bctype == 'dirichlet':
-       boundary_ids = (1,2,3,4) #
+       boundary_ids = (1,2,3,4,5,6) #
        bc = DirichletBC(V, 0,boundary_ids)
        B = assemble(b, bcs=bc)
        M = assemble(m, bcs=bc, weight=0.)

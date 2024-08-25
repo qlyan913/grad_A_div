@@ -56,7 +56,10 @@ Choices of f:
 -- operator 1 -- 
 0000010   [0,10]x[0,10]   Dirichlet boundary
 0000011   [0,200]x[0,200]   Dirichlet boundary
+0000014   [0,500]x[0,500]  Dirichlet boundary
 -- operator 2 --    
 0000012   [0,200]x[0,200]   Dirichlet boundary
+0000015   [0,500]x[0,500]  Dirichlet boundary
 -- operator 3 --    
 0000013   [0,200]x[0,200]   Dirichlet boundary
+0000016   [0,500]x[0,500]  Dirichlet boundary
