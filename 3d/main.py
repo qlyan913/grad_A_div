@@ -73,7 +73,7 @@ paramf.close()
 PETSc.Sys.Print("> run parameters written to {}".format(paramfile))
 
 mesh = CubeMesh(nx,ny,nz,L,hexahedral=True)
-print("> mesh with {} elements".format(mesh.num_cells()))
+PETSc.Sys.Print("> mesh with {} elements".format(mesh.num_cells()))
 outfile = VTKFile(meshplotfile)
 outfile.write(mesh)
 PETSc.Sys.Print("> File for visualization in Paraview saved to {}".format(meshplotfile))
