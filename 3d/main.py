@@ -101,7 +101,6 @@ eigf_imgs_list=[]
 for target in target_list: 
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
    modes, eigenvalues2, pratio,targets = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfun_smpr_file,target)
-   np.savetxt(pratiofile.format(target),pratio)
    eigenvalues_list+=eigenvalues2
    pratio_list+=pratio
    targets_all+=targets
