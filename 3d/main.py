@@ -3,6 +3,7 @@ Solve the eigenvalue problem with variable coefficient:
    -div(A\nabla u')=lambda u on square [0,L]x[0,L]x[0,L]
 Here, A(x)  is piecewise constant on hexahedral mesh,taking unfirom random number from [a01, a1]
 """
+import csv
 import random
 import os,math, json
 import matplotlib.pyplot as plt
@@ -40,10 +41,9 @@ outdir = makedir()
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.pvd'
 meshplotfile = outdir + '/' + 'mesh.pvd'
-eigenvalfile = outdir + '/' + 'eigenvalues_target_{:05d}.txt'
+eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
-pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen.pvd'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr.pvd'
 paramfile = outdir+ '/'+'Parameter.json'
@@ -100,10 +100,19 @@ eigf_imgs_list=[]
 # solve eigen problem and save results
 for target in target_list: 
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-   modes, eigenvalues2, pratio = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfun_smpr_file,target)
+   modes, eigenvalues2, pratio,targets = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfun_smpr_file,target)
    np.savetxt(pratiofile.format(target),pratio)
    eigenvalues_list+=eigenvalues2
    pratio_list+=pratio
+   targets_all+=targets
+   
+with open(eigen_pratiofile, 'w', newline='') as csvfile:
+    fieldnames = ['target','eigenvalue','participation_ratio']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for i in range(len(eigenvalues_list)):
+       writer.writerow({'target':targets_all[i],'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
+print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
 plt.yscale('log')

@@ -17,8 +17,9 @@ target_00000_smpr.pvd : 21 eigenfunctions with small participation ratio (<0.05)
 target_00000_eigen.pvd: 21 eigenfunctions cloest to target value
 coefficient.pvd:    coefficients A.
 ratio_eigen_log.png:  participation  ratio vs eigenvalues.
+eigen_pratio.csv: eigenvalues and participation ratio.
 
-# coefficient piecewise constant random i.i.d from [1,10]: 
+1). The piecewise constant coefficient with random i.i.d from [1,10]: 
 
 -- operator 1 -- 
 0000000   [0,10]x[0,10]x[0,10]   Dirichlet boundary

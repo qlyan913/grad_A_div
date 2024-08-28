@@ -17,8 +17,9 @@ eigenfunmontage_smpr_ n.png :    saved  montage of eigenfunctions with small par
 coefficient.pn:    coefficients A.
 target_a_smpr_b.png:  b th eigenfunctions whose eigenvalues cloeset to number a and with small participation ratio (<0.05)  
 pratio_eigen_log.pn:  participation  ratio vs eigenvalues.
+eigen_pratio.csv: eigenvalues and participation ratio.
 
-THe coefficient 
+1). The random displacement coefficient 
  A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w)))
 
 Choices of f:
@@ -51,7 +52,7 @@ Choices of f:
 000009   [0,100]x[0,100]   random displacement   Dirichlet boundary   
 
 
-# coefficient piecewise constant random i.i.d from [1,10]: 
+2). The piecewise constant coefficient with random i.i.d from [1,10]: 
 
 -- operator 1 -- 
 0000010   [0,10]x[0,10]   Dirichlet boundary
