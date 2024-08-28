@@ -152,6 +152,7 @@ print("> coefficient plotted to {}".format(coefplotfile))
 eigenvalues_list=[]
 pratio_list=[]
 eigf_imgs_list=[]
+targets_all=[]
 # solve eigen problem and save results
 for target in target_list: 
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
