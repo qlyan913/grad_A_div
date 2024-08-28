@@ -1,9 +1,12 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -div(A\nabla u')=lambda u on square [0,L]x[0,L]
-Here, A(x)  is piecewise constant on quadrilateral mesh, taking uniform random number from [a01, a1]
+Here, we consider the 1d random displacement model:
+   A(x)  is piecewise constant on quadrilateral mesh, 
+   taking unfirom random number from [a01, a1]
 """
 import random
+import csv
 import os,math, json
 import matplotlib.pyplot as plt
 from firedrake import *
@@ -20,7 +23,7 @@ a0=1   # pc constant range from [a0, a1]
 a1=10  
 nreq=21
 target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
-plotefuns=[int(d) for d in range(20)]
+plotefuns=[int(d) for d in range(nreq)]
 flag2=3
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -38,10 +41,9 @@ outdir = makedir()
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
-eigenvalfile = outdir + '/' + 'eigenvalues_target_{:05d}.txt'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
-pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
+eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}.png'
@@ -105,14 +107,23 @@ print("> coefficient plotted to {}".format(coefplotfile))
 eigenvalues_list=[]
 pratio_list=[]
 eigf_imgs_list=[]
+targets_all=[]
 # solve eigen problem and save results
 for target in target_list: 
+   print("> solving for target {}".format(target))
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-   modes, eigenvalues2, pratio,eigenf_imgs_smpr = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
-   np.savetxt(pratiofile.format(target),pratio)
+   modes, eigenvalues2, pratio,eigenf_imgs_smpr,targets = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
    eigenvalues_list+=eigenvalues2
    pratio_list+=pratio
    eigf_imgs_list+=eigenf_imgs_smpr
+   targets_all+=targets
+with open(eigen_pratiofile, 'w', newline='') as csvfile:
+    fieldnames = ['target','eigenvalue','participation_ratio']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for i in range(len(eigenvalues_list)):
+       writer.writerow({'target':targets_all[i],'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
+print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
 plt.yscale('log')

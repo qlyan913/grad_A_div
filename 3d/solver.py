@@ -66,7 +66,7 @@ def combine_images(columns, space, images,file):
             x = 0
     background.save(file)
 
-def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
+def eigen_solver(mesh,A,deg,nreq,target,bctype,solver_flag,flag=1):
     """
      flag ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -74,7 +74,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     """
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, 'Lagrange', deg)
-    print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
+    PETSc.Sys.Print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
     u = TrialFunction(V)
     v = TestFunction(V)
     if flag == 1:
@@ -111,12 +111,16 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     ST = Eps.getST()
     ST.setType(SLEPc.ST.Type.SINVERT)
     ksp = ST.getKSP()
-    ksp.setType(PETSc.KSP.Type.PREONLY)
-    pc = ksp.getPC()
-    pc.setType(PETSc.PC.Type.CHOLESKY)
-   # PC = ST.getKSP().getPC()
-   # PC.setType("lu")
-   # PC.setFactorSolverType("mumps")
+    if solver_flag == 1:
+       ksp.setType("gmres")
+    else:
+       ksp.setType(PETSc.KSP.Type.PREONLY)
+       pc = ksp.getPC()
+       if solver_flag == 2:
+          pc.setType(PETSc.PC.Type.CHOLESKY)
+       else:
+          pc.setType("lu")
+          pc.setFactorSolverType("mumps")
     Eps.setST(ST)
     Eps.solve()
     nconv = Eps.getConverged()
@@ -227,7 +231,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
     return modes, eigenvalues_v2, pratio
 
 
-def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfun_smpr_file,target):
+def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfun_smpr_file,target):
    # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -235,6 +239,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
     modes=[]
     eigenf_list=[]
     eigenf_list_smpr=[]
+    targets=[]
     for i in range(nreq):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
@@ -257,6 +262,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
         if i in plotefuns:
            eigenvalues_v2.append(r.real)
            modes.append(i)
+           targets.append(target)
            f2=assemble(eigenfun**2*dx)
            f4=assemble(eigenfun**4*dx)
            pr=1/(L**3)*(f2**2)/f4
@@ -267,14 +273,12 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
            if pr <0.05:
               eigenf_list_smpr.append(eigenfun)
               PETSc.Sys.Print("> eigenfunction {} with p-ration{:1.5f} saved to ".format(i,pr) + eigenfun_smpr_file.format(target))
-    outfile = VTKFile(eigenfunplotfile.format(target))
+    outfile = File(eigenfunplotfile.format(target))
     outfile.write(*eigenf_list)
     if  eigenf_list_smpr:
-       outfile=VTKFile(eigenfun_smpr_file.format(target))
+       outfile=File(eigenfun_smpr_file.format(target))
        outfile.write(*eigenf_list_smpr)
-    np.savetxt(eigenvalfile.format(target), eigenvalues)
-    PETSc.Sys.Print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
-    return modes, eigenvalues_v2, pratio
+    return modes, eigenvalues_v2, pratio,targets
 
 
 

@@ -226,8 +226,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
            print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
     return modes, eigenvalues_v2, pratio
 
-
-def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target):
+def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target):
    # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -235,7 +234,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
     modes=[]
     eigenf_imgs = []
     eigenf_imgs_smpr = []
-    
+    targets=[]
     for i in range(nreq):
         r = Eps.getEigenvalue(i).real
         #print("{:12.9f}".format(r))
@@ -258,6 +257,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
         if i in plotefuns:
            eigenvalues_v2.append(r.real)
            modes.append(i)
+           targets.append(target)
            f2=assemble(eigenfun**2*dx)
            f4=assemble(eigenfun**4*dx)
            pr=1/(L**2)*(f2**2)/f4
@@ -285,13 +285,11 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenvalfile,eigenfunplotfile,
               plt.savefig(eigenfun_smpr_file.format(target,i),dpi=300)
               plt.close()
               eigenf_imgs_smpr.append(eigenfun_smpr_file.format(target,i))
-    np.savetxt(eigenvalfile.format(target), eigenvalues)
-    print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
+#    np.savetxt(eigenvalfile.format(target), eigenvalues)
+#    print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
     combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
     print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
-    return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr
-
-
+    return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets
 
 
 def plot_coeff(x0,x1,A,npts,filename):
