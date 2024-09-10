@@ -42,14 +42,14 @@ operator 3 : -div  grad u = lambda Au
 
 000014   [0,10]     fixed displacement (1-periodic)   Dirichlet boundary 
 
-000015   [0,200]    operator=1 random displacement     Dirichlet boundary   all first 500 eigenvalues
+000015   [0,200]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
 
-000016   [0,200]    operator=2 random displacement     Dirichlet boundary   all first 500 eigenvalues
+000016   [0,200]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
 
 000017   [0,200]    operator=3 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
 2). The piecewise constant coefficient with random i.i.d from [1,10]: 
 
-000018   [0,400]    operator=1 random displacement     Dirichlet boundary   all first 500 eigenvalues
+000018   [0,400]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
 
-000019   [0,400]    operator=2 random displacement     Dirichlet boundary   all first 500 eigenvalues
+000019   [0,400]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
