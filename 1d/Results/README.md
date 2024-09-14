@@ -53,3 +53,11 @@ operator 3 : -div  grad u = lambda Au
 000018   [0,400]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
 
 000019   [0,400]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
+
+
+
+Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary  all first 300 eigenvalues:
+000020   [0,400], nelts=10*L, deg =1
+000021   [0,400], nelts=10*L, deg =5
+000022   [0,400], nelts=L, deg =1
+000023   [0,400], nelts=L, deg =5
