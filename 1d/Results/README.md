@@ -48,13 +48,21 @@ operator 3 : -div  grad u = lambda Au
 
 000017   [0,200]    operator=3 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
-2). The piecewise constant coefficient with random i.i.d from [1,10]: 
+2). The piecewise (over 1 ) constant coefficient with random i.i.d from [1,10], Dirichlet boundary : 
 
-000018   [0,400]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
+000018   [0,400]    operator=1     all first 1000 eigenvalues
 
-000019   [0,400]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
+000019   [0,400]    operator=2     all first 1000 eigenvalues
 
+000028   [0,200]    operator=2     all first 800 eigenvalues
 
+000029   [0,100]    operator=2     all first 500 eigenvalues
+
+000030   [0,800]    operator=2     all first 1700 eigenvalues
+
+000031   [0,200]    operator=2  (pc over 2)  all first 800 eigenvalues
+
+000032   [0,200]    operator=2  (pc over 5)  all first 800 eigenvalues
 
 Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary:
 all first 300 eigenvalues:
