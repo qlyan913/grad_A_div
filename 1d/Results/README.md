@@ -13,42 +13,25 @@ operator 3 : -div  grad u = lambda Au
 # eigenvalue problem
 
 000000   [0,2\pi]   constant coefficient    periodic boundary   operator=1 
-
 000001   [0,2\pi]   constant coefficient    Dirichlet boundary  operator=1 
-
 000002   [0,10]     random displacement     Dirichlet boundary  operator=1 
-
 000003   [0,100]    random displacement     Dirichlet boundary  operator=1 
-
 000004   [0,200]    random displacement     Dirichlet boundary  operator=1 
-
 000005   [0,10]     random displacement v2  Dirichlet boundary   operator=1 
-
 000006   [0,100]    random displacement v2  Dirichlet boundary   operator=1 
-
 000007   [0,200]    random displacement v2  Dirichlet boundary   operator=1 
-
 000008   [0,400]    random displacement v2  Dirichlet boundary  operator=1 
-
 000009   [0,400]    random displacement     Dirichlet boundary  operator=1 
-
 000010   [0,200]    random displacement     Dirichlet boundary  operator=1 
-
 000011   [0,10]     fixed displacement (1-periodic)   Dirichlet boundary  operator=1 
-
 000012   [0,100]    fixed displacement (1-periodic)   Dirichlet boundary  operator=1 
-
 000013   [0,10]     1 - 10 2pc constants (2-periodic)   Dirichlet boundary  operator=1 
-
 000014   [0,10]     fixed displacement (1-periodic)   Dirichlet boundary 
-
 000015   [0,200]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
-
 000016   [0,200]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
-
 000017   [0,200]    operator=3 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
-2). The piecewise (over 1 ) constant coefficient with random i.i.d from [1,10], Dirichlet boundary : 
+2). The piecewise constant coefficient with random i.i.d from [1,10], Dirichlet boundary : 
 
 000018   [0,400]    operator=1     all first 1000 eigenvalues
 000019   [0,400]    operator=2     all first 1000 eigenvalues
@@ -61,6 +44,12 @@ operator 3 : -div  grad u = lambda Au
 000033   [0,200]    operator=2  (pc over 10)  all first 800 eigenvalues
 000034   [0,200]    operator=2  (pc over 100)  all first 800 eigenvalues
 000035   [0,200]    operator=2  (pc over 200, i.e., constant)  all first 800 eigenvalues
+
+3). Test over different range of pc random vairable.
+000036   [0,200],  pc i.i.d from [1,5],   operator=2     all first 800 eigenvalues
+000037   [0,200],  pc i.i.d from [1,20],   operator=2     all first 800 eigenvalues
+000038   [0,200],  pc i.i.d from [1,50],   operator=2     all first 800 eigenvalues
+000039   [0,200],  pc i.i.d from [1,100],   operator=2     all first 800 eigenvalues
 
 Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary:
 all first 300 eigenvalues:

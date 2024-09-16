@@ -21,7 +21,7 @@ nelts=10*L   # number of elements on interval
 npts=2*nelts # for plotting functions
 x0=0
 x1=L
-coef_pw=200
+coef_pw=1
 nreq=801
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
@@ -35,8 +35,10 @@ flag2 =2
           ---- 3: -div grad phi = lambda A phi
 """
 bctype='dirichlet' # dirichlet or neumann
-coeftype='constant' #'pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
+a0=1
+a1=100
 np.random.seed(5)
 #coeftype='constant'
 params=''
@@ -70,6 +72,8 @@ runparameters = {
     'coef_pw':coef_pw,
     'x0': x0,
     'x1': x1,
+    'a0': a0,
+    'a1': a1,
     }
 paramf = open(paramfile, 'w')
 json.dump(runparameters, paramf, indent=4)
@@ -90,8 +94,6 @@ if coeftype=='constant':
 elif coeftype == 'pw_2constant':
    # pw constants alternately equal to a0 or a1
    nc=int(L/coef_pw)
-   a0=1
-   a1=10
    center_list=range(nc)
    aval=a0+np.random.rand(nc)*(a1-a0)
    aelt = 'DG'

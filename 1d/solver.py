@@ -166,7 +166,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
               if i in plotefuns_2:
                  eigenf_imgs_2.append(eigenfunplotfile.format(i))
         else:
-            if i < 501:
+            if i < nconv:
                eigenvalues_v2.append(Eps.getEigenvalue(i).real)
                modes.append(i)
                x = np.linspace(x0, x1, npts, endpoint=False)
@@ -194,7 +194,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
        combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
        print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
     else:
-       for i in range(0,500,25):
+       for i in range(0,nconv-1,25):
            segment=list(range(i,i+25))
            i0=segment[0]
            iend=segment[-1]
