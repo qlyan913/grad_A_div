@@ -16,24 +16,26 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-nelts=4000   # number of elements on interval
-npts=4*nelts # for plotting functions
+L=200
+nelts=10*L   # number of elements on interval
+npts=2*nelts # for plotting functions
 x0=0
-x1=400
-nreq=1000
+x1=L
+coef_pw=200
+nreq=801
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
-fv=2 # fv=1: f, fv=2, f version 2
-flag=1 # print all first 500 eigenfuns
-flag2 =1
+fv=1 #fv=1: f, fv=2, f version 2
+flag=1 # print all first nreq  eigenfuns
+flag2 =2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
           ---- 3: -div grad phi = lambda A phi
 """
 bctype='dirichlet' # dirichlet or neumann
-coeftype='random displacement' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='constant' #'pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
 np.random.seed(5)
 #coeftype='constant'
@@ -65,6 +67,7 @@ runparameters = {
     'npts': npts,
     'params': params,
     'coeftype': coeftype,
+    'coef_pw':coef_pw,
     'x0': x0,
     'x1': x1,
     }
@@ -78,22 +81,19 @@ mesh = IntervalMesh(nelts, x0, x1)
 x , = SpatialCoordinate(mesh)
 # define coefficient A
 if coeftype=='constant':
-   aval=1
+   a0=1
+   a1=10
+   aval=a0+np.random.rand()*(a1-a0)
    aexpr = Constant(aval)
    aelt = 'DG'
    adeg = 0
 elif coeftype == 'pw_2constant':
    # pw constants alternately equal to a0 or a1
-   nc=x1-x0
+   nc=int(L/coef_pw)
    a0=1
    a1=10
-   aval=np.zeros(nc)
    center_list=range(nc)
-   for i in range(nc):
-       if i % 2 ==0:
-          aval[i]=a0
-       else:
-          aval[i]=a1
+   aval=a0+np.random.rand(nc)*(a1-a0)
    aelt = 'DG'
    adeg=0
    # create pw constant with nc pieces
