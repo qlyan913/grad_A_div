@@ -1,0 +1,13 @@
+{
+    "operator type": 2,
+    "1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi": "",
+    "bctype": "dirichlet",
+    "deg": 5,
+    "nelts": 2000,
+    "npts": 4000,
+    "params": "",
+    "coeftype": "pw_2constant",
+    "coef_pw": 200,
+    "x0": 0,
+    "x1": 200
+}
