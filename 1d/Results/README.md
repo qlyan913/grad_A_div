@@ -67,6 +67,9 @@ operator 3 : -div  grad u = lambda Au
 000048   [0,400],  pc i.i.d from [10,50],   operator=2     all first 800 eigenvalues
 000049   [0,400],  pc i.i.d from [10,100],   operator=2     all first 800 eigenvalues
 
+4). coefficient is landscape u^2
+000053   [0,200], operator =2,  all first 800 eigenvalues
+
 Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary:
 all first 300 eigenvalues:
 000020   [0,400], nelts=10*L, deg =1
