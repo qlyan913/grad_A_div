@@ -59,6 +59,14 @@ operator 3 : -div  grad u = lambda Au
 000045   [0,400],  pc i.i.d from [1,200],   operator=2     all first 800 eigenvalues
 000046   [0,400],  pc i.i.d from [1,400],   operator=2     all first 800 eigenvalues
 
+000050   [0,200],  pc i.i.d from [10,20],   operator=2     all first 800 eigenvalues
+000051   [0,200],  pc i.i.d from [10,50],   operator=2     all first 800 eigenvalues
+000052   [0,200],  pc i.i.d from [10,100],   operator=2     all first 800 eigenvalues
+
+000047   [0,400],  pc i.i.d from [10,20],   operator=2     all first 800 eigenvalues
+000048   [0,400],  pc i.i.d from [10,50],   operator=2     all first 800 eigenvalues
+000049   [0,400],  pc i.i.d from [10,100],   operator=2     all first 800 eigenvalues
+
 Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary:
 all first 300 eigenvalues:
 000020   [0,400], nelts=10*L, deg =1
