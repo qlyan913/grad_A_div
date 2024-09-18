@@ -71,10 +71,11 @@ operator 3 : -div  grad u = lambda Au
 000053   [0,200], V from [1,100], operator =2,  all first 800 eigenvalues 
 000054   [0,200], V from [0,1], operator =2,  all first 800 eigenvalues 
 000055   [0,200], V from [1,10], operator =2,  all first 800 eigenvalues 
+000057   [0,200], V from [0,20], operator =2,  all first 800 eigenvalues 
 
 5). coefficient A is 1/V^2
 000056   [0,200], V from [1,100], operator =2,  all first 800 eigenvalues 
-
+000058   [0,200], V from [0,20], operator =2,  all first 800 eigenvalues 
 
 Testing for  pc coefficients with i.i.d from [1,10], operator = 2,  Dirichlet boundary:
 all first 300 eigenvalues:
