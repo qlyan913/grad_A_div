@@ -35,10 +35,10 @@ flag2 =2
           ---- 3: -div grad phi = lambda A phi
 """
 bctype='dirichlet' # dirichlet or neumann
-coeftype='pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='1/V^2' #'landscape' #'pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
-a0=1
-a1=100
+a0=0
+a1=20
 np.random.seed(5)
 #coeftype='constant'
 params=''
@@ -57,7 +57,8 @@ eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
-
+Vplotfile= outdir+'/'+'potential.png'
+Landplotfile=outdir+'/'+'Landscape.png'
 # write parameters to file
 # store parameters in dictionary
 runparameters = {
@@ -101,7 +102,36 @@ elif coeftype == 'pw_2constant':
    # create pw constant with nc pieces
    aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
    aexpr.vector().set_local(aval)
-else: 
+elif coeftype == 'landscape':
+   nc=int(L/coef_pw)
+   Vval=a0+np.random.rand(nc)*(a1-a0)
+   Vexpr=Function(FunctionSpace(IntervalMesh(nc, x0, x1),'DG',0))
+   Vexpr.vector().set_local(Vval)
+   Vp=assemble(interpolate(Vexpr, FunctionSpace(mesh, 'DG', 0)))
+   u=get_landscape(mesh,x0,x1,Vp,deg,npts,Vplotfile,Landplotfile)
+   aexpr=u**2
+   aelt = 'CG'
+   adeg = 5
+elif coeftype == '1/V^2':
+   nc=int(L/coef_pw)
+   Vval=a0+np.random.rand(nc)*(a1-a0)
+   Vexpr=Function(FunctionSpace(IntervalMesh(nc, x0, x1),'DG',0))
+   Vexpr.vector().set_local(Vval)
+   Vp=assemble(interpolate(Vexpr, FunctionSpace(mesh, 'DG', 0)))
+   V_inv=1/(Vval**2)
+   aelt = 'DG'
+   adeg=0
+   aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
+   aexpr.vector().set_local(V_inv)
+   plt.clf()
+   pts = np.linspace(x0, x1, npts, endpoint=True)
+   Vpvals = eval_u(Vp,pts)
+   plt.plot(pts, Vpvals, alpha=.75, linewidth=2)
+   plt.xlim([x0, x1])
+   plt.title('potential V')
+   plt.savefig(Vplotfile, dpi=300)
+   print("> potential V  plotted to {}".format(Vplotfile))
+else:
    s=0.25
    nn=x1-x0-1
    if coeftype == 'random displacement':

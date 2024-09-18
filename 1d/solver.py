@@ -205,6 +205,35 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
            print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
     return modes, eigenvalues_v2, pratio
 
+def get_landscape(mesh,x0,x1,Vp,deg,npts,Vplotfile,Landplotfile):
+    plt.clf()
+    pts = np.linspace(x0, x1, npts, endpoint=True)
+    avals = eval_u(Vp,pts)
+    plt.plot(pts, avals, alpha=.75, linewidth=2)
+    plt.xlim([x0, x1])
+    plt.title('potential V')
+    plt.savefig(Vplotfile, dpi=300)
+    print("> potential V  plotted to {}".format(Vplotfile))
+    V = FunctionSpace(mesh, 'Lagrange', deg)
+    u = TrialFunction(V)
+    v = TestFunction(V)
+    a = dot(grad(u),grad(v))*dx+Vp*u*v*dx
+    L = v*dx
+    boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+    bc = DirichletBC(V, 0,boundary_ids)
+    uh = Function(V)
+    solve(a == L, uh, bcs=bc, solver_parameters={"ksp_type": "preonly", "pc_type": "lu"})
+    
+    plt.clf()
+    pts = np.linspace(x0, x1, npts, endpoint=True)
+    avals = eval_u(uh,pts)
+    plt.plot(pts, avals, alpha=.75, linewidth=2)
+    plt.xlim([x0, x1])
+    plt.title('Landscape')
+    plt.savefig(Landplotfile, dpi=300)
+    print("> Landscape  plotted to {}".format(Landplotfile))
+    return uh
+
 def plot_coeff(x0,x1,A,npts,filename):
     # evaluate coefficient, save to file and plot
     plt.clf()
