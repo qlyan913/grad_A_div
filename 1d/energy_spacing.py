@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-id=15
+id=16
 filename="Results/{:06d}/eigenvalues.txt".format(id)
 plot_file="Results/{:06d}/es_hist.png".format(id)
 plot_file2="Results/{:06d}/es_r_hist.png".format(id)
@@ -14,7 +14,7 @@ es=es/average  # normalize
 x=np.linspace(0,8,1000)
 y=np.exp(-x)
 plt.clf()
-plt.hist(es,bins=60,weights=np.ones(len(es))/len(es))
+plt.hist(es,bins=60,density=True)
 plt.plot(x,y,"r-")
 plt.xlabel('s')
 plt.title('energy spacing with average energy space {}'.format(average))
@@ -23,7 +23,7 @@ print("> histogram plotted to {}".format(plot_file))
 
 average2=sum(r)/len(r)
 plt.clf()
-plt.hist(r,bins=60,weights=np.ones(len(r))/len(r))
+plt.hist(r,bins=60,density=True)
 x=np.linspace(0,1,100)
 y=2/(1+x)**2
 plt.plot(x,y,"r-")
