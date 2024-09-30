@@ -64,3 +64,5 @@ Choices of f:
 -- operator 3 --    
 0000013   [0,200]x[0,200]   Dirichlet boundary
 0000016   [0,500]x[0,500]  Dirichlet boundary
+
+0000017   [0,50]x[0,50]  (nc=4) Dirichlet boundary first 4000 eigenfunctions

@@ -29,6 +29,7 @@ operator 3 : -div  grad u = lambda Au
 000014   [0,10]     fixed displacement (1-periodic)   Dirichlet boundary 
 000015   [0,200]    operator=1 random displacement     Dirichlet boundary   all first 1000 eigenvalues
 000016   [0,200]    operator=2 random displacement     Dirichlet boundary   all first 1000 eigenvalues
+000016_logplot eigenfunctions in log scale
 000017   [0,200]    operator=3 random displacement     Dirichlet boundary   all first 500 eigenvalues
 
 2). The piecewise constant coefficient with random i.i.d from [1,10], Dirichlet boundary : 
@@ -36,20 +37,27 @@ operator 3 : -div  grad u = lambda Au
 000018   [0,400]    operator=1     all first 1000 eigenvalues
 000019   [0,400]    operator=2     all first 1000 eigenvalues
 000028   [0,200]    operator=2     all first 800 eigenvalues
+000028_logplot   eigenfunctions in 000028 plot in log scale, i.e., log(|\psi|)
 000029   [0,100]    operator=2     all first 500 eigenvalues
 000030   [0,800]    operator=2     all first 1700 eigenvalues
 
-000031   [0,200]    operator=2  (pc over 2)  all first 800 eigenvalues
-000032   [0,200]    operator=2  (pc over 5)  all first 800 eigenvalues
-000033   [0,200]    operator=2  (pc over 10)  all first 800 eigenvalues
-000034   [0,200]    operator=2  (pc over 100)  all first 800 eigenvalues
-000035   [0,200]    operator=2  (pc over 200, i.e., constant)  all first 800 eigenvalues
+000031   [0,200]    operator=2  (nc = 100)  all first 800 eigenvalues
+000032   [0,200]    operator=2  (nc = 40)  all first 800 eigenvalues
+000033   [0,200]    operator=2  (nc = 20)  all first 800 eigenvalues
+000061   [0,200]    operator=2  (nc = 4)  all first 800 eigenvalues
+000061_logplot    plot in log scale
+000034   [0,200]    operator=2  (nc = 2)  all first 800 eigenvalues
+000034_logplot    plot in log scale
+000035   [0,200]    operator=2  (nc = 1, i.e., constant)  all first 800 eigenvalues
 
 3). Test over different range of pc random vairable.
 000036   [0,200],  pc i.i.d from [1,5],   operator=2     all first 800 eigenvalues
 000037   [0,200],  pc i.i.d from [1,20],   operator=2     all first 800 eigenvalues
+000037_logplot  plot in log scale, i.e., log(|\psi|)
 000038   [0,200],  pc i.i.d from [1,50],   operator=2     all first 800 eigenvalues
+000038_logplot  plot in log scale, i.e., log(|\psi|)
 000039   [0,200],  pc i.i.d from [1,100],   operator=2     all first 800 eigenvalues
+000039_logplot  plot in log scale, i.e., log(|\psi|)
 000040   [0,200],  pc i.i.d from [1,200],   operator=2     all first 800 eigenvalues
 
 000041   [0,400],  pc i.i.d from [1,5],   operator=2     all first 800 eigenvalues
@@ -70,8 +78,10 @@ operator 3 : -div  grad u = lambda Au
 4). coefficient A is landscape u^2
 000053   [0,200], V from [0,100], operator =2,  all first 800 eigenvalues 
 000054   [0,200], V from [0,1], operator =2,  all first 800 eigenvalues 
+
 000055   [0,200], V from [1,10], operator =2,  all first 800 eigenvalues 
 000057   [0,200], V from [0,20], operator =2,  all first 800 eigenvalues 
+
 000060   [0,1000],V from [0,10], operator =2,  all first 1700 eigenvalues 
 
 5). coefficient A is 1/V^2

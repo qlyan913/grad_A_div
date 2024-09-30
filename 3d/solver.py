@@ -121,6 +121,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,solver_flag,flag=1):
        else:
           pc.setType("lu")
           pc.setFactorSolverType("mumps")
+   # Eps.setTolerances(tol=10**(-8),max_it=10000)
     Eps.setST(ST)
     Eps.solve()
     nconv = Eps.getConverged()

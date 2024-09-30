@@ -22,7 +22,7 @@ ny=L
 nz=L
 a0=1   # pc constant range from [a0, a1]
 a1=10  
-nreq=11
+nreq=4
 #target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1500,2000,2500,3000,3500,4000]
 target_list=[0,10,20,40,60,80,100,200,250,300,400,500,600,800,1000,1500,2000]
 #target_list =[ 0]
@@ -80,13 +80,12 @@ PETSc.Sys.Print("> run parameters written to {}".format(paramfile))
 
 mesh = CubeMesh(nx,ny,nz,L,hexahedral=True)
 nc=mesh.num_cells()
-print("common world rank", COMM_WORLD.rank, " mesh with {} elements".format(nc) )
+#print("common world rank", COMM_WORLD.rank, " mesh with {} elements".format(nc) )
 outfile = File(meshplotfile)
 outfile.write(mesh)
 PETSc.Sys.Print("> File for visualization in Paraview saved to {}".format(meshplotfile))
 
 # define coefficient A
-x , y,z= SpatialCoordinate(mesh)
 aelt = 'DG'
 adeg = 0
 V=FunctionSpace(mesh, aelt, adeg)
