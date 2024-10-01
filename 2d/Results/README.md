@@ -66,3 +66,4 @@ Choices of f:
 0000016   [0,500]x[0,500]  Dirichlet boundary
 
 0000017   [0,50]x[0,50]  (nc=4) Dirichlet boundary first 4000 eigenfunctions
+0000018   [0,50]x[0,50]  (nc=50*50) Dirichlet boundary first 4000 eigenfunctions
