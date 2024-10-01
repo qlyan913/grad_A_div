@@ -293,9 +293,9 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
            iend=segment[-1]
            eigenf_imgs=[]
            for j in segment:
-              eigenf_imgs.append(eigenfunplotfile.format(target,i))
-          # combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
-          # PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
+              eigenf_imgs.append(eigenfunplotfile.format(target,j))
+           combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
+           PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
 #    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
 #    print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
     return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets

@@ -16,16 +16,16 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=50 # length of square
+L=200 # length of square
 nx=L
 ny=L
 nc=2
 nc2=nc*nc
 a0=1   # pc constant range from [a0, a1]
 a1=10 
-nreq=2001
-#target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
-target_list=[0]
+nreq=21
+target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
+#target_list=[0]
 plotefuns=[int(d) for d in range(nreq)]
 flag2=2
 """
@@ -40,8 +40,8 @@ np.random.seed(5)
 #coeftype='constant'
 params=''
 # create directory and filenames for output
-outdir = makedir()
-#outdir = 'Results/000017'
+#outdir = makedir()
+outdir = 'Results/000017'
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
@@ -99,9 +99,12 @@ if plotmesh==1:
 aelt = 'DG'
 adeg = 0
 V=FunctionSpace(mesh,aelt,adeg)
+aexpr = Function(V)
+av=aexpr.vector()
+nc2=nx*ny
 aval=a0+np.random.rand(nc2)*(a1-a0)
-aexpr=Function(FunctionSpace(SquareMesh(nc,nc,L,quadrilateral=True),aelt,adeg))
-aexpr.vector().set_local(aval)
+n_min,n_max=av.local_range()
+aexpr.vector().set_local(aval[n_min:n_max])
 A = assemble(interpolate(aexpr, V))
 
 # evaluate coefficient, save to file and plot
