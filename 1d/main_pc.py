@@ -1,0 +1,146 @@
+"""
+Solve the eigenvalue problem with variable coefficient:
+   -(Au')'=lambda u on [x0,x1]
+Here, we consider the 1d random displacement model:
+   A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
+   f = 1/8[max{(1-x^2/s^2)^3,0}(3x^2+1)]', supp(f) in [-s,s]
+   dn uniform distribution on [-dmax,dmax]
+   We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
+"""
+import os,math, json
+import matplotlib.pyplot as plt
+from firedrake import *
+from firedrake.petsc import PETSc
+from firedrake.__future__ import interpolate
+from slepc4py import SLEPc
+import numpy as np
+from solver import *
+deg = 5
+L=200
+nelts=L   # number of elements on interval
+npts=nelts # for plotting functions
+x0=0
+x1=L
+coef_pw=1
+nreq=801
+target=0
+plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
+plotefuns_2=[int(d) for d in range(20)]
+fv=1 #fv=1: f, fv=2, f version 2
+flag=1 # print all first nreq  eigenfuns
+flag2 =2
+"""
+     flag2 ---- 1: -div A grad phi = lambda phi
+          ---- 2: -div A grad phi = lambda A phi
+          ---- 3: -div grad phi = lambda A phi
+"""
+bctype='dirichlet' # dirichlet or neumann
+coeftype='pc'
+a0=1
+a1=10
+np.random.seed(5)
+#coeftype='constant'
+params=''
+# create directory and filenames for output
+outdir = 'Results/000066'
+# filenames
+coefplotfile = outdir + '/' + 'coefficient.png'
+eigenvalfile = outdir + '/' + 'eigenvalues.txt'
+mpfile = outdir + '/' + 'pratio_mode.png'
+epfile = outdir + '/' + 'pratio_eigen.png'
+mpfile_log = outdir + '/' + 'pratio_mode_log.png'
+epfile_log = outdir + '/' + 'pratio_eigen_log.png'
+pratiofile=outdir + '/' + 'pratio.txt'
+eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
+eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
+eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
+eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
+paramfile = outdir+ '/'+'Parameter.json'
+Vplotfile= outdir+'/'+'potential.png'
+Landplotfile=outdir+'/'+'Landscape.png'
+# write parameters to file
+# store parameters in dictionary
+runparameters = {
+    'operator type': flag2,
+    '1:-div A grad phi = lambda phi, 2:-div A grad phi = lambda A phi, 3: -div grad phi = lambda A phi':"" ,
+    'bctype': bctype,
+    'deg': deg,
+    'nelts': nelts,
+    'npts': npts,
+    'params': params,
+    'coeftype': coeftype,
+    'coef_pw':coef_pw,
+    'x0': x0,
+    'x1': x1,
+    'a0': a0,
+    'a1': a1,
+    }
+paramf = open(paramfile, 'w')
+json.dump(runparameters, paramf, indent=4)
+paramf.write('\n')
+paramf.close()
+PETSc.Sys.Print("> run parameters written to {}".format(paramfile))
+
+mesh = IntervalMesh(nelts, x0, x1)
+mesh.tolerance = 10.0
+x , = SpatialCoordinate(mesh)
+# define coefficient A
+
+# pw constants alternately equal to a0 or a1
+aelt = 'DG'
+adeg = 0
+V=FunctionSpace(mesh,aelt,adeg)
+aexpr = Function(V)
+av=aexpr.vector()
+nc2=L
+aval=a0+np.random.rand(nc2)*(a1-a0)
+n_min,n_max=av.local_range()
+aexpr.vector().set_local(aval[n_min:n_max])
+A = assemble(interpolate(aexpr, V))
+# evaluate coefficient, save to file and plot
+plt.clf()
+print("> evaluating coefficient")
+pts = np.linspace(x0, x1, npts, endpoint=True)
+#avals = eval_u(A,pts)
+avals=A.at(pts)
+plt.plot(pts, avals, alpha=.75, linewidth=2)
+plt.xlim([x0, x1])
+plt.title('coefficient')
+plt.savefig(coefplotfile, dpi=500)
+PETSc.Sys.Print("> coefficient plotted to {}".format(coefplotfile))
+
+# solve eigen problem and save results
+EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
+modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+np.savetxt(pratiofile,pratio)
+
+plt.clf()
+plt.scatter(modes,pratio)
+plt.xlabel('modes')
+plt.ylabel('p-ratio')
+plt.savefig(mpfile)
+PETSc.Sys.Print("> pratio vs modes to {}".format(mpfile))
+
+plt.clf()
+plt.scatter(eigenvalues2,pratio)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.savefig(epfile)
+PETSc.Sys.Print("> pratio vs eigenvalues to {}".format(epfile))
+
+
+plt.clf()
+plt.yscale('log')
+plt.scatter(modes,pratio)
+plt.xlabel('modes')
+plt.ylabel('p-ratio')
+plt.savefig(mpfile_log)
+PETSc.Sys.Print("> pratio vs modes to {}".format(mpfile_log))
+
+plt.clf()
+plt.yscale('log')
+plt.scatter(eigenvalues2,pratio)
+plt.xlabel('eigenvalues')
+plt.ylabel('p-ratio')
+plt.savefig(epfile_log)
+PETSc.Sys.Print("> pratio vs eigenvalues to {}".format(epfile_log))

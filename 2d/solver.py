@@ -74,7 +74,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     """
     # Find the first nreq eigenpaires nearest the given target
     V = FunctionSpace(mesh, 'Lagrange', deg)
-    print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
+    PETSc.Sys.Print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
     u = TrialFunction(V)
     v = TestFunction(V)
     if flag == 1:
@@ -112,15 +112,15 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,flag=1):
     ST.setType(SLEPc.ST.Type.SINVERT)
     ksp = ST.getKSP()
     ksp.setType(PETSc.KSP.Type.PREONLY)
-    pc = ksp.getPC()
-    pc.setType(PETSc.PC.Type.CHOLESKY)
-   # PC = ST.getKSP().getPC()
-   # PC.setType("lu")
-   # PC.setFactorSolverType("mumps")
+   # pc = ksp.getPC()
+   # pc.setType(PETSc.PC.Type.CHOLESKY)
+    pc = ST.getKSP().getPC()
+    pc.setType("lu")
+    pc.setFactorSolverType("mumps")
     Eps.setST(ST)
     Eps.solve()
     nconv = Eps.getConverged()
-    print(f"> computed {nconv} eigenvalues.")
+    PETSc.Sys.Print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
 def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,eigenfun_smpr_file,center_list=[],flag=0,eigenfunmon_all="",n_all=500):
@@ -162,7 +162,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
               collection = tripcolor(eigenfun, axes=axes)
               fig.colorbar(collection);
               plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
-              print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+              PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               plt.close()
               if i in plotefuns:
@@ -176,7 +176,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                    collection=trisurf(eigenfun,axes=axes);
                    fig.colorbar(collection);
                    plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-                   print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
+                   PETSc.Sys.Print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
                    plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
                    plt.close()
         else:
@@ -192,7 +192,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                collection = tripcolor(eigenfun, axes=axes)
                fig.colorbar(collection);
                plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-               print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+               PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
                plt.close()
                if pr <0.07:
@@ -202,7 +202,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
                    collection=trisurf(eigenfun,axes=axes);
                    fig.colorbar(collection);
                    plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-                   print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
+                   PETSc.Sys.Print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(i))
                    plt.savefig(eigenfun_smpr_file.format(i),dpi=300)
                    plt.close()
             else:
@@ -211,9 +211,9 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
     print("> eigenvalues written to {}".format(eigenvalfile))
     if flag == 0:
        combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
-       print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
+       PETSc.Sys.Print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
        combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
-       print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
+       PETSc.Sys.Print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
     else:
        for i in range(0,n_all,25):
            segment=list(range(i,i+25))
@@ -223,7 +223,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
            for j in segment:
               eigenf_imgs.append(eigenfunplotfile.format(j))
            combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmon_all.format(i0,iend))
-           print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
+           PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
     return modes, eigenvalues_v2, pratio
 
 def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target):
@@ -268,7 +268,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
            collection.set_clim(-1.1,1.1)
            fig.colorbar(collection);
            plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
-           print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
+           PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
            plt.savefig(eigenfunplotfile.format(target,i), dpi=300)
            plt.close()
            if i in plotefuns:
@@ -281,14 +281,23 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
               collection.set_clim(-1.1,1.1)
               fig.colorbar(collection);
               plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-              print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))
+              PETSc.Sys.Print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))
               plt.savefig(eigenfun_smpr_file.format(target,i),dpi=300)
               plt.close()
               eigenf_imgs_smpr.append(eigenfun_smpr_file.format(target,i))
 #    np.savetxt(eigenvalfile.format(target), eigenvalues)
 #    print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
-    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
-    print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
+    for i in range(0,nreq,25):
+           segment=list(range(i,i+25))
+           i0=segment[0]
+           iend=segment[-1]
+           eigenf_imgs=[]
+           for j in segment:
+              eigenf_imgs.append(eigenfunplotfile.format(target,i))
+          # combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
+          # PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
+#    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
+#    print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
     return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets
 
 
