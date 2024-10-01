@@ -287,17 +287,23 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
               eigenf_imgs_smpr.append(eigenfun_smpr_file.format(target,i))
 #    np.savetxt(eigenvalfile.format(target), eigenvalues)
 #    print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
-    for i in range(0,nreq,25):
-           segment=list(range(i,i+25))
-           i0=segment[0]
-           iend=segment[-1]
-           eigenf_imgs=[]
-           for j in segment:
-              eigenf_imgs.append(eigenfunplotfile.format(target,j))
-           combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
-           PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
-#    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target))
-#    print("> eigenfunction montage written to {}".format(eigenfunmontagefile.format(target))) 
+    dd,dd2=divmod(nreq,25)
+    for i in range(dd):
+       segment=list(range(25*i,25*i+25))
+       i0=segment[0]
+       iend=segment[-1]
+       eigenf_imgs=[]
+       for j in segment:
+          eigenf_imgs.append(eigenfunplotfile.format(target,j))
+       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
+       PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
+    segment=list(range(25*dd,nreq))
+    i0=segment[0]
+    eigenf_imgs=[]
+    for j in segment:
+       eigenf_imgs.append(eigenfunplotfile.format(target,j))
+    combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0,iend))
+    PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0,iend)))
     return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets
 
 
