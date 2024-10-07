@@ -226,7 +226,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfun
            PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
     return modes, eigenvalues_v2, pratio
 
-def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target):
+def  get_eigenpairs_v2(mesh,Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,target):
    # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -251,7 +251,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
             rx = rx/rxmin
         else:
             rx = rx/rxmax
-        eigenfun = Function(V)
+        eigenfun = Function(V,name="eigen")
         eigenfun.vector().set_local(rx)
         
         if i in plotefuns:
@@ -262,42 +262,12 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
            f4=assemble(eigenfun**4*dx)
            pr=1/(L**2)*(f2**2)/f4
            pratio.append(pr)
-           plt.clf()
-           fig, axes = plt.subplots()
-           collection = tripcolor(eigenfun, axes=axes)
-           collection.set_clim(-1.1,1.1)
-           fig.colorbar(collection);
-           plt.title(' eigenfunction {}  $\lambda=${:7.5f}  ratio {:1.5f}'.format( i, r.real,pr))
-           PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(target,i))
-           plt.savefig(eigenfunplotfile.format(target,i), dpi=300)
-           plt.close()
-           if i in plotefuns:
-              eigenf_imgs.append(eigenfunplotfile.format(target,i))
-           if pr <0.05:
-              plt.clf()
-              fig = plt.figure()
-              axes= fig.add_subplot(projection="3d")
-              collection=trisurf(eigenfun,axes=axes);
-              collection.set_clim(-1.1,1.1)
-              fig.colorbar(collection);
-              plt.title('eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format( i, r.real,pr))
-              PETSc.Sys.Print("> eigenfunction {} with p-ration{:1.5f} plotted to ".format(i,pr) + eigenfun_smpr_file.format(target,i))
-              plt.savefig(eigenfun_smpr_file.format(target,i),dpi=300)
-              plt.close()
-              eigenf_imgs_smpr.append(eigenfun_smpr_file.format(target,i))
-#    np.savetxt(eigenvalfile.format(target), eigenvalues)
-#    print("> eigenvalues written to {}".format(eigenvalfile.format(target)))
-    dd,dd2=divmod(nreq,25)
-    for i in range(dd):
-       segment=list(range(25*i,25*i+25))
-       i0=segment[0]
-       iend=segment[-1]
-       eigenf_imgs=[]
-       for j in segment:
-          eigenf_imgs.append(eigenfunplotfile.format(target,j))
-       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile.format(target,i0))
-       PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0)))
-    return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets
+           with CheckpointFile(eigenfunplotfile.format(target,i),'w') as afile:
+                afile.save_mesh(mesh)
+                afile.save_function(eigenfun)
+           PETSc.Sys.Print("> eigenfunction {} saved to ".format(i) + eigenfunplotfile.format(target,i))           
+           
+    return modes, eigenvalues_v2, pratio, targets
 
 
 def plot_coeff(x0,x1,A,npts,filename):

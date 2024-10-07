@@ -14,18 +14,18 @@ from firedrake.petsc import PETSc
 from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
-from solver import *
+from solver_mpi import *
 deg = 5
-L=200 # length of square
+L=10 # length of square
 nx=L
 ny=L
 nc=2
 nc2=nc*nc
 a0=1   # pc constant range from [a0, a1]
 a1=10 
-nreq=21
-target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
-#target_list=[0]
+nreq=51
+#target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000,2200,2500,3000]
+target_list=[0]
 plotefuns=[int(d) for d in range(nreq)]
 flag2=2
 """
@@ -41,17 +41,14 @@ np.random.seed(5)
 params=''
 # create directory and filenames for output
 #outdir = makedir()
-outdir = 'Results/000017'
+outdir = 'Results/000040'
 # filenames
-coefplotfile = outdir + '/' + 'coefficient.png'
+coefplotfile = outdir + '/h5_file/' + 'coefficient.h5'
 meshplotfile = outdir + '/' + 'mesh.png'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
 eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
-eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
-eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
-eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}_mode_{:03d}_{:03d}.png'
-eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr_{:05d}.png'
+eigenfunplotfile = outdir + '/h5_file/' + 'target_{:05d}_eigen{:05d}.h5'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
 mpfile = outdir + '/' + 'pratio_mode.png'
@@ -72,7 +69,8 @@ runparameters = {
     'params': params,
     'coeftype': coeftype,
     'L':L,
-    'nc':nc2
+    'nc':nc2,
+    'nreq':nreq
     }
 paramf = open(paramfile, 'w')
 json.dump(runparameters, paramf, indent=4)
@@ -99,23 +97,23 @@ if plotmesh==1:
 aelt = 'DG'
 adeg = 0
 V=FunctionSpace(mesh,aelt,adeg)
-aexpr = Function(V)
+mesh2 = SquareMesh(nc,nc,L,quadrilateral=True)
+V2=FunctionSpace(mesh2,aelt,adeg)
+aexpr = Function(V2)
 av=aexpr.vector()
-nc2=nx*ny
 aval=a0+np.random.rand(nc2)*(a1-a0)
+###
 n_min,n_max=av.local_range()
 aexpr.vector().set_local(aval[n_min:n_max])
-A = assemble(interpolate(aexpr, V))
+A = Function(V, name="coef")
+A.assign(assemble(interpolate(aexpr, V)))
 
-# evaluate coefficient, save to file and plot
-plt.clf()
-fig, axes = plt.subplots()
-collection = tripcolor(A, axes=axes)
-fig.colorbar(collection);
-plt.title('coefficient')
-plt.savefig(coefplotfile, dpi=500)
-PETSc.Sys.Print("> coefficient plotted to {}".format(coefplotfile))
-
+# save coefficients
+with CheckpointFile(coefplotfile,'w') as afile:
+     afile.save_mesh(mesh)
+     afile.save_function(A)
+PETSc.Sys.Print("> coefficient saved to {}".format(coefplotfile))
+modes_list=[]
 eigenvalues_list=[]
 pratio_list=[]
 eigf_imgs_list=[]
@@ -124,17 +122,18 @@ targets_all=[]
 for target in target_list: 
    PETSc.Sys.Print("> solving for target {}".format(target))
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-   modes, eigenvalues2, pratio,eigenf_imgs_smpr,targets = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
+   modes, eigenvalues2, pratio,targets = get_eigenpairs_v2(mesh,EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,target)
    eigenvalues_list+=eigenvalues2
    pratio_list+=pratio
-   eigf_imgs_list+=eigenf_imgs_smpr
    targets_all+=targets
+   modes_list+=modes
+
 with open(eigen_pratiofile, 'w', newline='') as csvfile:
-    fieldnames = ['target','eigenvalue','participation_ratio']
+    fieldnames = ['target','modes','eigenvalue','participation_ratio']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for i in range(len(eigenvalues_list)):
-       writer.writerow({'target':targets_all[i],'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
+       writer.writerow({'target':targets_all[i],'modes':modes_list[i],'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
 PETSc.Sys.Print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
@@ -168,29 +167,5 @@ plt.xlabel('modes')
 plt.ylabel('p-ratio')
 plt.savefig(mpfile_log)
 PETSc.Sys.Print("> pratio vs modes to {}".format(mpfile_log))
-
-n_imgs=len(eigf_imgs_list)
-if n_imgs<25:
-   if n_imgs>0:
-      combine_images(columns=5, space=20, images=eigf_imgs_list,file=eigenfunmontagefile_smpr)
-      PETSc.Sys.Print("> eigenfunction montage written to {}".format(eigenfunmontagefile_smpr.format(0)))
-else:
-   dd,dd2=divmod(n_imgs,25)
-   for i in range(dd):
-       segment=list(range(25*i,25*i+25))
-       i0=segment[0]
-       iend=segment[-1]
-       eigenf_imgs=[]
-       for j in segment:
-          eigenf_imgs.append(eigf_imgs_list[j])
-       combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
-       PETSc.Sys.Print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))
-   segment=list(range(25*dd,n_imgs))
-   i0=segment[0]
-   eigenf_imgs=[]
-   for j in segment:
-      eigenf_imgs.append(eigf_imgs_list[j])
-   combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile_smpr.format(i0))
-   PETSc.Sys.Print("> eigenfunction montage  written to {}".format(eigenfunmontagefile_smpr.format(i0)))
 
 
