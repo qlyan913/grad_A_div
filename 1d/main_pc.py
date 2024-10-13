@@ -18,7 +18,7 @@ from solver import *
 deg = 5
 L=200
 nelts=L   # number of elements on interval
-npts=nelts # for plotting functions
+npts=2*nelts # for plotting functions
 x0=0
 x1=L
 coef_pw=1
@@ -26,8 +26,7 @@ nreq=801
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns_2=[int(d) for d in range(20)]
-fv=1 #fv=1: f, fv=2, f version 2
-flag=1 # print all first nreq  eigenfuns
+flag=1 # print all first nreq  eigenfuns, ignore plotefuns and plotefuns_2
 flag2 =2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -52,6 +51,7 @@ mpfile_log = outdir + '/' + 'pratio_mode_log.png'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 pratiofile=outdir + '/' + 'pratio.txt'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
+eigenfunh5file  = outdir + '/h5_file/' + 'eigenfun{:05d}.h5'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
@@ -94,8 +94,7 @@ aexpr = Function(V)
 av=aexpr.vector()
 nc2=L
 aval=a0+np.random.rand(nc2)*(a1-a0)
-n_min,n_max=av.local_range()
-aexpr.vector().set_local(aval[n_min:n_max])
+aexpr.vector().set_local(aval)
 A = assemble(interpolate(aexpr, V))
 # evaluate coefficient, save to file and plot
 plt.clf()
@@ -111,7 +110,7 @@ PETSc.Sys.Print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
-modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+modes, eigenvalues2, pratio = get_eigenpairs(mesh,EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunh5file,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
 np.savetxt(pratiofile,pratio)
 
 plt.clf()

@@ -122,7 +122,7 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag=1):
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
     
-def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
+def get_eigenpairs(mesh,Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunh5file,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
     # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []
@@ -146,7 +146,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
             rx = rx/rxmin
         else:
             rx = rx/rxmax
-        eigenfun = Function(V)
+        eigenfun = Function(V,name="eigen")
         eigenfun.vector().set_local(rx)
         if flag == 0:
            if i in plotefuns or i in plotefuns_2:
@@ -159,7 +159,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
               plt.xlim([x0, x1])
               plt.ylim([-1.1, 1.1])
               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
-              print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+              PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               if i in plotefuns:
                  eigenf_imgs.append(eigenfunplotfile.format(i))
@@ -178,21 +178,25 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
                plt.clf()
                if center_list:
                   plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
-               plt.plot(x, y, alpha=.75, linewidth=2)
+               plt.plot(x,y, alpha=.75, linewidth=2)
                plt.xlim([x0, x1])
                plt.ylim([-1.1, 1.1])
                plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format(nelts, i, r.real,pr))
-               print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
+               PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
+               # save eigenfunction to h5 file
+               with CheckpointFile(eigenfunh5file.format(i),'w') as afile:
+                  afile.save_mesh(mesh)
+                  afile.save_function(eigenfun)
             else:
                break
     np.savetxt(eigenvalfile, eigenvalues)
     print("> eigenvalues written to {}".format(eigenvalfile))
     if flag == 0:
        combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmontagefile)
-       print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
+       PETSc.Sys.Print("> eigenfunction montage written to {}".format(eigenfunmontagefile)) 
        combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
-       print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
+       PETSc.Sys.Print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
     else:
        for i in range(0,nconv-1,25):
            segment=list(range(i,i+25))
@@ -202,7 +206,7 @@ def get_eigenpairs(Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenv
            for j in segment:
               eigenf_imgs.append(eigenfunplotfile.format(j))
            combine_images(columns=5, space=20, images=eigenf_imgs,file=eigenfunmon_all.format(i0,iend))
-           print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
+           PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmon_all.format(i0,iend)))
     return modes, eigenvalues_v2, pratio
 
 def get_landscape(mesh,x0,x1,Vp,deg,npts,Vplotfile,Landplotfile):
