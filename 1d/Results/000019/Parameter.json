@@ -4,9 +4,12 @@
     "bctype": "dirichlet",
     "deg": 5,
     "nelts": 4000,
-    "npts": 16000,
+    "npts": 8000,
     "params": "",
-    "coeftype": "pw_2constant",
+    "coeftype": "pc",
+    "coef_pw": 1,
     "x0": 0,
-    "x1": 400
+    "x1": 400,
+    "a0": 1,
+    "a1": 10
 }
