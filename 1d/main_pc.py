@@ -17,11 +17,11 @@ import numpy as np
 from solver import *
 deg = 5
 L=200
-nelts=L   # number of elements on interval
+nelts=10*L   # number of elements on interval
 npts=2*nelts # for plotting functions
 x0=0
 x1=L
-coef_pw=1
+coef_pw=1 # length of subinterval for p.w. constant 
 nreq=801
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
@@ -82,19 +82,16 @@ paramf.close()
 PETSc.Sys.Print("> run parameters written to {}".format(paramfile))
 
 mesh = IntervalMesh(nelts, x0, x1)
-mesh.tolerance = 10.0
 x , = SpatialCoordinate(mesh)
 # define coefficient A
-
 # pw constants alternately equal to a0 or a1
 aelt = 'DG'
 adeg = 0
-V=FunctionSpace(mesh,aelt,adeg)
-aexpr = Function(V)
-av=aexpr.vector()
-nc2=L
+nc2=int(L/coef_pw)
+aexpr=Function(FunctionSpace(IntervalMesh(nc2, x0, x1),aelt,adeg))
 aval=a0+np.random.rand(nc2)*(a1-a0)
 aexpr.vector().set_local(aval)
+V=FunctionSpace(mesh,aelt,adeg)
 A = assemble(interpolate(aexpr, V))
 # evaluate coefficient, save to file and plot
 plt.clf()
