@@ -361,7 +361,7 @@ def  get_eigenpairs_v2(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmonta
        PETSc.Sys.Print("> eigenfunction montage between {} and {} is  written to {}".format(i0,iend,eigenfunmontagefile.format(target,i0)))
     return modes, eigenvalues_v2, pratio, eigenf_imgs_smpr, targets
 
-def  get_eigenpairs_v3(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,mesh=[],eigenfunh5file=[]):
+def  get_eigenpairs_v3(Eps,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,eigenfunh5file=[],mesh=[]):
    # get eigenpairs
     eigenvalues = []
     eigenvalues_v2 = []

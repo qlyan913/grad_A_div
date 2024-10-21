@@ -16,15 +16,15 @@ from slepc4py import SLEPc
 import numpy as np
 from solver import *
 deg = 5
-L=50 # length of square
+L=100 # length of square
 nx=L
 ny=L
-nc=2
+nc=5
 nc2=nc*nc
 a0=1   # pc constant range from [a0, a1]
 a1=10 
 sigma_0=0
-sigma_1=100
+sigma_1=1
 flag2=2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -49,7 +49,7 @@ eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
 eigenfunplotfile = outdir + '/' + 'eigen{:05d}.png'
 eigenfunh5file  = outdir + '/h5_file/' + 'eigenfun{:05d}.h5'
 eigenfun_smpr_file= outdir + '/' + 'smpr_{:05d}.png'
-eigenfunmontagefile = outdir + '/'+'eigenfunmontage_mode_{:03d}_{:03d}.png'
+eigenfunmontagefile = outdir + '/'+'eigenfunmontage_mode_{:03d}.png'
 eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr_{:05d}.png'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
