@@ -27,6 +27,7 @@ def makedir(resultsdir='Results'):
         id += 1
     outdir = resultsdir + '/{:06d}'.format(id)
     os.mkdir(outdir)
+    os.mkdir(outdir+'/h5_file/')
     print('> subdirectory name:{:06d}'.format(id), flush=True)
     return outdir
     
@@ -121,7 +122,62 @@ def eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag=1):
     nconv = Eps.getConverged()
     print(f"> computed {nconv} eigenvalues.")
     return Eps, nconv, Bsc,V
-    
+
+def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
+    # find all the eigenvalues of the generalized Hermitian eigenvalue problem which belong to the interval [sigma_0, sigma_1]
+    """
+     flag ---- 1: -div A grad phi = lambda phi
+          ---- 2: -div A grad phi = lambda A phi
+          ---- 3: -div grad phi = lambda A phi
+    """
+    V = FunctionSpace(mesh, 'Lagrange', deg)
+    u = TrialFunction(V)
+    v = TestFunction(V)
+    if flag == 1:
+       b = A*dot(grad(u), grad(v))*dx
+       m = u*v*dx
+    elif flag == 2:
+       b = A*dot(grad(u), grad(v))*dx
+       m = A*u*v*dx
+    elif flag == 3:
+       b = dot(grad(u), grad(v))*dx
+       m = A*u*v*dx
+    uh = Function(V)
+    if bctype == 'dirichlet':
+       boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+       bc = DirichletBC(V, 0,boundary_ids)
+       B = assemble(b, bcs=bc)
+       M = assemble(m, bcs=bc, weight=0.)
+    else:    
+       B = assemble(b)
+       M = assemble(m)
+    Bsc, Msc = B.M.handle, M.M.handle
+    B_petsc = Bsc.convert('mpisbaij')
+    M_petsc = Msc.convert('mpisbaij')
+    # create SLEPc eigensolver
+    Eps = SLEPc.EPS().create()
+    Eps.setOperators(B_petsc, M_petsc)
+    # Set problem type to be generalized Hermitian
+    Eps.setProblemType(SLEPc.EPS.ProblemType.GHEP)
+    Eps.setType(SLEPc.EPS.Type.KRYLOVSCHUR)
+    Eps.setInterval(sigma_0,sigma_1)
+    Eps.setWhichEigenpairs(SLEPc.EPS.Which.ALL)
+    # set the spectral transform of the EPS to shift-and-invert
+    ST = Eps.getST()
+    ST.setType(SLEPc.ST.Type.SINVERT)
+    ksp = ST.getKSP()
+    ksp.setType(PETSc.KSP.Type.PREONLY)
+    pc = ksp.getPC()
+    pc.setType(PETSc.PC.Type.CHOLESKY)
+   # PC = ST.getKSP().getPC()
+   # PC.setType("lu")
+   # PC.setFactorSolverType("mumps")
+    Eps.setST(ST)
+    Eps.solve()
+    nconv = Eps.getConverged()
+    print(f"> computed {nconv} eigenvalues.")
+    return Eps, nconv, Bsc,V
+
 def get_eigenpairs(mesh,Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunh5file,eigenfunmontagefile,eigenfunmontagefile_2,center_list=[],flag=0,eigenfunmon_all=""):
     # get eigenpairs
     eigenvalues = []
@@ -198,8 +254,9 @@ def get_eigenpairs(mesh,Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,e
        combine_images(columns=5, space=20, images=eigenf_imgs_2,file=eigenfunmontagefile_2)
        PETSc.Sys.Print("> another eigenfunction montage written to {}".format(eigenfunmontagefile_2)) 
     else:
-       for i in range(0,nconv-1,25):
-           segment=list(range(i,i+25))
+       dd,dd2=divmod(nconv,25)
+       for i in range(dd):
+           segment=list(range(25*i,25*i+25))
            i0=segment[0]
            iend=segment[-1]
            eigenf_imgs=[]

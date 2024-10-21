@@ -68,4 +68,4 @@ Choices of f:
 0000017   [0,50]x[0,50]  (nc=2*2) Dirichlet boundary first 4000 eigenfunctions
 0000018   [0,50]x[0,50]  (nc=50*50) Dirichlet boundary first 4000 eigenfunctions
 0000019   [0,100]x[0,100] nc=4*4 Dirichlet boundary first 2000 eigenfunctions
-0000020   [0,100]x[0,100] nc=100*100 Dirichlet boundary first 2000 eigenfunctions
+0000020   [0,100]x[0,100] nc=100*100 Dirichlet boundary first 5000 eigenfunctions
