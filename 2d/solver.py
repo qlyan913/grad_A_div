@@ -135,8 +135,8 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
     rank = PETSc.COMM_WORLD.Get_rank()
     size = PETSc.COMM_WORLD.Get_size()
     subints = np.linspace(sigma_0, sigma_1, size + 1)
-#    if rank == 0:
-#       starttime = datetime.now()
+    if rank == 0:
+       starttime = datetime.now()
     V = FunctionSpace(mesh, 'Lagrange', deg)
     PETSc.Sys.Print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
     u = TrialFunction(V)
@@ -185,11 +185,11 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
     Eps.setST(ST)
     PETSc.Sys.Print("> solving the eigen value")
     Eps.solve()
- #   if rank == 0:
- #      endtime = datetime.now()
- #      elapsed = endtime - starttime
- #      totalsecs = elapsed.seconds
-#   PETSc.Sys.Print('used {} seconds to solve'.format(totalsecs))
+    if rank == 0:
+       endtime = datetime.now()
+       elapsed = endtime - starttime
+       totalsecs = elapsed.seconds
+    PETSc.Sys.Print('used {} seconds to solve'.format(totalsecs))
     nconv = Eps.getConverged()
     PETSc.Sys.Print(f"> computed {nconv} eigenvalues.")
     q = Eps.getKrylovSchurSubcommInfo()
