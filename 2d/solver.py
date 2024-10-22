@@ -183,7 +183,7 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
    # PC.setType("lu")
    # PC.setFactorSolverType("mumps")
     Eps.setST(ST)
-    PETSc.Sys.Print("soling the eigen value")
+    PETSc.Sys.Print("> solving the eigen value")
     Eps.solve()
  #   if rank == 0:
  #      endtime = datetime.now()
