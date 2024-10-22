@@ -163,7 +163,7 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
     B_petsc = Bsc.convert('mpisbaij')
     M_petsc = Msc.convert('mpisbaij')
   # create SLEPc eigensolver
-    Eps = SLEPc.EPS().create(comm=PETSc.COMM_WORLD)
+    Eps = SLEPc.EPS().create()
     Eps.setOperators(B_petsc, M_petsc)
     # Set problem type to be generalized Hermitian
     Eps.setProblemType(SLEPc.EPS.ProblemType.GHEP)
@@ -183,7 +183,7 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
    # PC.setType("lu")
    # PC.setFactorSolverType("mumps")
     Eps.setST(ST)
-    PETSc.Sys.Print("> solving the eigen value")
+    PETSc.Sys.Print("soling the eigen value")
     Eps.solve()
  #   if rank == 0:
  #      endtime = datetime.now()
