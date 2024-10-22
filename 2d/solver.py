@@ -15,7 +15,7 @@ from firedrake.petsc import PETSc
 from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
-
+from datetime import datetime
 def makedir(resultsdir='Results'):
     """
     Check that the directory resultsdir exists, and, if so, create a new subdirectory
@@ -132,6 +132,11 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
           ---- 3: -div grad phi = lambda A phi
     """
     # Find the first nreq eigenpaires nearest the given target
+    rank = PETSc.COMM_WORLD.Get_rank()
+    size = PETSc.COMM_WORLD.Get_size()
+    subints = np.linspace(sigma_0, sigma_1, size + 1)
+#    if rank == 0:
+#       starttime = datetime.now()
     V = FunctionSpace(mesh, 'Lagrange', deg)
     PETSc.Sys.Print("> degree of freedom: ", V.dof_dset.layout_vec.getSize())
     u = TrialFunction(V)
@@ -158,13 +163,15 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
     B_petsc = Bsc.convert('mpisbaij')
     M_petsc = Msc.convert('mpisbaij')
   # create SLEPc eigensolver
-    Eps = SLEPc.EPS().create()
+    Eps = SLEPc.EPS().create(comm=PETSc.COMM_WORLD)
     Eps.setOperators(B_petsc, M_petsc)
     # Set problem type to be generalized Hermitian
     Eps.setProblemType(SLEPc.EPS.ProblemType.GHEP)
     Eps.setType(SLEPc.EPS.Type.KRYLOVSCHUR)
     Eps.setInterval(sigma_0,sigma_1)
     Eps.setWhichEigenpairs(SLEPc.EPS.Which.ALL)
+    Eps.setKrylovSchurPartitions(size)
+    Eps.setKrylovSchurSubintervals(subints)
     # set the spectral transform of the EPS to shift-and-invert
     ST = Eps.getST()
     ST.setType(SLEPc.ST.Type.SINVERT)
@@ -176,9 +183,17 @@ def eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag=1):
    # PC.setType("lu")
    # PC.setFactorSolverType("mumps")
     Eps.setST(ST)
+    PETSc.Sys.Print("soling the eigen value")
     Eps.solve()
+ #   if rank == 0:
+ #      endtime = datetime.now()
+ #      elapsed = endtime - starttime
+ #      totalsecs = elapsed.seconds
+#   PETSc.Sys.Print('used {} seconds to solve'.format(totalsecs))
     nconv = Eps.getConverged()
-    print(f"> computed {nconv} eigenvalues.")
+    PETSc.Sys.Print(f"> computed {nconv} eigenvalues.")
+    q = Eps.getKrylovSchurSubcommInfo()
+    print("Proc {}:  {} of {} eigenvalues\n".format(q[0], q[1], nconv))
     return Eps, nconv, Bsc,V
 
 def get_eigenpairs(Eps,nconv,Bsc,V,L,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,eigenfun_smpr_file,center_list=[],flag=0,eigenfunmon_all="",n_all=500):

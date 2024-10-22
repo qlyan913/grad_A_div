@@ -24,8 +24,8 @@ nc2=nc*nc
 a0=1   # pc constant range from [a0, a1]
 a1=10 
 sigma_0=0
-sigma_1=1
-plotefun_flag=1 # 0 -- solve eigenproblem only wihtout plotting
+sigma_1=0.5
+plotefun_flag=0 # 0 -- solve eigenproblem only wihtout plotting
 flag2=2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
@@ -39,9 +39,10 @@ np.random.seed(5)
 #coeftype='constant'
 params=''
 # create directory and filenames for output
-outdir = makedir()
-#outdir = 'Results/000022'
+#outdir = makedir()
+outdir = 'Results/000022'
 # filenames
+coefh5file = outdir + '/h5_file/' + 'coef.h5'
 coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
@@ -81,10 +82,6 @@ paramf.write('\n')
 paramf.close()
 PETSc.Sys.Print("> run parameters written to {}".format(paramfile))
 
-mesh = SquareMesh(nx,ny,L,quadrilateral=True)
-#mesh2 = SquareMesh(nc,nc,L,quadrilateral=True)
-#PETSc.Sys.Print("common world rank", COMM_WORLD.rank, " mesh with {} elements".format(nc2) )
-#PETSc.Sys.Print("> mesh with {} elements".format(mesh.num_cells()))
 if plotmesh==1:
    plt.clf()
    triplot(mesh)
@@ -95,15 +92,10 @@ if plotmesh==1:
    plt.close()
    print("> mesh plotted to {}".format(meshplotfile))
 
-
-# define coefficient A
-aelt = 'DG'
-adeg = 0
-V=FunctionSpace(mesh,aelt,adeg)
-aval=a0+np.random.rand(nc2)*(a1-a0)
-aexpr=Function(FunctionSpace(SquareMesh(nc,nc,L,quadrilateral=True),aelt,adeg))
-aexpr.vector().set_local(aval)
-A = assemble(interpolate(aexpr, V))
+# read mesh and coefficient file
+with CheckpointFile(coefh5file,'r') as afile:
+     mesh=afile.load_mesh()
+     A=afile.load_function(mesh,"coef")
 
 # evaluate coefficient, save to file and plot
 plt.clf()
@@ -121,6 +113,7 @@ eigf_imgs_list=[]
 # solve eigen problem and save results
 PETSc.Sys.Print("> solving for interval from {} to {}".format(sigma_0,sigma_1))
 EPS, nconv, Bsc, V=eigen_solver_slicing(mesh,A,deg,sigma_0,sigma_1,bctype,flag2)
+#EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,10,0,bctype,flag2)
 plotefuns=[int(d) for d in range(nconv)]
 if plotefun_flag == 1 :
    modes, eigenvalues2, pratio,eigenf_imgs_smpr = get_eigenpairs_v3(EPS,nconv,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,eigenfunh5file,mesh)
