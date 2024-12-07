@@ -1,0 +1,5 @@
+MPI plot: Can not plot function directly.
+
+When using MPI for plot: 1. Saved to h5 file with mpi -n N. 2. Load h5 file with N=1 and then plot it. 
+
+The function to be plotted should depend on coordinate NOT on DOF numbering. 

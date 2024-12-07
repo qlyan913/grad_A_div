@@ -1,0 +1,9 @@
+hexahedral mesh on cube [0,L]x[0,L]x[0,L]
+
+L = 50, deg =3, degree of freedom : 3,442,951
+L = 50, deg =4, degree of freedom : 8120601
+L = 50, deg =5, degree of freeedom:  15813251
+L = 100, deg = 3, degree of freedom: 27270901
+L = 100, deg = 4, degree of freedom: 64481201
+L = 100, deg = 5, degree of freedom: 125751501
+L = 200, deg =3 , degree of freedom: 217081801
