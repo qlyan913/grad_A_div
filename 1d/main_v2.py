@@ -21,24 +21,25 @@ nelts=10*L   # number of elements on interval
 npts=2*nelts # for plotting functions
 x0=0
 x1=L
-coef_pw=1
-nreq=801
+nc=200
+nreq=500
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
+plotefuns=[int(d) for d in range(180,220)]
 plotefuns_2=[int(d) for d in range(20)]
 fv=1 #fv=1: f, fv=2, f version 2
 flag=1 # print all first nreq  eigenfuns
-flag2 =2
+flag2 =1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
           ---- 3: -div grad phi = lambda A phi
 """
 bctype='dirichlet' # dirichlet or neumann
-coeftype='1/V^2' #'landscape' #'pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
+coeftype='random displacement' #'landscape' #'pw_2constant' #'random displacement' # 'fixed displacement' #'pw_2constant' #'random displacement'
 dmax=0.2
-a0=0
-a1=20
+a0=1
+a1=10
 np.random.seed(5)
 #coeftype='constant'
 params=''
@@ -52,7 +53,9 @@ epfile = outdir + '/' + 'pratio_eigen.png'
 mpfile_log = outdir + '/' + 'pratio_mode_log.png'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 pratiofile=outdir + '/' + 'pratio.txt'
+eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
 eigenfunplotfile = outdir + '/' + 'eigenfun{:05d}.png'
+eigenfunh5file  = outdir + '/h5_file/' + 'eigenfun{:05d}.h5'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage.png'
 eigenfunmontagefile_2 = outdir + '/'+'eigenfunmontage_v2.png'
 eigenfunmon_all = outdir+'/'+'eigenfunmon{:03d}_{:03d}.png'
@@ -70,12 +73,12 @@ runparameters = {
     'npts': npts,
     'params': params,
     'coeftype': coeftype,
-    'coef_pw':coef_pw,
     'x0': x0,
     'x1': x1,
     'a0': a0,
     'a1': a1,
-    }
+    'nc':nc 
+   }
 paramf = open(paramfile, 'w')
 json.dump(runparameters, paramf, indent=4)
 paramf.write('\n')
@@ -94,7 +97,6 @@ if coeftype=='constant':
    adeg = 0
 elif coeftype == 'pw_2constant':
    # pw constants alternately equal to a0 or a1
-   nc=int(L/coef_pw)
    center_list=range(nc)
    aval=a0+np.random.rand(nc)*(a1-a0)
    aelt = 'DG'
@@ -103,7 +105,6 @@ elif coeftype == 'pw_2constant':
    aexpr = Function(FunctionSpace(IntervalMesh(nc, x0, x1), aelt, adeg))
    aexpr.vector().set_local(aval)
 elif coeftype == 'landscape':
-   nc=int(L/coef_pw)
    Vval=a0+np.random.rand(nc)*(a1-a0)
    Vexpr=Function(FunctionSpace(IntervalMesh(nc, x0, x1),'DG',0))
    Vexpr.vector().set_local(Vval)
@@ -113,7 +114,6 @@ elif coeftype == 'landscape':
    aelt = 'CG'
    adeg = 5
 elif coeftype == '1/V^2':
-   nc=int(L/coef_pw)
    Vval=a0+np.random.rand(nc)*(a1-a0)
    Vexpr=Function(FunctionSpace(IntervalMesh(nc, x0, x1),'DG',0))
    Vexpr.vector().set_local(Vval)
@@ -171,18 +171,29 @@ print("> coefficient plotted to {}".format(coefplotfile))
 
 # solve eigen problem and save results
 EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,x0,x1,flag2)
-modes, eigenvalues2, pratio = get_eigenpairs(EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all)
+modes, eigenvalues2, pratio =get_eigenpairs(mesh,EPS,nreq,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,eigenvalfile,eigenfunplotfile,eigenfunh5file,eigenfunmontagefile,eigenfunmontagefile_2,[],flag,eigenfunmon_all,5)
 np.savetxt(pratiofile,pratio)
+eigenvalues_list=[]
+pratio_list=[]
+eigenvalues_list+=eigenvalues2
+pratio_list+=pratio
+with open(eigen_pratiofile, 'w', newline='') as csvfile:
+    fieldnames = ['eigenvalue','participation_ratio']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for i in range(len(eigenvalues_list)):
+       writer.writerow({'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
+PETSc.Sys.Print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
-plt.scatter(modes,pratio)
+plt.scatter(modes,pratio,s=0.1)
 plt.xlabel('modes')
 plt.ylabel('p-ratio')
 plt.savefig(mpfile)
 print("> pratio vs modes to {}".format(mpfile))
 
 plt.clf()
-plt.scatter(eigenvalues2,pratio)
+plt.scatter(eigenvalues2,pratio,s=0.1)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
 plt.savefig(epfile)
@@ -191,7 +202,7 @@ print("> pratio vs eigenvalues to {}".format(epfile))
 
 plt.clf()
 plt.yscale('log')
-plt.scatter(modes,pratio)
+plt.scatter(modes,pratio,s=0.1)
 plt.xlabel('modes')
 plt.ylabel('p-ratio')
 plt.savefig(mpfile_log)
@@ -199,8 +210,9 @@ print("> pratio vs modes to {}".format(mpfile_log))
 
 plt.clf()
 plt.yscale('log')
-plt.scatter(eigenvalues2,pratio)
+plt.scatter(eigenvalues2,pratio,s=0.1)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
 plt.savefig(epfile_log)
 print("> pratio vs eigenvalues to {}".format(epfile_log))
+

@@ -209,13 +209,17 @@ def get_eigenpairs(mesh,Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,e
            if i in plotefuns or i in plotefuns_2:
               x = np.linspace(x0, x1, npts, endpoint=False)
               y = eval_u(eigenfun,x)
+              f2=assemble(eigenfun**2*dx)
+              f4=assemble(eigenfun**4*dx)
+              pr=1/(x1-x0)*(f2**2)/f4
+              pratio.append(pr)
               plt.clf()
               if center_list:
                  plt.vlines(x=center_list,ymin=-1,ymax=1, colors='red',ls='--',lw=1)
               plt.plot(x, y, alpha=.75, linewidth=2)
               plt.xlim([x0, x1])
               plt.ylim([-1.1, 1.1])
-              plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f}'.format(nelts, i, r.real))
+              plt.title('eigenfunction {}  $\lambda=${:7.5f} p-ratio {:1.5f}'.format(i, r.real,pr))
               PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
               plt.savefig(eigenfunplotfile.format(i), dpi=300)
               if i in plotefuns:
@@ -238,7 +242,7 @@ def get_eigenpairs(mesh,Eps,nconv,Bsc,V,x0,x1,nelts,npts,plotefuns,plotefuns_2,e
                plt.plot(x,y, alpha=.75, linewidth=2)
                plt.xlim([x0, x1])
                plt.ylim([-1.1, 1.1])
-               plt.title('nelts={}  eigenfunction {}  $\lambda=${:7.5f} ratio {:1.5f}'.format(nelts, i, r.real,pr))
+               plt.title('eigenfunction {}  $\lambda=${:7.5f} p-ratio {:1.5f}'.format(i, r.real,pr))
                PETSc.Sys.Print("> eigenfunction {} plotted to ".format(i) + eigenfunplotfile.format(i))
                plt.savefig(eigenfunplotfile.format(i), dpi=300)
                # save eigenfunction to h5 file
