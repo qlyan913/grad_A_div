@@ -7,7 +7,7 @@ Here, we consider the 1d random displacement model:
    dn uniform distribution on [-dmax,dmax]
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
-import os,math, json
+import os,math, json,csv
 import matplotlib.pyplot as plt
 from firedrake import *
 from firedrake.petsc import PETSc
@@ -22,14 +22,14 @@ npts=2*nelts # for plotting functions
 x0=0
 x1=L
 nc=200
-nreq=500
+nreq=300
 target=0
 plotefuns=0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,700,800,900,999
 plotefuns=[int(d) for d in range(180,220)]
 plotefuns_2=[int(d) for d in range(20)]
 fv=1 #fv=1: f, fv=2, f version 2
-flag=1 # print all first nreq  eigenfuns
-flag2 =1
+flag=0 # print all first nreq  eigenfuns
+flag2 =2
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
@@ -186,33 +186,33 @@ with open(eigen_pratiofile, 'w', newline='') as csvfile:
 PETSc.Sys.Print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
-plt.scatter(modes,pratio,s=0.1)
+plt.scatter(modes,pratio,s=0.5)
 plt.xlabel('modes')
 plt.ylabel('p-ratio')
-plt.savefig(mpfile)
+plt.savefig(mpfile,dpi=300)
 print("> pratio vs modes to {}".format(mpfile))
 
 plt.clf()
-plt.scatter(eigenvalues2,pratio,s=0.1)
+plt.scatter(eigenvalues2,pratio,s=0.5)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.savefig(epfile)
+plt.savefig(epfile,dpi=300)
 print("> pratio vs eigenvalues to {}".format(epfile))
 
 
 plt.clf()
 plt.yscale('log')
-plt.scatter(modes,pratio,s=0.1)
+plt.scatter(modes,pratio,s=0.5)
 plt.xlabel('modes')
 plt.ylabel('p-ratio')
-plt.savefig(mpfile_log)
+plt.savefig(mpfile_log,dpi=300)
 print("> pratio vs modes to {}".format(mpfile_log))
 
 plt.clf()
 plt.yscale('log')
-plt.scatter(eigenvalues2,pratio,s=0.1)
+plt.scatter(eigenvalues2,pratio,s=0.5)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.savefig(epfile_log)
+plt.savefig(epfile_log,dpi=300)
 print("> pratio vs eigenvalues to {}".format(epfile_log))
 

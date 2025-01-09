@@ -1,7 +1,7 @@
 """
 Solve the eigenvalue problem with variable coefficient:
    -(Au')'=lambda u on square [0,L]x[0,L]
-Here, we consider the random displacement model:
+Here, we consider the 1d random displacement model:
    A(x) = 1/(1+ sum_{integer n: x0<= n <= x1}f(x-n-dn(w))
   
    f1 = 20[max{(1-x^2/s^2)^3,0}(3x^2+1)], supp(f) in B_0(s)
@@ -9,8 +9,7 @@ Here, we consider the random displacement model:
    dn uniform distribution on the ball B_0(d_max)
    We choose s=1/4 and dmax=1/5 such that s+dmax<1/2
 """
-import csv
-import random
+import random, csv
 import os,math, json
 import matplotlib.pyplot as plt
 from firedrake import *
@@ -19,21 +18,22 @@ from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
 from solver import *
-deg = 5
-L=100 # length of square
-nx=200
-ny=200
-nreq=21
-target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000]
-plotefuns=[int(d) for d in range(20)]
+deg = 7
+L=10 # length of square
+nx=4*L
+ny=4*L
+nreq=501
+#target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000]
+target_list=[0]
+plotefuns=[int(d) for d in range(nreq)]
 f_flag=1 # 1: coef--- f1, 2: coef --- f2
-flag2 =3
+flag2 =1
 """
      flag2 ---- 1: -div A grad phi = lambda phi
           ---- 2: -div A grad phi = lambda A phi
           ---- 3: -div grad phi = lambda A phi
 """
-plotmesh=1 # 1: plot mesh. 0: no plot
+plotmesh=0 # 1: plot mesh. 0: no plot
 bctype='dirichlet' # dirichlet or neumann
 coeftype='random displacement' #'constant' #'random displacement' # 'fixed displacement' 
 dmax=0.2
@@ -42,12 +42,15 @@ np.random.seed(5)
 params=''
 # create directory and filenames for output
 outdir = makedir()
+#outdir="Results/000024"
 # filenames
 coefplotfile = outdir + '/' + 'coefficient.png'
 meshplotfile = outdir + '/' + 'mesh.png'
+eigenvalfile = outdir + '/' + 'eigenvalues_target_{:05d}.txt'
+eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
 epfile_log = outdir + '/' + 'pratio_eigen_log.png'
 epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
-eigen_pratiofile=outdir + '/' + 'eigen_pratio.csv'
+pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
 eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}.png'
@@ -76,7 +79,7 @@ paramf.write('\n')
 paramf.close()
 print("> run parameters written to {}".format(paramfile))
 
-mesh = SquareMesh(nx,ny,L)
+mesh = SquareMesh(nx,ny,L,quadrilateral=True)
 print("> mesh with {} elements".format(mesh.num_cells()))
 if plotmesh==1:
    plt.clf()
@@ -84,7 +87,7 @@ if plotmesh==1:
    plt.xlabel('X')
    plt.ylabel('Y')
    plt.title('Mesh')
-   plt.savefig(meshplotfile, dpi=300)
+   plt.savefig(meshplotfile, dpi=500)
    plt.close()
    print("> mesh plotted to {}".format(meshplotfile))
 
@@ -138,7 +141,10 @@ else:
              fi = conditional(((x-x_center[0])**2+(y-x_center[1])**2)**0.5>s,0,sign_2*(1-((x-x_center[0])**2+(y-x_center[1])**2)/pow(s,2))**3*(3*((x-x_center[0])**2+(y-x_center[1])**2)+1))
           Fi = assemble(interpolate(fi,FunctionSpace(mesh,'CG',7)))
           Asum += Fi
-   A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
+   V=FunctionSpace(mesh,'CG',7)
+   A=Function(V,name="f")
+   A.assign(assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),V)))
+  # A=assemble(interpolate(Constant(1.0)/(Constant(1.0)+Asum),FunctionSpace(mesh,'CG',7)))
 
 # evaluate coefficient, save to file and plot
 plt.clf()
@@ -148,6 +154,9 @@ fig.colorbar(collection);
 plt.title('coefficient')
 plt.savefig(coefplotfile, dpi=500)
 print("> coefficient plotted to {}".format(coefplotfile))
+with CheckpointFile("ex.h5",'w') as afile:
+    afile.save_mesh(mesh)
+    afile.save_function(A)
 
 eigenvalues_list=[]
 pratio_list=[]
@@ -156,35 +165,34 @@ targets_all=[]
 # solve eigen problem and save results
 for target in target_list: 
    EPS, nconv, Bsc, V=eigen_solver(mesh,A,deg,nreq,target,bctype,flag2)
-   modes, eigenvalues2, pratio,eigenf_imgs_smpr,targets= get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
+   modes, eigenvalues2, pratio,eigenf_imgs_smpr,targets = get_eigenpairs_v2(EPS,nreq,Bsc,V,L,plotefuns,eigenfunplotfile,eigenfunmontagefile,eigenfun_smpr_file,target)
    eigenvalues_list+=eigenvalues2
    pratio_list+=pratio
    eigf_imgs_list+=eigenf_imgs_smpr
    targets_all+=targets
-
 with open(eigen_pratiofile, 'w', newline='') as csvfile:
     fieldnames = ['target','eigenvalue','participation_ratio']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for i in range(len(eigenvalues_list)):
        writer.writerow({'target':targets_all[i],'eigenvalue':eigenvalues_list[i],'participation_ratio':pratio_list[i]})
-print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
+PETSc.Sys.Print("> Results of eigenvalues and participation ratio  are saved to {}".format(eigen_pratiofile))
 
 plt.clf()
 plt.yscale('log')
-plt.scatter(eigenvalues_list,pratio_list)
+plt.scatter(eigenvalues_list,pratio_list,s=0.5)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.savefig(epfile_log)
+plt.savefig(epfile_log,dpi=300)
 print("> pratio vs eigenvalues to {}".format(epfile_log))
 
 plt.clf()
 plt.yscale('log')
 plt.xscale('log')
-plt.scatter(eigenvalues_list,pratio_list)
+plt.scatter(eigenvalues_list,pratio_list,d=0.5)
 plt.xlabel('eigenvalues')
 plt.ylabel('p-ratio')
-plt.savefig(epfile_loglog)
+plt.savefig(epfile_loglog,dpi=300)
 print("> pratio vs eigenvalues to {}".format(epfile_loglog))
 
 n_imgs=len(eigf_imgs_list)
