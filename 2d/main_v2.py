@@ -20,9 +20,9 @@ import numpy as np
 from solver import *
 deg = 7
 L=10 # length of square
-nx=4*L
-ny=4*L
-nreq=501
+nx=10*L
+ny=10*L
+nreq=101
 #target_list=[0,10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,550,600,800,1000,1200,1500,2000]
 target_list=[0]
 plotefuns=[int(d) for d in range(nreq)]
@@ -53,7 +53,7 @@ epfile_loglog = outdir + '/' + 'pratio_eigen_loglog.png'
 pratiofile=outdir + '/' + 'pratio_target_{:05d}.txt'
 eigenfunplotfile = outdir + '/' + 'target_{:05d}_eigen{:05d}.png'
 eigenfun_smpr_file= outdir + '/' + 'target_{:05d}_smpr_{:05d}.png'
-eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:05d}.png'
+eigenfunmontagefile = outdir + '/'+'eigenfunmontage_target_{:4.2f}_mode_{:03d}.png'
 eigenfunmontagefile_smpr=outdir+'/'+'eigenfunmontage_smpr.png'
 paramfile = outdir+ '/'+'Parameter.json'
 signfile = outdir+ '/'+'sign_list.txt'
