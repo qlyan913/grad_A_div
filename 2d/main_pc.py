@@ -15,17 +15,17 @@ from firedrake.__future__ import interpolate
 from slepc4py import SLEPc
 import numpy as np
 from solver import *
-deg = 5
-L=10 # length of square
+deg = 8
+L=100 # length of square
 nx=L
 ny=L
-nc=2
+nc=10
 nc2=nc**2
 a0=1   # pc constant range from [a0, a1]
 a1=10
-nreq=10
-#target_list=np.linspace(1200,2000, 3201)
-target_list=[0]
+nreq=1
+#target_list=np.linspace(600,1000,401)
+target_list=[m/4 for m in range(41)]
 plotefuns=[int(d) for d in range(nreq)]
 flag2=2
 """
@@ -127,8 +127,9 @@ if coeftype=='checkerboard':
             Fi = assemble(interpolate(fi,V))
             A += Fi
 else:
-   #aval=a0+np.random.rand(nc2)*(a1-a0)
-   aval=np.array([1,10,10,1])
+   aval=a0+np.random.rand(nc2)*(a1-a0)
+   #aval=a0+np.random.binomial(size=nc2, n=1, p= 0.5)*(a1-a0)
+   #aval=np.array([1,10,10,1])
    #aval=np.array([1,1,10,10])
    aexpr=Function(FunctionSpace(SquareMesh(nc,nc,L,quadrilateral=True),aelt,adeg))
    aexpr.vector().set_local(aval)
