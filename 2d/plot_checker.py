@@ -29,23 +29,24 @@ with open(eigen_pratiofile) as f:
 
 eigenvalues_list=np.array(columns['eigenvalue'])
 eigenf_imgs=[]
-L=100
+Lx=100
+Ly=100
 nelts=2001
-x=np.linspace(0,L,nelts)
-y=np.linspace(0,L,nelts)
+x=np.linspace(0,Lx,nelts)
+y=np.linspace(0,Ly,nelts)
 X,Y =np.meshgrid(x,y)
 a1=1
 a2=10
 ne=len(eigenvalues_list)
 idx_list=[i for i in range(ne)]
-def pc_function(X,Y,nelts,a1,a2,i0,j0):
+def pc_function(X,Y,nelts,a1,a2,i0,j0,Lx,Ly):
     Z=np.zeros_like(X)
     for i in range(nelts):
        for j in range(nelts):
-           if  ((0<=X[i,j]<=L/2) and (0<=Y[i,j]<=L/2)) or ((L/2<=X[i,j]<=L) and (L/2<=Y[i,j]<=L)):
-                Z[i,j]=np.sin((i0+1)*np.pi*X[i,j]/L)*np.sin((j0+1)*np.pi*Y[i,j]/L)
+           if  ((0<=X[i,j]<=Lx/2) and (0<=Y[i,j]<=Ly/2)) or ((Lx/2<=X[i,j]<=Lx) and (Ly/2<=Y[i,j]<=Ly)):
+                Z[i,j]=np.sin((i0+1)*np.pi*X[i,j]/Lx)*np.sin((j0+1)*np.pi*Y[i,j]/Ly)
            else:
-                Z[i,j]=a1/a2*np.sin((i0+1)*np.pi*X[i,j]/L)*np.sin((j0+1)*np.pi*Y[i,j]/L)
+                Z[i,j]=a1/a2*np.sin((i0+1)*np.pi*X[i,j]/Lx)*np.sin((j0+1)*np.pi*Y[i,j]/Ly)
     return Z
 def closest(list, Number):
     aux = []
@@ -55,18 +56,18 @@ def closest(list, Number):
 for i in range(nn):
    for j in range(nn):
       if ((i+1)%2==1 and (j+1)%2==1) or ((i+1)%2==0 and (j+1)%2==0):
-         eigen=(np.pi/L)**2*((i+1)**2+(j+1)**2)
+         eigen=(np.pi)**2*(((i+1)/Lx)**2+((j+1)/Ly)**2)
          eigen_list=eigenvalues_list[idx_list]
          idex=closest(eigen_list,eigen)
          del idx_list[idex]
 for i in range(nn):
    for j in range(nn):
       if (i+1)%2==1 and (j+1)%2==1:
-         eigen=(np.pi/L)**2*((i+1)**2+(j+1)**2)
-         Z = np.sin((i+1)*np.pi*X/L)*np.sin((j+1)*np.pi*Y/L)
+         eigen=(np.pi)**2*(((i+1)/Lx)**2+((j+1)/Ly)**2)
+         Z = np.sin((i+1)*np.pi*X/Lx)*np.sin((j+1)*np.pi*Y/Ly)
          plt.clf()  
          fig, axes = plt.subplots()
-         im = plt.pcolormesh(X,Y,Z.transpose(),cmap='bwr')
+         im = plt.pcolormesh(X,Y,Z,cmap='bwr')
          axes.set_aspect('equal') 
          im.set_clim(-1.1,1.1)
          plt.xlabel("x")
@@ -77,11 +78,11 @@ for i in range(nn):
          plt.close()
          eigenf_imgs.append(eigenfunplotfile.format(j*nn+i))
       elif (i+1)%2==0 and (j+1)%2==0: 
-         eigen=(np.pi/L)**2*((i+1)**2+(j+1)**2)
-         Z=pc_function(X,Y,nelts,a1,a2,i,j)
+         eigen=(np.pi)**2*(((i+1)/Lx)**2+((j+1)/Ly)**2)
+         Z=pc_function(X,Y,nelts,a1,a2,i,j,Lx,Ly)
          plt.clf()  
          fig, axes = plt.subplots()
-         im = plt.pcolormesh(X,Y,Z.transpose(),cmap='bwr')
+         im = plt.pcolormesh(X,Y,Z,cmap='bwr')
          axes.set_aspect('equal') 
          im.set_clim(-1.1,1.1)
          plt.xlabel("x")
@@ -92,7 +93,7 @@ for i in range(nn):
          plt.close()
          eigenf_imgs.append(eigenfunplotfile.format(j*nn+i))
       else:
-         target=(np.pi/L)**2*((i+1)**2+(j+1)**2)
+         target=(np.pi)**2*(((i+1)/Lx)**2+((j+1)/Ly)**2)
          eigen_list=eigenvalues_list[idx_list]
          idex=closest(eigen_list,target)
          eigen=eigen_list[idex]

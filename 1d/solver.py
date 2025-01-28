@@ -289,8 +289,7 @@ def get_landscape(mesh,x0,x1,Vp,deg,npts,Vplotfile,Landplotfile):
     boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
     bc = DirichletBC(V, 0,boundary_ids)
     uh = Function(V)
-    solve(a == L, uh, bcs=bc, solver_parameters={"ksp_type": "preonly", "pc_type": "lu"})
-    
+    solve(a == L, uh, bcs=bc, solver_parameters={"ksp_type": "preonly", "pc_type": "lu"})    
     plt.clf()
     pts = np.linspace(x0, x1, npts, endpoint=True)
     avals = eval_u(uh,pts)
@@ -299,6 +298,18 @@ def get_landscape(mesh,x0,x1,Vp,deg,npts,Vplotfile,Landplotfile):
     plt.title('Landscape')
     plt.savefig(Landplotfile, dpi=300)
     print("> Landscape  plotted to {}".format(Landplotfile))
+    return uh
+
+def get_shifted_landscape(mesh,x0,x1,s,A,deg,npts,Landplotfile):
+    V = FunctionSpace(mesh, 'Lagrange', deg)
+    u = TrialFunction(V)
+    v = TestFunction(V)
+    a =A*dot(grad(u),grad(v))*dx+Constant(s)*u*v*dx
+    L =v*dx
+    boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
+    bc = DirichletBC(V, 0,boundary_ids)
+    uh = Function(V)
+    solve(a == L, uh, bcs=bc, solver_parameters={"ksp_type": "preonly", "pc_type": "lu"})    
     return uh
 
 def plot_coeff(x0,x1,A,npts,filename):
