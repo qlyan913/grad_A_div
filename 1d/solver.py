@@ -304,8 +304,8 @@ def get_shifted_landscape(mesh,x0,x1,s,A,deg,npts,Landplotfile):
     V = FunctionSpace(mesh, 'Lagrange', deg)
     u = TrialFunction(V)
     v = TestFunction(V)
-    a =A*dot(grad(u),grad(v))*dx+Constant(s)*u*v*dx
-    L =v*dx
+    a =A*dot(grad(u),grad(v))*dx+Constant(s)*A*u*v*dx
+    L =sqrt(A)*v*dx
     boundary_ids = (1,2) # 1: left endpoint, 2: right endpoint
     bc = DirichletBC(V, 0,boundary_ids)
     uh = Function(V)
